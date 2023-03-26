@@ -7,16 +7,24 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { EventComponent } from './wedding/event/event.component';
+import { RsvpComponent } from './wedding/rsvp/rsvp.component';
+import { VenueComponent } from './wedding/venue/venue.component';
+import { GiftsComponent } from './wedding/gifts/gifts.component';
+import { WeddingComponent } from './wedding/wedding.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    EventComponent,
+    RsvpComponent,
+    VenueComponent,
+    GiftsComponent,
+    WeddingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,9 +32,13 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+      { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] },
+      { path: 'wedding/event', component: EventComponent, canActivate: [AuthGuard] },
+      { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },
+      { path: 'wedding/venue', component: VenueComponent, canActivate: [AuthGuard] },
+      { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
+    ]),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
