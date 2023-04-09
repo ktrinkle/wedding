@@ -1,0 +1,21 @@
+global using System;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Options;
+global using Microsoft.OpenApi.Models;
+global using Serilog;
+global using System.Threading.Tasks;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Text;
+
+global using wedding.Config;
+global using wedding.Data;
+global using wedding.Extensions;
+global using wedding.Models;
+global using wedding.Services;
