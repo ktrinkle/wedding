@@ -50,6 +50,35 @@ public class LoginService : ILoginService
         return returnUser;
     }
 
+    public async Task<BearerDto> LoginAdminAsync(string emailAddr, string password)
+    {
+        /*
+        This is a very simple login method just calling for the email address.
+        We also require a fixed password from AppSettings.
+        */
+        
+        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress == emailAddr);
+        if (emailAddr != _appSettings.AdminUser)
+        {
+            return null;
+        }
+
+        var fixedPwd = _appSettings.AdminPassword;
+        if (password.ToLower() != fixedPwd.ToLower())
+        {
+            return null;
+        }
+
+        var returnUser = new BearerDto()
+        {
+            PartyGuid = _appSettings.AdminGuid.ToString(),
+            PartyAddress = _appSettings.AdminUser,
+            BearerToken = GenerateToken(new Guid(_appSettings.AdminGuid), _appSettings.AdminUser)
+        };
+
+        return returnUser;
+    }
+
     public async Task<WeddingPartyDto?> GetPartyEmailAsync(string emailAddr)
     {
         var partyGuid = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(w => w.EmailAddress == emailAddr);
@@ -99,6 +128,11 @@ public class LoginService : ILoginService
             new Claim("sessionid", partyGuid.ToString()),
             new Claim("username", emailAddress ?? ""),
         });
+
+        if (emailAddress == _appSettings.AdminUser)
+        {
+            claims.AddClaim(new Claim("role", "Admin"));
+        }
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor

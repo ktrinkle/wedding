@@ -33,6 +33,25 @@ public class LoginController : ControllerBase
         return Ok(loginResult);
     }
 
+    [AllowAnonymous]
+    [HttpPost("adminLogin")]
+    public async Task<ActionResult<WeddingPartyDto>> AdminLogin(string emailAddr, string password)
+    {
+        if (emailAddr is null)
+        {
+            return Unauthorized();
+        }
+
+        var loginResult = await _loginService.LoginAdminAsync(emailAddr, password);
+
+        if (loginResult is null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(loginResult);
+    }
+
     [Authorize]
     [HttpGet("partyByEmail")]
     public async Task<ActionResult<WeddingPartyDto>> GetPartyByEmail(string emailAddr)

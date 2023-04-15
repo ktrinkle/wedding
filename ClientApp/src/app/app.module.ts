@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -14,6 +15,7 @@ import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { WeddingComponent } from './wedding/wedding.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] },
@@ -38,7 +40,8 @@ import { AuthGuard } from 'src/guards/auth.guard';
       { path: 'wedding/venue', component: VenueComponent, canActivate: [AuthGuard] },
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
     ]),
-    NgbModule
+    NgbModule,
+    StoreModule.forRoot({}, {})
   ],
   providers: [],
   bootstrap: [AppComponent]

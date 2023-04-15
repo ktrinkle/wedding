@@ -46,7 +46,6 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddSwaggerGen(c => {
         c.EnableAnnotations();
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wedding API", Version = "v1.0" });
-        //future c.TagActionsBy();
 
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {

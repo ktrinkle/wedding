@@ -10,5 +10,8 @@ public class AppSettings
     public string Audience { get; set; } = String.Empty;
     public string JWTKeyId { get; set; } = String.Empty;
     public string Password { get; set; } = String.Empty;
+    public string AdminUser { get; set; } = String.Empty;
+    public string AdminPassword { get; set; } = String.Empty;
+    public string AdminGuid { get; set; } = String.Empty;
 }
 
