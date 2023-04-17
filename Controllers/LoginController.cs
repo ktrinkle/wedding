@@ -16,14 +16,19 @@ public class LoginController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<WeddingPartyDto>> Login(string emailAddr, string password)
+    public async Task<ActionResult<WeddingPartyDto>> Login(LoginDto loginDto)
     {
-        if (emailAddr is null)
+        if (loginDto.EmailAddress is null)
         {
             return Unauthorized();
         }
 
-        var loginResult = await _loginService.LoginAsync(emailAddr, password);
+        if (loginDto.Password is null or "")
+        {
+            return Unauthorized();
+        }
+
+        var loginResult = await _loginService.LoginAsync(loginDto.EmailAddress, loginDto.Password);
 
         if (loginResult is null)
         {

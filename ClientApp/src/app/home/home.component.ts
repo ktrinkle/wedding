@@ -20,11 +20,11 @@ export class HomeComponent{
     if (this.loginForm.value.emailAddress != '' && this.loginForm.value.password != '')
     {
       var loginSubmit: frontLogin = {
-        emailAddress: this.loginForm.value.userId,
+        emailAddress: this.loginForm.value.emailAddress,
         password: this.loginForm.value.password
       }
 
-      // this.authService.processLoginAdmin(loginSubmit);
+      this.authService.processLoginEmail(loginSubmit);
     }
   }
 }
