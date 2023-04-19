@@ -95,4 +95,25 @@ public class LoginController : ControllerBase
         return Ok(partyResult);
     }
 
+    [Authorize]
+    [HttpGet("partyByAuth")]
+    public async Task<ActionResult<WeddingPartyDto>> GetPartyByAuth()
+    {
+        var partyGuid = User.PartyGuid;
+        
+        if (partyGuid is null)
+        {
+            return Unauthorized();
+        }
+
+        var partyResult = await _loginService.GetPartyAsync(partyGuid.Invoke());
+
+        if (partyResult is null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(partyResult);
+    }
+
 }
