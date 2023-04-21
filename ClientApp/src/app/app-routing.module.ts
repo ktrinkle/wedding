@@ -6,7 +6,7 @@ import { OfficiantComponent } from './wedding/officiant/officiant.component';
 import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { RsvpComponent } from './wedding/rsvp/rsvp.component';
 import { VenueComponent } from './wedding/venue/venue.component';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},

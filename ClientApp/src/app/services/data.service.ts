@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from './../environments/environment';
-import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto } from '../app/data/data';
+import { environment } from '../../environments/environment';
+import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto } from '../data/data';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -32,6 +32,11 @@ export class DataService {
   public getPartyByEmail(emailAddr: string): Observable<weddingPartyDto> {
     var uri = this.REST_API_SERVER + '/Login/party/' + encodeURIComponent(emailAddr) + '';
     return this.httpClient.get<weddingPartyDto>(uri);
+  }
+
+  public getPartyMembers() : Observable<weddingPartyMemberDto[]> {
+    var uri = this.REST_API_SERVER + '/Rsvp/getMembers';
+    return this.httpClient.get<weddingPartyMemberDto[]>(uri);
   }
 
   public saveRsvp(party: weddingPartyMemberDto): Observable<weddingPartyDto> {

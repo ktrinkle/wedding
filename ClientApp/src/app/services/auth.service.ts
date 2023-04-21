@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { frontLogin, simpleUser } from '../app/data/data';
+import { frontLogin, simpleUser } from '../data/data';
 import { DataService } from './data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -25,10 +25,10 @@ export class AuthService {
 
     this.currentUser = this.currentUserSubject.asObservable();
 
-    this.currentTokenSubject = new BehaviorSubject<any>(sessionStorage.getItem('jwt'));
+    this.currentTokenSubject = new BehaviorSubject<any>(sessionStorage.getItem('access_token'));
     this.currentToken = this.currentTokenSubject.asObservable();
 
-    if(localStorage.getItem('jwt') != null)
+    if(localStorage.getItem('access_token') != null)
     {
       this.loggedIn.next(true);
     }
@@ -48,7 +48,7 @@ export class AuthService {
     {
       this.dataService.sendEmailLogin(loginDto).subscribe(al =>
         {
-          localStorage.setItem('jwt', al.bearerToken ?? "");
+          localStorage.setItem('access_token', al.bearerToken ?? "");
           localStorage.setItem('partyAddress', al.partyAddress ?? "");
           localStorage.setItem('partyGuid', al.partyGuid ?? "");
 

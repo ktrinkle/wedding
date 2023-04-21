@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { frontLogin } from 'src/app/data/data';
 
 @Component({

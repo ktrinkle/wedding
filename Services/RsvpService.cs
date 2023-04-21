@@ -43,5 +43,24 @@ public class RsvpService : IRsvpService
         return partyInfo;
     }
 
+    public async Task<List<WeddingPartyMemberDto>> GetWeddingPartyMembersAsync(string PartyGuid)
+    {
+        if (PartyGuid is null)
+        {
+            return new List<WeddingPartyMemberDto>() {};
+        }
+    
+
+        var partyList = await _ContextWedding.WeddingGroupName.Where(g => g.GroupId == new Guid(PartyGuid))
+                            .Select(g => new WeddingPartyMemberDto() {
+                                GroupMemberId = g.GroupMemberId,
+                                GroupMemberName = g.GroupMemberName,
+                                RsvpComment = g.RsvpComment,
+                                RsvpYes = g.RsvpYes
+                            }).ToListAsync();
+
+        return partyList;
+    }
+
 }
 

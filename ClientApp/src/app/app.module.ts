@@ -14,9 +14,15 @@ import { VenueComponent } from './wedding/venue/venue.component';
 import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { WeddingComponent } from './wedding/wedding.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+
+import { JwtModule } from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -43,7 +49,14 @@ import { EffectsModule } from '@ngrx/effects';
     ]),
     NgbModule,
     StoreModule.forRoot({}, {}),
-    EffectsModule
+    EffectsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["example.com"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

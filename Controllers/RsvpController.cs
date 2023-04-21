@@ -45,4 +45,22 @@ public class RsvpController : ControllerBase
 
         return Ok(updatedDto);
     }
+
+    [Authorize]
+    [HttpGet("getMembers")]
+    public async Task<ActionResult<List<WeddingPartyMemberDto?>>> GetPartyGroupMembersAsync()
+    {
+        // we ignore the passed in group and use the one from the token
+
+        var jwtGroupId = User.PartyGuid;
+
+        if (jwtGroupId is null)
+        {
+            return Unauthorized();
+        }
+
+        var partyMemberDto = await _rsvpService.GetWeddingPartyMembersAsync(jwtGroupId.Invoke());
+
+        return Ok(partyMemberDto);
+    }
 }
