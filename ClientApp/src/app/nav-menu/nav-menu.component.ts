@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,6 +7,8 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  constructor(private authService: AuthService) {}
+
   isExpanded = false;
   userLoggedIn = false;
 
@@ -19,6 +21,7 @@ export class NavMenuComponent {
   }
 
   isLoggedIn() {
-
+    return this.authService.isLoggedIn();
   }
+
 }

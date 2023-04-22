@@ -3,47 +3,37 @@ import { frontLogin, simpleUser } from '../data/data';
 import { DataService } from './data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+//import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private currentUserSubject : BehaviorSubject<simpleUser>;
-  private currentUser : Observable<simpleUser>;
-  private currentTokenSubject: BehaviorSubject<string>;
-  private currentToken: Observable<string>;
-
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private dataService:DataService, private router: Router)
-  {
-    this.currentUserSubject = new BehaviorSubject<simpleUser>({
-      partyAddress: localStorage.getItem('partyAddress') ?? undefined,
-      partyGuid: localStorage.getItem('partyGuid') ?? undefined
-    });
+  constructor(private dataService:DataService, private router: Router) { }
 
-    this.currentUser = this.currentUserSubject.asObservable();
+  public isLoggedIn():boolean {
+      const token = localStorage.getItem('access_token'); // get token from local storage
 
-    this.currentTokenSubject = new BehaviorSubject<any>(sessionStorage.getItem('access_token'));
-    this.currentToken = this.currentTokenSubject.asObservable();
+      if (token)
+      {
+        //const payload = Buffer.from(token.split('.')[1], 'base64');
+        const payload = window.atob(token.split('.')[1]); // decode payload of token
 
-    if(localStorage.getItem('access_token') != null)
-    {
-      this.loggedIn.next(true);
+        const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
+
+        return parsedPayload.exp > Date.now() / 1000; // check if token is expired
+      }
+
+      // if the token is null, always return false since the user isn't logged in.
+      return false;
     }
-  }
 
-  public get currentUserValue(): simpleUser{
-    return this.currentUserSubject.value;
-  }
-
-  public getAccessToken(): Observable<string> {
-    return this.currentToken;
-  }
-
-  public processLoginEmail(loginDto: frontLogin): void
+  public processLoginEmail(loginDto: frontLogin): number
   {
+    console.log(loginDto);
     if (loginDto.emailAddress != '' && loginDto.password != '')
     {
       this.dataService.sendEmailLogin(loginDto).subscribe(al =>
@@ -54,16 +44,13 @@ export class AuthService {
 
           if (al.bearerToken)
           {
-            this.loggedIn.next(true);
-            this.router.navigate(["wedding"]);
+            this.isLoggedIn();
+            return 1;
           }
+          return 0;
         })
-
     }
-  }
-
-  public isLoggedIn(){
-    return this.loggedIn.asObservable();
+    return -1;
   }
 
 }

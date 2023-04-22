@@ -14,7 +14,7 @@ import { VenueComponent } from './wedding/venue/venue.component';
 import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { WeddingComponent } from './wedding/wedding.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -53,8 +53,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["example.com"],
-        disallowedRoutes: ["http://example.com/examplebadroute/"],
+        allowedDomains: ["localhost","wedding.kevintrinkle.com"],
+        disallowedRoutes: [],
       },
     }),
   ],

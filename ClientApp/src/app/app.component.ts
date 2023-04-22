@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AppComponent {
   constructor(public authService: AuthService) { }
 
-  loggedIn = this.authService.isLoggedIn().subscribe();
+  loggedIn = this.authService.isLoggedIn();
 
   title = 'Wedding';
 }
