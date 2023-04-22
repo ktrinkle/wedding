@@ -3,7 +3,6 @@ import { frontLogin, simpleUser } from '../data/data';
 import { DataService } from './data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-//import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +32,6 @@ export class AuthService {
 
   public processLoginEmail(loginDto: frontLogin): number
   {
-    console.log(loginDto);
     if (loginDto.emailAddress != '' && loginDto.password != '')
     {
       this.dataService.sendEmailLogin(loginDto).subscribe(al =>
@@ -51,6 +49,15 @@ export class AuthService {
         })
     }
     return -1;
+  }
+
+  public processLogout(): void
+  {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('partyAddress');
+    localStorage.removeItem('partyGuid');
+
+    this.router.navigate(["home"]);
   }
 
 }

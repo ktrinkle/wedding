@@ -20,17 +20,14 @@ export class HomeComponent{
   constructor(private authService: AuthService, private router: Router) { }
 
   submitLogin(): void {
-    console.log(this.loginForm.value);
     if (this.loginForm.value.emailAddress != '' && this.loginForm.value.password != '')
     {
-      console.log('passed blank test');
       this.loginError = false; //clear any existing status
 
       var loginSubmit: frontLogin = {
         emailAddress: this.loginForm.value.emailAddress,
         password: this.loginForm.value.password
       }
-      console.log('calling loginstatus');
       var loginStatus = this.authService.processLoginEmail(loginSubmit);
       if (loginStatus == 1)
       {

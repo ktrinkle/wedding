@@ -24,4 +24,8 @@ export class NavMenuComponent {
     return this.authService.isLoggedIn();
   }
 
+  logout() {
+    this.authService.processLogout();
+  }
+
 }
