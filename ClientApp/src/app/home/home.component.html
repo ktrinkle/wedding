@@ -1,8 +1,8 @@
-<h1>Welcome to our wedding</h1>
+<h2 class="appleg">Welcome to our wedding!</h2>
 <div><img src="../../assets/Danny.png"/></div>
 <div>
-<div>Austin and Kevin are getting married! We just need some information before we can give you our information.</div>
-<div class="bd-example-snippet">
+<p>Austin and Kevin are getting married! We just need some information before we can give you our information.</p>
+<div class="container border border-dark">
 <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!this.isLoggedIn()">
 <div class="mb-3" *ngIf="this.loginError">We could not find an email address for you, or the city was wrong. Please try again.</div>
 <div class="mb-3">

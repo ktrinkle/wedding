@@ -19,6 +19,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { JwtModule } from "@auth0/angular-jwt";
+import { WeddingEffects } from './store/wedding.effects';
+import { metaReducers, reducers } from './store';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -48,12 +50,12 @@ export function tokenGetter() {
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
     ]),
     NgbModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule,
+    StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot(WeddingEffects),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost","wedding.kevintrinkle.com"],
+        allowedDomains: ["localhost","wedding.kevintrinkle.com", "localhost:7096"],
         disallowedRoutes: [],
       },
     }),
