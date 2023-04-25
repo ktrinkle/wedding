@@ -1,8 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+  font-family: ag;
+  src: url('./assets/applegaramond.ttf');
+}
+
+@font-face {
+  font-family: carthage;
+  src: url('./assets/carthage.ttf');
+}
+
+@font-face {
+  font-family: charcoal;
+  src: url('./assets/charcoal.ttf');
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
+}
+
+body {
+  background-color: #C7C8C1;
+  font-family: charcoal;
 }
 
 code {
@@ -13,4 +33,8 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.appleg {
+  font-family: ag;
 }
