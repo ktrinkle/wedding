@@ -16,31 +16,71 @@ public class RsvpService : IRsvpService
         _loginService = loginService;
     }
 
-    public async Task<WeddingPartyDto> SaveRsvpStatusSingleAsync(WeddingPartyUpdateDto updateDto)
+    public async Task<List<WeddingPartyMemberDto>?> SaveRsvpStatusSingleAsync(WeddingPartyUpdateDto updateDto)
     {
         /*
         Update an RSVP status for a single person.
         Called dynamically as check boxes are performed.
         */
+
+        // verify that wedding group exists
+        var weddingGroup = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.GroupId == new Guid(updateDto.GroupId));
+
+        if (weddingGroup is null)
+        {
+            _logger.LogInformation("Invalid wedding group called - {}", updateDto.GroupId);
+            return null;
+        }
         
         var userInfo = await _ContextWedding.WeddingGroupName.FirstOrDefaultAsync(u => u.GroupId == new Guid(updateDto.GroupId)
                                 && u.GroupMemberId == updateDto.GroupMemberId);
 
+        // our way of upserting. If the group member ID doesn't exist, add it.
         if (userInfo is null)
         {
-            return null;
+            // create a new object and save it. Then 
+            var newUser = new WeddingGroupName() {
+                GroupId = weddingGroup.GroupId,
+                GroupMemberId = updateDto.GroupMemberId, // set in the UI
+                GroupMemberName = updateDto.GroupMemberName,
+                RsvpComment = updateDto.RsvpComment,
+                RsvpYes = updateDto.RsvpYes
+            };
+            await _ContextWedding.WeddingGroupName.AddAsync(newUser);
+        }
+        else
+        {
+            userInfo.GroupMemberName = updateDto.GroupMemberName;
+            userInfo.RsvpComment = updateDto.RsvpComment;
+            userInfo.RsvpYes = updateDto.RsvpYes;
+
+            _ContextWedding.WeddingGroupName.Update(userInfo);
         }
 
-        userInfo.GroupMemberName = updateDto.GroupMemberName;
-        userInfo.RsvpComment = updateDto.RsvpComment;
-        userInfo.RsvpYes = updateDto.RsvpYes;
-
-        _ContextWedding.WeddingGroupName.Update(userInfo);
         await _ContextWedding.SaveChangesAsync();
 
-        var partyInfo = await _loginService.GetPartyAsync(updateDto.GroupId);
+        var partyInfo = await GetWeddingPartyMembersAsync(updateDto.GroupId);
 
         return partyInfo;
+    }
+
+    public async Task<List<WeddingPartyMemberDto>> RemoveWeddingPartyMemberAsync(string partyGuid, int groupMemberId)
+    {
+        if (partyGuid is null)
+        {
+            return new List<WeddingPartyMemberDto>() {};
+        }
+
+        var userInfo = await _ContextWedding.WeddingGroupName.FirstOrDefaultAsync(u => u.GroupId == new Guid(partyGuid)
+                                && u.GroupMemberId == groupMemberId);
+
+        if (userInfo is not null)
+        {
+            _ContextWedding.Remove(userInfo);
+            await _ContextWedding.SaveChangesAsync();
+        }
+
+        return await GetWeddingPartyMembersAsync(partyGuid);
     }
 
     public async Task<List<WeddingPartyMemberDto>> GetWeddingPartyMembersAsync(string PartyGuid)
@@ -50,7 +90,6 @@ public class RsvpService : IRsvpService
             return new List<WeddingPartyMemberDto>() {};
         }
     
-
         var partyList = await _ContextWedding.WeddingGroupName.Where(g => g.GroupId == new Guid(PartyGuid))
                             .Select(g => new WeddingPartyMemberDto() {
                                 GroupMemberId = g.GroupMemberId,

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, ElementRef, QueryList, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { DropdownDirective } from './dropdown.directive';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,7 +8,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  constructor(private authService: AuthService) {}
+
+  time: Date = new Date();
+
+  constructor(private authService: AuthService, private renderer: Renderer2) {
+    this.getCurrentDate();
+  }
 
   isExpanded = false;
   userLoggedIn = false;
@@ -26,6 +32,12 @@ export class NavMenuComponent {
 
   logout() {
     this.authService.processLogout();
+  }
+
+  getCurrentDate() {
+    setInterval(() => {
+    this.time = new Date(); //set time variable with current date
+   }, 1000); // set it every one seconds}
   }
 
 }

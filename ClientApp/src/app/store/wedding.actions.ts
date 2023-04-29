@@ -10,15 +10,15 @@ export const partyByAuthSuccess = createAction(
   props<{ partyMembers: weddingPartyMemberDto[] }>()
 );
 
-// export const round1AllTeams = createAction(
-//   '[Round1] GetAllTeams',
-//   props<{ yEvent: string }>()
-// );
+export const savePartyMember = createAction(
+  '[Wedding] SavePartyMember',
+  props<{ partyMember: weddingPartyMemberDto }>()
+);
 
-// export const round1AllTeamsSuccess = createAction(
-//   '[Round1] LoadAllTeams',
-//   props<{ allTeams: introDto[] }>()
-// );
+export const savePartyMemberSuccess = createAction(
+  '[Wedding] SavePartyMemberSuccess',
+  props<{ partyMembers: weddingPartyMemberDto[] }>()
+);
 
 
 

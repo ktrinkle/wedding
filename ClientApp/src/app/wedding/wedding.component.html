@@ -1,140 +1,164 @@
-<div><h2 class="appleg">Welcome to our wedding!</h2>
-<p>Saturday, October 28 - 6:00 PM - Town Hall Collaborative, Denver, CO</p></div>
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding">
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner"></div>
+      </div>
+  </div>
+  <h1 class="titlebar"><span>Welcome to our wedding</span></h1>
+  <div class="inner">
+    <div class="icon">
+      <img src="../../assets/img/about.png" alt="About" />
+    </div>
+    <ul>
+      <li style="text-align: left;">
+        <p>Saturday, October 28 - 6:00 PM - Town Hall Collaborative, Denver, CO</p>
 
-<div ngbAccordion>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-			<button ngbAccordionButton class="green">
-				<span>Where and when is it?</span>
-			</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <ul>
-            <li>Saturday, October 28, 2023, 6:00 PM</li>
-            <li>Town Hall Collaborative, 525 Santa Fe Dr, Denver, CO</li>
-          </ul>
-          <h2>Agenda:</h2>
-            <ul>
-              <li>6:00 PM - doors open. Bar open. Food served.</li>
-              <li>7:00 PM - the ceremony</li>
-              <li>7:30 PM until midnight - drinks, dancing (if you dare), chat, and fun!</li>
-            </ul>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton class="yellow">What should I wear?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <p>This is <strong>not</strong> a white wedding. This is a costume party!</p>
-          <p>Wear your favorite costume. Or an easy costume. Or a suit.
-            Or a hawaiian shirt and shorts. We're good either way!</p>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton class="orange">What should I bring?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <p>Bring yourself. Bring your plus one. Or two. Just as long as we know how many people are coming so
-            that we have enough pizza. Yes, we're catering pizza. Why not?
-          </p>
-          <p>For gifts, please see our <a routerLink="/wedding/gifts">Gifts</a> page.</p>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton class="red">Where should I stay?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <p>Somewhere in the Denver metropolitan area. We don't have a room block anywhere.
-          </p>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton class="purple">Who is officiating?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <p>I'm glad you asked. We have joined the First Southern Fried, Self-Satisfied Babaptist church, and our
-            spiritual advisor, Sister Helen Holy, will be officiating. She has more information on the
-            <a routerLink="/wedding/officiant">Officiant</a> page.
-          </p>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton class="blue">It's Colorado and I live in Texas. Can I consume Marijuana?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <h2>Marijuana policy</h2>
-          The state of Colorado permits recreational use of Marijuana. If you choose to partake, you are responsible for following the
-          rules of the state of Colorado as well as the rules of Town Hall Collaborative:
-          <ul>
-            <li>
-              Marijuana can only be consumed by people age 21 or over. This will be strictly enforced.
-            </li>
-            <li>
-              Smoking or vaping of any kind is only permitted on the patio with the doors closed. This includes tobacco products.
-            </li>
-            <li>
-              For our airline industry friends, please remember transportation is a federally regulated industry.
-            </li>
-          </ul>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton>We're totally down for attending. How do we RSVP?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <p>Check out the
-            <a routerLink="/wedding/rsvp">RSVP</a> page!
-          </p>
-          <p>Please RSVP no later than October 21st, 2023.</p>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div ngbAccordionItem>
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton>I'm not interested in fun and won't be coming. Should I say so?</button>
-    </h2>
-    <div ngbAccordionCollapse>
-      <div ngbAccordionBody>
-        <ng-template>
-          <p>Yes. Even if you can't come, we still would like to know, so that we don't expect you. Please go
-            to the <a routerLink="/wedding/rsvp">RSVP</a> page and let us know. You will be missed.
-          </p>
-          <p>Feel free to leave us a <a routerlink="/wedding/gifts">gift</a> though!</p>
-        </ng-template>
-      </div>
-    </div>
+        <div ngbAccordion>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="green">
+                <span>Where and when is it?</span>
+              </button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <ul>
+                    <li>Saturday, October 28, 2023, 6:00 PM</li>
+                    <li>Town Hall Collaborative, 525 Santa Fe Dr, Denver, CO</li>
+                  </ul>
+                  <h2 class="appleg">Agenda:</h2>
+                    <ul>
+                      <li>6:00 PM - doors open. Bar open. Pizza served.</li>
+                      <li>7:00 PM - the ceremony</li>
+                      <li>7:30 PM until midnight - drinks, dancing (if you dare), chat, and fun!</li>
+                    </ul>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="yellow">What should I wear?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <p>This is <strong>not</strong> a white wedding. This is a costume party!</p>
+                  <p>Wear your favorite costume. Or an easy costume. Or a suit.
+                    Or a hawaiian shirt and shorts. We're good either way!</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="orange">What should I bring?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <p>Bring yourself. Bring your plus one. Or two. Just as long as we know how many people are coming so
+                    that we have enough pizza. Yes, we're catering pizza. Why not?
+                  </p>
+                  <p>For gifts, please see our <a routerLink="/wedding/gifts">Gifts</a> page.</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="red">Where should I stay?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <p>Somewhere in the Denver metropolitan area. We don't have a room block anywhere.
+                  </p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="purple">Who is officiating?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <p>I'm glad you asked. We have joined the First Southern Fried, Self-Satisfied Babaptist church, and our
+                    spiritual advisor, Sister Helen Holy, will be officiating. She has more information on the
+                    <a routerLink="/wedding/officiant">Officiant</a> page.
+                  </p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="blue">It's Colorado and I live in Texas. Can I consume Marijuana?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <h2 class="appleg">Marijuana policy</h2>
+                  The state of Colorado permits recreational use of Marijuana. If you choose to partake, you are responsible for following the
+                  rules of the state of Colorado as well as the rules of Town Hall Collaborative:
+                  <ul>
+                    <li>
+                      Marijuana can only be consumed by people age 21 or over. This will be strictly enforced.
+                    </li>
+                    <li>
+                      Smoking or vaping of any kind is only permitted on the patio with the doors closed. This includes tobacco products.
+                    </li>
+                    <li>
+                      For our airline industry friends, please remember transportation is a federally regulated industry.
+                    </li>
+                  </ul>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton class="platinum">We're totally down for attending. How do we RSVP?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <p>Check out the
+                    <a routerLink="/wedding/rsvp">RSVP</a> page!
+                  </p>
+                  <p>Please RSVP no later than October 21st, 2023.</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>I'm not interested in fun and won't be coming. Should I say so?</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <p>Yes. Even if you can't come, we still would like to know, so that we don't expect you. Please go
+                    to the <a routerLink="/wedding/rsvp">RSVP</a> page and let us know. You will be missed.
+                  </p>
+                  <p>Feel free to leave us a <a routerlink="/wedding/gifts">gift</a> though!</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

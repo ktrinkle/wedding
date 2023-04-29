@@ -16,7 +16,7 @@ public class RsvpController : ControllerBase
 
     [Authorize]
     [HttpPost("saveRsvp")]
-    public async Task<ActionResult<WeddingPartyDto?>> SaveRsvpStatusSingleAsync(WeddingPartyMemberDto partyMember)
+    public async Task<ActionResult<List<WeddingPartyMemberDto>>> SaveRsvpStatusSingleAsync(WeddingPartyMemberDto partyMember)
     {
         // we ignore the passed in group and use the one from the token
 
@@ -60,6 +60,24 @@ public class RsvpController : ControllerBase
         }
 
         var partyMemberDto = await _rsvpService.GetWeddingPartyMembersAsync(jwtGroupId.Invoke());
+
+        return Ok(partyMemberDto);
+    }
+
+    [Authorize]
+    [HttpPost("removeMember")]
+    public async Task<ActionResult<List<WeddingPartyMemberDto?>>> RemovePartyGroupMemberAsync(WeddingPartyMemberDto partyMember)
+    {
+        // we ignore the passed in group and use the one from the token
+
+        var jwtGroupId = User.PartyGuid;
+
+        if (jwtGroupId is null)
+        {
+            return Unauthorized();
+        }
+
+        var partyMemberDto = await _rsvpService.RemoveWeddingPartyMemberAsync(jwtGroupId.Invoke(), partyMember.GroupMemberId);
 
         return Ok(partyMemberDto);
     }

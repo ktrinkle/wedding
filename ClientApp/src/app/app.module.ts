@@ -21,6 +21,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { JwtModule } from "@auth0/angular-jwt";
 import { WeddingEffects } from './store/wedding.effects';
 import { metaReducers, reducers } from './store';
+import { DropdownDirective } from './nav-menu/dropdown.directive';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -35,7 +36,8 @@ export function tokenGetter() {
     RsvpComponent,
     VenueComponent,
     GiftsComponent,
-    WeddingComponent
+    WeddingComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

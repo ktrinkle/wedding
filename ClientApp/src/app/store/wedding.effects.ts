@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, switchMap } from 'rxjs/operators';
 import { DataService } from '../services/data.service';
-import { partyByAuth, partyByAuthSuccess } from './wedding.actions';
+import { partyByAuth, partyByAuthSuccess, savePartyMember, savePartyMemberSuccess } from './wedding.actions';
 
 @Injectable()
 export class WeddingEffects {
@@ -17,6 +17,17 @@ export class WeddingEffects {
           partyByAuthSuccess({ partyMembers: teams })
         ))
         )
+    )
+  );
+
+  savePartyMember$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(savePartyMember),
+    switchMap(payload =>
+      this.dataService.saveRsvp(payload.partyMember).pipe(map(party =>
+        savePartyMemberSuccess({ partyMembers: party })
+      ))
+      )
     )
   );
 

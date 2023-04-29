@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./assets/css/platinum.css";
+@import "./assets/css/scrollbar.css";
 
 @font-face {
   font-family: ag;
@@ -23,6 +25,7 @@ a {
 body {
   background-color: #C7C8C1;
   font-family: charcoal;
+  font-size: 15px;
 }
 
 code {
@@ -37,4 +40,63 @@ code {
 
 .appleg {
   font-family: ag;
+}
+
+.form-control {
+  font-family: charcoal;
+  font-size: 15px;
+  border-color: #000;
+  border-width: 1px;
+  border-style: inset;
+  box-shadow: -1px -1px 1px 1px rgba(42, 42, 42, 0.2);
+}
+
+.accordion .accordion-item {
+  width: 100%;
+}
+
+
+@media only screen and (max-width: 767px) {
+	/* mobile layout */
+
+	.align_left, .align_right, .align_center {
+		display: block;
+		float: none;
+		margin: 1em auto;
+		max-width: 100%;
+	}
+
+  table,
+  tbody {
+      display: block;
+      width: 100%;
+  }
+  thead { display: none; }
+  table tr,
+  table th,
+  table td {
+      display: block;
+      padding: 0;
+      text-align: left;
+      white-space: normal;
+  }
+  table tr {
+      border: 1px solid #000;
+      padding-bottom: 11px;
+      margin-bottom: 11px;
+  }
+  table th[data]:before,
+  table td[data]:before {
+      content: attr(data) ":\00A0";
+  }
+  table td {
+      border: none;
+  }
+  table td:empty { display: none; }
+  table td:first-child {
+      color: #333;
+  }
+  table td:first-child:before {
+    content: '';
+  }
 }

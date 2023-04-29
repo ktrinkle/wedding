@@ -21,3 +21,11 @@
 .purple {
   background-color: #963C97;
 }
+
+.accordion-header .collapsed {
+  color: #000;
+}
+
+.accordion-button {
+  color: #fff;
+}
