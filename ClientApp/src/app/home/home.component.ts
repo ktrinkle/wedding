@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { frontLogin } from 'src/app/data/data';
@@ -8,9 +8,11 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit {
 
   public loginError: boolean = false;
+  public bootStatus: boolean = false;
+  bootSound = new Audio('../../../assets/snd/boot.mp3');
 
   public loginForm: UntypedFormGroup = new UntypedFormGroup({
     emailAddress: new UntypedFormControl('', [Validators.email]),
@@ -18,6 +20,10 @@ export class HomeComponent{
   });
 
   constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.bootSound.load();
+  }
 
   submitLogin(): void {
     if (this.loginForm.value.emailAddress != '' && this.loginForm.value.password != '')
@@ -40,5 +46,12 @@ export class HomeComponent{
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
+  }
+
+  changeBoot(): void {
+    this.bootSound.currentTime = 0;
+    this.bootSound.play();
+    this.bootStatus = true;
+    console.log(this.bootStatus);
   }
 }
