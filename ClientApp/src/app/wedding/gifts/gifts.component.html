@@ -1,4 +1,4 @@
-<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding">
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
   <div class="control-box close-box">
       <a class="control-box-inner"></a>
   </div>
@@ -12,27 +12,23 @@
           <div class="window-collapse-inner"></div>
       </div>
   </div>
-  <h1 class="titlebar"><span>Gifts</span></h1>
-  <div class="inner">
+  <h1 class="titlebar" cdkDragHandle><span>Gifts</span></h1>
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
     <div class="icon">
       <img src="../../assets/img/about.png" alt="About" />
     </div>
-    <ul>
-      <li style="text-align: left;">
 <p>Look. We know almost everyone is traveling to the venue. We also know that we have a full house, with a fully equipped
   kitchen (Kevin insists on that) and more computers than we know what to do with. So we're making this easy.</p>
   <ul>
     <li>We're not registered at any store.</li>
-    <li>All we want is money towards the honeymoon fund.</li>
+    <li>We would so appreciate if you were so inclined to contribute to our honeymoon account.</li>
   </ul>
 
-  <h3 class="appleg">Where is the honeymoon?</h3>
+  <h3>Where is the honeymoon?</h3>
   <p>Moorea, French Polynesia (airport code MOZ).</p>
   <p>Or, for those who don't know, it's Tahiti. Just a different island.</p>
 
-  <h3 class="appleg">How do I contribute my gift?</h3>
+  <h3>How do I contribute my gift?</h3>
   <p>Kevin still needs to figure this out.</p>
-</li>
-</ul>
-</div>
+  </cdk-virtual-scroll-viewport>
 </div>

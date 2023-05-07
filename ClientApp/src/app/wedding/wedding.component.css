@@ -29,3 +29,8 @@
 .accordion-button {
   color: #fff;
 }
+
+strong {
+  font-weight:normal;
+  text-decoration: underline;
+}

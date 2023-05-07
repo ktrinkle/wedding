@@ -3,11 +3,6 @@
 @import "./assets/css/scrollbar.css";
 
 @font-face {
-  font-family: ag;
-  src: url('./assets/applegaramond.ttf');
-}
-
-@font-face {
   font-family: carthage;
   src: url('./assets/carthage.ttf');
 }
@@ -15,6 +10,37 @@
 @font-face {
   font-family: charcoal;
   src: url('./assets/charcoal.ttf');
+}
+
+/* h3 with charcoal */
+h3 {
+  text-decoration: underline;
+  font-size: 1em;
+  font-family: charcoal;
+}
+
+/* Show and hide classes */
+
+.showMain {
+  display: block;
+  min-height: 80px;
+}
+
+.hideMain {
+  display: none;
+  min-height: 0px;
+}
+
+.icon {
+  font-family: 'Geneva', 'Arial', 'Helvetica';
+  font-size: 9pt;
+}
+
+.icon-text {
+  background: #fff;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-top: 3px;
 }
 
 /* Provide sufficient contrast against white background */
@@ -38,10 +64,6 @@ code {
   border-color: #1861ac;
 }
 
-.appleg {
-  font-family: ag;
-}
-
 .form-control {
   font-family: charcoal;
   font-size: 15px;
@@ -49,6 +71,75 @@ code {
   border-width: 1px;
   border-style: inset;
   box-shadow: -1px -1px 1px 1px rgba(42, 42, 42, 0.2);
+}
+
+.menu-bar-item {
+  cursor: pointer;
+  border: none;
+
+  user-select: none;
+  min-width: 34px;
+  line-height: 26px;
+  padding: 0 16px;
+}
+
+.menu-bar-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.menu {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 180px;
+  max-width: 280px;
+  /* background-color: rgb(255, 255, 255); */
+  padding: 6px 0;
+}
+
+.menu hr {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.12);
+}
+
+.menu {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.menu .menu-item {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+
+  user-select: none;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+}
+
+.menu-item > span {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.menu .menu-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.menu .menu-item:active {
+  background-color: rgb(170, 170, 170);
+}
+
+.menu-bar-item[aria-expanded='true'],
+.menu-item[aria-expanded='true'] {
+  background-color: rgb(208, 208, 208) !important;
 }
 
 ul .menu {
@@ -59,13 +150,29 @@ ul .menu {
   width: 100%;
 }
 
+.content ul {
+  font-size: 13px;
+}
+
+.inner {
+  font-size: 13px;
+}
+
+.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
+  padding: 10px;
+}
+
 /* Bootstrap accordion */
+
+h2 .accordion-header .collapsed {
+  margin-block-start: 0px;
+}
 
 .accordion-button {
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 95%;
   padding: 20;
   text-align: left;
   border: 0;
@@ -109,16 +216,17 @@ ul .menu {
   margin-bottom: 0;
 }
 
+ngbAccordionBody
+
 .accordion-item {
-  color: var(--#{$prefix}accordion-color);
-  background-color: var(--#{$prefix}accordion-bg);
-  border: var(--#{$prefix}accordion-border-width) solid var(--#{$prefix}accordion-border-color);
+  border: 1px;
+  border-color: #000;
 
   &:first-of-type {
-    @include border-top-radius(var(--#{$prefix}accordion-border-radius));
+    @include border-top-radius: 1px;
 
     .accordion-button {
-      @include border-top-radius(var(--#{$prefix}accordion-inner-border-radius));
+      @include border-top-radius: 1px;
     }
   }
 
@@ -135,15 +243,7 @@ ul .menu {
         @include border-bottom-radius(var(--#{$prefix}accordion-inner-border-radius));
       }
     }
-
-    .accordion-collapse {
-      @include border-bottom-radius(var(--#{$prefix}accordion-border-radius));
-    }
   }
-}
-
-.accordion-body {
-  padding: var(--#{$prefix}accordion-body-padding-y) var(--#{$prefix}accordion-body-padding-x);
 }
 
 
@@ -173,10 +273,14 @@ ul .menu {
   }
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 767px) {
 	/* desktop and ipad layout */
   #wedding {
-    width: 765px !important;
+    width: 750px !important;
+  }
+
+  #wedding .inner {
+    height: 500px;
   }
 }
 
@@ -233,5 +337,14 @@ ul .menu {
   }
   table td:first-child:before {
     content: '';
+  }
+
+  #wedding .inner {
+    height: 85vh;
+    width: 100%;
+  }
+
+  .cdk-drag {
+    z-index: 500;
   }
 }

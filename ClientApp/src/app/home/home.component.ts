@@ -8,11 +8,9 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   public loginError: boolean = false;
-  public bootStatus: boolean = false;
-  bootSound = new Audio('../../../assets/snd/boot.mp3');
 
   public loginForm: UntypedFormGroup = new UntypedFormGroup({
     emailAddress: new UntypedFormControl('', [Validators.email]),
@@ -20,10 +18,6 @@ export class HomeComponent implements OnInit {
   });
 
   constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit(): void {
-    this.bootSound.load();
-  }
 
   submitLogin(): void {
     if (this.loginForm.value.emailAddress != '' && this.loginForm.value.password != '')
@@ -48,10 +42,4 @@ export class HomeComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
-  changeBoot(): void {
-    this.bootSound.currentTime = 0;
-    this.bootSound.play();
-    this.bootStatus = true;
-    console.log(this.bootStatus);
-  }
 }

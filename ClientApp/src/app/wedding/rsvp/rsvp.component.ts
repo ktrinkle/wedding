@@ -31,6 +31,8 @@ export class RsvpComponent implements OnInit{
     this.store.dispatch(partyByAuth());
   }
 
+  windowVisible: boolean = true;
+
   ngOnInit(): void {
 
     this.store.select(selectPartyMembers).pipe(takeUntil(this.destroy$)).subscribe(weddingParty => {
@@ -111,6 +113,11 @@ export class RsvpComponent implements OnInit{
     };
 
     return partyChange;
+  }
+
+
+  toggleCollapse(): void {
+    this.windowVisible = !this.windowVisible;
   }
 
   ngOnDestroy() {

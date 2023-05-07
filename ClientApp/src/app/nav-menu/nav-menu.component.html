@@ -1,5 +1,5 @@
 <header>
-  <nav>
+  <!-- <nav> -->
     <div class="nav-wrapper">
       <ul class="nav-list">
           <li appDropdown id="apple-logo">
@@ -30,7 +30,7 @@
             Wedding
             <ul class="menu command_button hide">
                 <li id="menu-controls">
-                  <img src="../../assets/img/web.png" width="16" alt="Wedding home">
+                  <img src="../../assets/img/about.png" width="16" alt="Wedding home">
                   <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding']">
                     Wedding Home
                   </a>
@@ -60,11 +60,88 @@
               </li>
            </ul>
         </li>
+        <li appDropdown id="specialmenu" *ngIf="this.isLoggedIn()">
+          Special
+          <ul class="menu command_button hide">
+            <li id="trash" class="disabled noimg">Empty Trash</li>
+        </ul>
         <li id="macoslogo" class="nav-list">
             <img src="../../assets/img/macos.svg" width="16" alt="MacOS">
         </li>
         <li id="time" class="time text-center timeText">{{time | date:'mediumTime'}}</li>
     </ul>
     </div>
-  </nav>
+  <!-- </nav> -->
 </header>
+
+<!-- <header>
+  <nav>
+    <nav>
+      <div cdkMenuBar>
+        <button class="example-menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="file">File</button>
+        <button class="example-menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="edit">Edit</button>
+        <button class="example-menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="format">Format</button>
+      </div>
+
+      <ng-template #file>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Share</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem [cdkMenuTriggerFor]="new_doc">
+            New <span>&#10148;</span>
+          </button>
+          <button class="example-menu-item" cdkMenuItem>Open</button>
+          <button class="example-menu-item" cdkMenuItem>Make a Copy</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem [cdkMenuTriggerFor]="download">
+            Download <span>&#10148;</span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #edit>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Undo</button>
+          <button class="example-menu-item" cdkMenuItem>Redo</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem>Cut</button>
+          <button class="example-menu-item" cdkMenuItem>Copy</button>
+          <button class="example-menu-item" cdkMenuItem>Paste</button>
+        </div>
+      </ng-template>
+
+      <ng-template #format >
+        <div class="example-menu" cdkMenu>
+          <div class="example-menu-group" cdkMenuGroup>
+            <button cdkMenuItemCheckbox class="example-menu-item" cdkMenuItemChecked>Bold</button>
+            <button cdkMenuItemCheckbox class="example-menu-item">Italic</button>
+          </div>
+          <hr />
+          <div class="example-menu-group" cdkMenuGroup>
+            <button cdkMenuItemRadio class="example-menu-item">Small</button>
+            <button cdkMenuItemRadio class="example-menu-item" cdkMenuItemChecked>Normal</button>
+            <button cdkMenuItemRadio class="example-menu-item">Big</button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #new_doc>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Document</button>
+          <button class="example-menu-item" cdkMenuItem>From template</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem>Spreadsheet</button>
+          <button class="example-menu-item" cdkMenuItem>Presentation</button>
+          <button class="example-menu-item" cdkMenuItem>Form</button>
+        </div>
+      </ng-template>
+
+      <ng-template #download>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Microsoft Word</button>
+          <button class="example-menu-item" cdkMenuItem>PDF</button>
+          <button class="example-menu-item" cdkMenuItem>Plain text</button>
+        </div>
+      </ng-template>
+    </nav>
+  </header> -->

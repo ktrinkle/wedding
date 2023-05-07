@@ -1,4 +1,4 @@
-<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding">
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
   <div class="control-box close-box">
       <a class="control-box-inner"></a>
   </div>
@@ -12,13 +12,17 @@
           <div class="window-collapse-inner"></div>
       </div>
   </div>
-  <h1 class="titlebar"><span>Sister Helen Holy</span></h1>
-  <div class="inner">
+  <h1 class="titlebar" cdkDragHandle><span>Sister Helen Holy</span></h1>
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
     <div class="icon">
       <img src="../../assets/img/news.png" alt="News" />
     </div>
     <ul>
+      <hr/>
       <li style="text-align: left;">
+        <div style="text-align: center;">
+        <img src="../../../assets/sister.jpg"/>
+        </div>
   <p><a href="http://www.pauljwilliams.com/about-sister-helen-holy/" target="_blank">Sister Helen Holy</a> has graciously agreed to serve as officiant.</p>
 <p>Sister is head of the 701 club, because she's just a little bit better than that other person. She is known
   for her pithy opinions and insistence on long hours of prayer, on your knees. Often found ministering on
@@ -27,5 +31,5 @@
 <p>We are thrilled that Sister Helen Holy is available for our needs and can't wait for you to see the ministry.</p>
 </li>
 </ul>
-</div>
+  </cdk-virtual-scroll-viewport>
 </div>

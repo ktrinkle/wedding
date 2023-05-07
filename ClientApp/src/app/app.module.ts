@@ -1,9 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Scroll } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkMenuModule } from '@angular/cdk/menu';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -52,6 +55,9 @@ export function tokenGetter() {
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
     ]),
     NgbModule,
+    DragDropModule,
+    ScrollingModule,
+    CdkMenuModule,
     StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot(WeddingEffects),
     JwtModule.forRoot({

@@ -1,12 +1,4 @@
-<div id="boot" class="modal" *ngIf="!this.bootStatus">
-  <button class="command_button boot-button close-button" id="boot-button" (click)="changeBoot();">
-      <img src="../../assets/img/mac.png" />
-      <br />
-      Boot
-  </button>
-</div>
-
-<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding">
+<div id="wedding" class="content resizable" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
   <div class="control-box close-box">
       <a class="control-box-inner"></a>
   </div>
@@ -20,13 +12,12 @@
           <div class="window-collapse-inner"></div>
       </div>
   </div>
-  <h1 class="titlebar"><span>Austin and Kevin</span></h1>
+  <div cdkDragHandle>
+  <h1 class="titlebar"><span>Austin and Kevin</span></h1></div>
   <div class="inner">
       <div class="icon">
           <img src="../../assets/img/about.png" alt="About" />
       </div>
-      <ul>
-          <li style="text-align: left;">
             <div style="text-align:center;">
               <img src="../../assets/Danny.png"/>
             </div>
@@ -48,7 +39,5 @@
               <button type="submit" class="command_button boot-button">Log In!</button>
             </form>
             <div *ngIf="this.isLoggedIn()">Please go to the menu for information about our wedding.</div>
-          </li>
-        </ul>
   </div>
 </div>

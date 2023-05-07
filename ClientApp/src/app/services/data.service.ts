@@ -13,6 +13,8 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public bootStatus: boolean = false;
+
   // login stuff
   public sendEmailLogin(userLogin: frontLogin): Observable<bearerDto> {
     var uri = this.REST_API_SERVER + '/Login/login';

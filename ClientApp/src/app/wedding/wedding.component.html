@@ -1,4 +1,4 @@
-<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding">
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/about.png" data-window-name="Wedding" cdkDrag>
   <div class="control-box close-box">
       <a class="control-box-inner"></a>
   </div>
@@ -9,25 +9,24 @@
   </div>
   <div class="control-box window-collapse">
       <div class="control-box-inner">
-          <div class="window-collapse-inner"></div>
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
       </div>
   </div>
-  <h1 class="titlebar"><span>Welcome to our wedding</span></h1>
-  <div class="inner">
+  <h1 class="titlebar" cdkDragHandle><span>Welcome to our wedding</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
     <div class="icon">
       <img src="../../assets/img/about.png" alt="About" />
     </div>
-    <ul>
-      <li style="text-align: left;">
         <p>Saturday, October 28 - 6:00 PM - Town Hall Collaborative, Denver, CO</p>
 
         <div ngbAccordion>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
+            <div ngbAccordionHeader>
               <button ngbAccordionButton class="green">
                 <span>Where and when is it?</span>
               </button>
-            </h2>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
@@ -35,7 +34,7 @@
                     <li>Saturday, October 28, 2023, 6:00 PM</li>
                     <li>Town Hall Collaborative, 525 Santa Fe Dr, Denver, CO</li>
                   </ul>
-                  <h2 class="appleg">Agenda:</h2>
+                  <h3>Agenda:</h3>
                     <ul>
                       <li>6:00 PM - doors open. Bar open. Pizza served.</li>
                       <li>7:00 PM - the ceremony</li>
@@ -46,9 +45,9 @@
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
+            <div ngbAccordionHeader>
               <button ngbAccordionButton class="yellow">What should I wear?</button>
-            </h2>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
@@ -60,9 +59,9 @@
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
+            <div ngbAccordionHeader>
               <button ngbAccordionButton class="orange">What should I bring?</button>
-            </h2>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
@@ -75,22 +74,38 @@
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
+            <div ngbAccordionHeader>
               <button ngbAccordionButton class="red">Where should I stay?</button>
-            </h2>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
                   <p>Somewhere in the Denver metropolitan area. We don't have a room block anywhere.
                   </p>
+                  <div>
+                  <p>The nearest hotels are:</p>
+                  <ul>
+                    <li>
+                      <p>Townplace Suites by Marriott Denver Downtown<br/>
+                        685 Speer Blvd<br/>
+                        Denver, CO 80204</p>
+                    </li>
+                    <li>
+                      <p>The ART Hotel Denver, Curio Collection by Hilton<br/>
+                        1201 N Broadway<br/>
+                        Denver, CO  80203</p>
+                    </li>
+                  </ul>
+                </div>
+                <p>There are numerous other hotels nearby in downtown Denver that can be booked.</p>
                 </ng-template>
               </div>
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
+            <div ngbAccordionHeader>
               <button ngbAccordionButton class="purple">Who is officiating?</button>
-            </h2>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
@@ -103,15 +118,14 @@
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
-              <button ngbAccordionButton class="blue">It's Colorado and I live in Texas. Can I consume Marijuana?</button>
-            </h2>
+            <div ngbAccordionHeader>
+              <button ngbAccordionButton class="blue">It's Colorado and I live in Texas. Can I consume marijuana?</button>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
-                  <h2 class="appleg">Marijuana policy</h2>
-                  The state of Colorado permits recreational use of Marijuana. If you choose to partake, you are responsible for following the
-                  rules of the state of Colorado as well as the rules of Town Hall Collaborative:
+                  <p>The state of Colorado permits recreational use of Marijuana. If you choose to partake, you are responsible for following the
+                  rules of the state of Colorado as well as the rules of Town Hall Collaborative:</p>
                   <ul>
                     <li>
                       Marijuana can only be consumed by people age 21 or over. This will be strictly enforced.
@@ -128,9 +142,9 @@
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
-              <button ngbAccordionButton class="platinum">We're totally down for attending. How do we RSVP?</button>
-            </h2>
+            <div ngbAccordionHeader>
+              <button ngbAccordionButton>We're totally down for attending. How do we RSVP?</button>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
@@ -143,9 +157,9 @@
             </div>
           </div>
           <div ngbAccordionItem>
-            <h2 ngbAccordionHeader>
+            <div ngbAccordionHeader>
               <button ngbAccordionButton>I'm not interested in fun and won't be coming. Should I say so?</button>
-            </h2>
+            </div>
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
@@ -158,7 +172,7 @@
             </div>
           </div>
         </div>
-      </li>
-    </ul>
-  </div>
+  <!-- </div> -->
+</cdk-virtual-scroll-viewport>
+</div>
 </div>
