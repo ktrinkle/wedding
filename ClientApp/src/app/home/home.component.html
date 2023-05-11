@@ -1,4 +1,4 @@
-<div id="wedding" class="content resizable" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
+<div id="wedding" class="content resizable" data-window-icon="img/about.png" data-window-name="Wedding" cdkDrag>
   <div class="control-box close-box">
       <a class="control-box-inner"></a>
   </div>
@@ -9,35 +9,41 @@
   </div>
   <div class="control-box window-collapse">
       <div class="control-box-inner">
-          <div class="window-collapse-inner"></div>
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
       </div>
   </div>
   <div cdkDragHandle>
   <h1 class="titlebar"><span>Austin and Kevin</span></h1></div>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
   <div class="inner">
       <div class="icon">
           <img src="../../assets/img/about.png" alt="About" />
       </div>
-            <div style="text-align:center;">
-              <img src="../../assets/Danny.png"/>
+            <div class="textcenter">
+              <img src="../../assets/Danny.png" class="danny"/>
             </div>
             <p>Austin and Kevin are getting married! We just need some information before we can give you our information.</p>
             <hr>
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!this.isLoggedIn()">
-              <div class="mb-3" *ngIf="this.loginError">We could not find an email address for you, or the city was wrong. Please try again.</div>
-              <div class="mb-3">
+              <div class="flexbox">
+              <div class="stack" *ngIf="this.loginError">We could not find an email address for you, or the city was wrong. Please try again.</div>
+              <div class="stack">
                 <label for="emailAddress" class="form-label">Your email address:</label>
+                </div><div class="stack">
                 <input type="email" id="emailAddress" name="emailAddress" formControlName="emailAddress" class="form-control" placeholder="name@example.com">
               </div>
-              <div class="mb-3">
+              <div class="stack">
                 <label for="password" class="form-label">What city are Austin and Kevin getting married in?</label>
+              </div><div class="stack">
                 <input id="password" name="password" formControlName="password" type="password" class="form-control" aria-labelledby="passwordHelpBlock">
                 <div id="passwordHelpBlock" class="form-text">
                   Enter the city name. Don't enter the state name or airport code.
                 </div>
               </div>
+            </div>
               <button type="submit" class="command_button boot-button">Log In!</button>
             </form>
-            <div *ngIf="this.isLoggedIn()">Please go to the menu for information about our wedding.</div>
+            <div *ngIf="this.isLoggedIn()">Please go to the wedding menu for <a [routerLink]="['/wedding']">information</a> about our wedding.</div>
+  </div>
   </div>
 </div>

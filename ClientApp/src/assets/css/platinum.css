@@ -30,7 +30,6 @@ body {
     height: 22px;
 }
 
-
 .right-button {
   float: right;
 }
@@ -394,7 +393,7 @@ div.content.noscroll .inner {
 .content .inner {
     max-height: 100%;
     max-width: 100%;
-    min-height: 80px;
+    /* min-height: 80px; */
     min-width: 100px;
 }
 #about .inner {

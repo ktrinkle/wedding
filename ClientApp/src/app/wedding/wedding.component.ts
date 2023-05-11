@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CDK_DRAG_CONFIG } from '@angular/cdk/drag-drop';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 const DragConfig = {
   zIndex: 100
@@ -14,9 +15,17 @@ const DragConfig = {
   }]
 })
 
-export class WeddingComponent {
+export class WeddingComponent implements OnInit {
 
   windowVisible: boolean = true;
+
+  constructor (private readonly mediaMatcher: MediaMatcher) {}
+
+  ngOnInit() {
+    this.mediaMatcher.matchMedia('print').addEventListener("beforeprint", (event) => {
+      console.log('printing');
+    });
+  }
 
   toggleCollapse(): void {
     this.windowVisible = !this.windowVisible;

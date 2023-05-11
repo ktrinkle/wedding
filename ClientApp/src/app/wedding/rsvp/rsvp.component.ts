@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { weddingPartyMemberDto } from 'src/app/data/data';
 import { selectPartyMembers } from 'src/app/store';
-import { partyByAuth, savePartyMember } from 'src/app/store/wedding.actions';
+import { partyByAuth, removePartyMember, savePartyMember } from 'src/app/store/wedding.actions';
 
 @Component({
   selector: 'app-rsvp',
@@ -68,9 +68,7 @@ export class RsvpComponent implements OnInit{
 
   addPartyMember(): void {
     var arrayLength = this.partyMembers.length;
-    console.log(arrayLength);
     var newGroupMemberId = this.partyMembers.at(arrayLength-1).get('groupMemberId')?.value ?? 0;
-    console.log(newGroupMemberId);
 
     var newGroup = this.formBuilder.group({
       groupMemberId: new UntypedFormControl(),
@@ -85,6 +83,10 @@ export class RsvpComponent implements OnInit{
   removePartyMember(i: number): void {
     // for use when we rebuild the database
     this.removeFlag = true;
+    var removeParty = this.partyMembers.at(i).value as weddingPartyMemberDto;
+    console.log(removeParty);
+
+    this.store.dispatch(removePartyMember({ partyMember: removeParty }));
 
     // finally remove from the array
     this.partyMembers.removeAt(i);

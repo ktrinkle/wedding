@@ -17,29 +17,39 @@ export class HomeComponent {
     password: new UntypedFormControl()
   });
 
+  windowVisible: boolean = true;
+
   constructor(private authService: AuthService, private router: Router) { }
 
   submitLogin(): void {
+    this.loginError = false;
+
     if (this.loginForm.value.emailAddress != '' && this.loginForm.value.password != '')
     {
-      this.loginError = false; //clear any existing status
 
       var loginSubmit: frontLogin = {
         emailAddress: this.loginForm.value.emailAddress,
         password: this.loginForm.value.password
       }
       var loginStatus = this.authService.processLoginEmail(loginSubmit);
+      console.log(loginStatus);
       if (loginStatus == 1)
       {
         this.router.navigate(["wedding"]);
       }
+      else
+      {
+        this.loginError = true;
+      }
 
     }
-    this.loginError = true;
   }
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 
+  toggleCollapse(): void {
+    this.windowVisible = !this.windowVisible;
+  }
 }

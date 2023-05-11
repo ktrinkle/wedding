@@ -80,6 +80,28 @@ public class RsvpService : IRsvpService
             await _ContextWedding.SaveChangesAsync();
         }
 
+        // renumber the remaining members
+        var remainingParty = await _ContextWedding.WeddingGroupName.Where(u => u.GroupId == new Guid(partyGuid)
+                                && u.GroupMemberId > groupMemberId).ToListAsync();
+
+        if (remainingParty is not null)
+        {
+            _ContextWedding.RemoveRange(remainingParty);
+            await _ContextWedding.SaveChangesAsync();
+            
+            var nextPerson = groupMemberId;
+
+            foreach(var remainingMember in remainingParty)
+            {
+                remainingMember.GroupMemberId = nextPerson;
+                nextPerson++;
+            }
+
+            await _ContextWedding.AddRangeAsync(remainingParty);
+            await _ContextWedding.SaveChangesAsync();
+            
+        }
+
         return await GetWeddingPartyMembersAsync(partyGuid);
     }
 
@@ -91,6 +113,7 @@ public class RsvpService : IRsvpService
         }
     
         var partyList = await _ContextWedding.WeddingGroupName.Where(g => g.GroupId == new Guid(PartyGuid))
+                            .OrderBy(g => g.GroupMemberId)
                             .Select(g => new WeddingPartyMemberDto() {
                                 GroupMemberId = g.GroupMemberId,
                                 GroupMemberName = g.GroupMemberName,

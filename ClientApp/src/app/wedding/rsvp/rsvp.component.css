@@ -39,3 +39,8 @@
   }
 }
 /* end .squaredFour */
+
+th {
+  font-weight: normal;
+  text-decoration: underline;
+}

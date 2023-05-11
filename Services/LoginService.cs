@@ -111,7 +111,6 @@ public class LoginService : ILoginService
                                                     }).ToList()
                                 }).FirstOrDefaultAsync();
 
-        // temporary to compile
         return weddingParty;                 
     }
 

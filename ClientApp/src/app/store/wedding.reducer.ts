@@ -1,6 +1,6 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { bearerDto, weddingPartyMemberDto } from 'src/app/data/data';
-import { partyByAuth, partyByAuthSuccess, savePartyMemberSuccess } from './wedding.actions';
+import { createReducer, on } from '@ngrx/store';
+import { weddingPartyMemberDto } from 'src/app/data/data';
+import { partyByAuthSuccess, savePartyMemberSuccess, removePartyMemberSuccess } from './wedding.actions';
 
 export interface State {
   currentEmail: string,
@@ -24,11 +24,11 @@ export const weddingReducer = createReducer(
   on(savePartyMemberSuccess, (state, { partyMembers }) => ({
     ...state,
     partyMembers: partyMembers
+  })),
+
+  on(removePartyMemberSuccess, (state, { partyMembers }) => ({
+    ...state,
+    partyMembers: partyMembers
   }))
 
-
-  // on(round1BigDisplaySuccess, (state, { allQuestions }) => ({
-  //   ...state,
-  //   bigDisplay: allQuestions
-  // }))
 );

@@ -1,4 +1,4 @@
-<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/gift.png" data-window-name="Wedding" cdkDrag>
   <div class="control-box close-box">
       <a class="control-box-inner"></a>
   </div>
@@ -9,20 +9,24 @@
   </div>
   <div class="control-box window-collapse">
       <div class="control-box-inner">
-          <div class="window-collapse-inner"></div>
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
       </div>
   </div>
   <h1 class="titlebar" cdkDragHandle><span>Gifts</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
   <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
     <div class="icon">
-      <img src="../../assets/img/about.png" alt="About" />
+      <img src="../../assets/img/gift.png" alt="Gifts" />
     </div>
 <p>Look. We know almost everyone is traveling to the venue. We also know that we have a full house, with a fully equipped
   kitchen (Kevin insists on that) and more computers than we know what to do with. So we're making this easy.</p>
   <ul>
     <li>We're not registered at any store.</li>
-    <li>We would so appreciate if you were so inclined to contribute to our honeymoon account.</li>
+    <li>We really don't need a fondue pot.</li>
   </ul>
+
+  <p>Instead of the fondue pot, what we'd really like is your help toward something very meaninfgul to us...</p>
+  <img src="../../../assets/honeymoon.png" class="danny" alt="The Honeymoon!">
 
   <h3>Where is the honeymoon?</h3>
   <p>Moorea, French Polynesia (airport code MOZ).</p>
@@ -31,4 +35,5 @@
   <h3>How do I contribute my gift?</h3>
   <p>Kevin still needs to figure this out.</p>
   </cdk-virtual-scroll-viewport>
+</div>
 </div>

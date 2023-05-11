@@ -8,10 +8,16 @@
 <app-nav-menu></app-nav-menu>
   <div class="container">
     <router-outlet></router-outlet>
+  <div id="icon-holder" title="MacintoshHD" cdkDrag>
+    <div class="icon draggable-icon ui-widget-content" id="icon-drive">
+        <img src="../assets/img/harddrive.png" alt="Macintosh HD" />
+        <span class="icon-text">Macintosh HD</span>
+    </div>
   </div>
-  <div id="icon-holder" title="Trash" cdkDrag>
+  <div id="icon-holder-trash" title="Trash" cdkDrag>
     <div class="icon draggable-icon ui-widget-content" id="icon-trash">
         <img src="../assets/img/trash.png" alt="Trash" />
         <span class="icon-text">Trash</span>
     </div>
+  </div>
 </div>
