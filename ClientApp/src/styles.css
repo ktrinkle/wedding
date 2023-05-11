@@ -48,7 +48,9 @@ h3 {
   margin-top: 3px;
 }
 
-#icon-holder-trash .icon {
+#icon-holder-trash {
+  bottom: 0;
+  right: 0;
   clear: both;
   float: right;
   margin: 1rem 0;
@@ -56,8 +58,6 @@ h3 {
   text-align: center;
 
   width: 10em;
-  bottom: 0;
-  right: 0;
 }
 
 /* Provide sufficient contrast against white background */

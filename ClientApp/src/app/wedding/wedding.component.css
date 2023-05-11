@@ -30,6 +30,10 @@
   color: #fff;
 }
 
+.platinum.accordion-button {
+  color: #000;
+}
+
 strong {
   font-weight:normal;
   text-decoration: underline;
