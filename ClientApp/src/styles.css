@@ -36,6 +36,10 @@ h3 {
   text-align:center;
 }
 
+.textright {
+  text-align: right;
+}
+
 .icon {
   font-family: 'Geneva', 'Arial', 'Helvetica';
   font-size: 9pt;
@@ -58,6 +62,20 @@ h3 {
   text-align: center;
 
   width: 10em;
+}
+
+.icon img {
+  display: block;
+  height: 32px;
+  margin: auto;
+  width: 32px;
+}
+
+img.oscar  {
+  display: block;
+  height: 64px;
+  margin: auto;
+  width: 32px;
 }
 
 /* Provide sufficient contrast against white background */
@@ -197,7 +215,7 @@ h2 .accordion-header .collapsed {
   overflow-anchor: none;
 
   &:not(.collapsed) {
-    box-shadow: inset 0 calc(-1 * var(--#{$prefix}accordion-border-width)) 0 var(--#{$prefix}accordion-border-color);
+    box-shadow: inset 0 0 0 0;
 
     &::after {
       background-image: var(--#{$prefix}accordion-btn-active-icon);
@@ -313,6 +331,10 @@ ngbAccordionBody
   .stack {
     width: 50%;
   }
+
+  .centerbutton {
+    text-align: center;
+  }
 }
 
 
@@ -392,6 +414,14 @@ ngbAccordionBody
 
   .danny {
     width: 75vw;
+  }
+
+  .centerbutton {
+    text-align: left;
+  }
+
+  .textright {
+    text-align: left;
   }
 
 }

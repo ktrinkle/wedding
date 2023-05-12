@@ -1,6 +1,6 @@
-import { AfterContentInit, Component, ContentChildren, ElementRef, QueryList, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { DropdownDirective } from './dropdown.directive';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,8 +10,9 @@ import { DropdownDirective } from './dropdown.directive';
 export class NavMenuComponent {
 
   time: Date = new Date();
+  trashEnabled: boolean = true;
 
-  constructor(private authService: AuthService, private renderer: Renderer2) {
+  constructor(private authService: AuthService, private eventService: EventService) {
     this.getCurrentDate();
   }
 
@@ -38,6 +39,11 @@ export class NavMenuComponent {
     setInterval(() => {
     this.time = new Date(); //set time variable with current date
    }, 1000); // set it every one seconds}
+  }
+
+  emptyTrash() {
+    this.eventService.emptyTrashEmit();
+    this.trashEnabled = false;
   }
 
 }

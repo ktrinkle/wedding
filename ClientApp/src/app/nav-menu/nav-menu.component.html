@@ -5,7 +5,11 @@
           <li appDropdown id="apple-logo">
             <img src="../../assets/img/apple.png">
             <ul class="menu command_button hide">
-                <li id="menu-about"><img src="../../assets/img/mac.png" width="16" alt="About">About</li>
+                <li id="menu-about"><img src="../../assets/img/mac.png" width="16" alt="About">
+                  <a [routerLinkActive]="['link-active']" [routerLink]="['/about']">
+                    About
+                  </a>
+                </li>
             </ul>
         </li>
         <li appDropdown id="file">
@@ -64,7 +68,7 @@
         <li appDropdown id="specialmenu" *ngIf="this.isLoggedIn()">
           Special
           <ul class="menu command_button hide">
-            <li id="trash" class="disabled noimg">Empty Trash</li>
+            <li id="trash" [ngClass]="this.trashEnabled ? 'noimg' : 'noimg disabled'" (click)="this.emptyTrash()">Empty Trash</li>
         </ul>
         <li id="macoslogo" class="nav-list">
             <img src="../../assets/img/macos.svg" width="16" alt="MacOS">

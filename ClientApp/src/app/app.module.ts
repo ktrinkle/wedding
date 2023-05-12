@@ -25,6 +25,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { WeddingEffects } from './store/wedding.effects';
 import { metaReducers, reducers } from './store';
 import { DropdownDirective } from './nav-menu/dropdown.directive';
+import { AboutComponent } from './about/about.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -40,7 +41,8 @@ export function tokenGetter() {
     VenueComponent,
     GiftsComponent,
     WeddingComponent,
-    DropdownDirective
+    DropdownDirective,
+    AboutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +50,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'about', component: AboutComponent },
       { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] },
       { path: 'wedding/officiant', component: OfficiantComponent, canActivate: [AuthGuard] },
       { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },

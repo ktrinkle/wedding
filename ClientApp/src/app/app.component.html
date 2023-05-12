@@ -16,7 +16,9 @@
   </div>
   <div id="icon-holder-trash" title="Trash" cdkDrag>
     <div class="icon draggable-icon ui-widget-content" id="icon-trash">
-        <img src="../assets/img/trash.png" alt="Trash" />
+        <img src="../assets/img/trashf.png" alt="Trash" *ngIf="!this.oscarActive && this.trashfull"/>
+        <img src="../assets/img/trash.png" alt="Trash" *ngIf="!this.oscarActive && !this.trashfull"/>
+        <img src="../assets/img/oscar.png" alt="Trash" class="oscar" *ngIf="this.oscarActive"/>
         <span class="icon-text">Trash</span>
     </div>
   </div>
