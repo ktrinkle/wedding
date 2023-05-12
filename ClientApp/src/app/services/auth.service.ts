@@ -3,6 +3,8 @@ import { frontLogin, simpleUser } from '../data/data';
 import { DataService } from './data.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { partyByAuth } from '../store/wedding.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class AuthService {
 
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private dataService:DataService, private router: Router) { }
+  constructor(private dataService:DataService, private router: Router, private store: Store) { }
 
   public isLoggedIn():boolean {
       const token = localStorage.getItem('access_token'); // get token from local storage
@@ -43,6 +45,7 @@ export class AuthService {
           if (al.bearerToken)
           {
             this.isLoggedIn();
+            this.store.dispatch(partyByAuth());
             return 1;
           }
           return 0;

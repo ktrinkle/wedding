@@ -1,64 +1,152 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Austin & Kevin</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="this.isLoggedIn()">
-            <a class="nav-link text-dark" [routerLink]="['/wedding']"
-              >Wedding</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="this.isLoggedIn()">
-            <a class="nav-link text-dark" [routerLink]="['/wedding/officiant']"
-              >Officiant</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="this.isLoggedIn()">
-            <a class="nav-link text-dark" [routerLink]="['/wedding/venue']"
-              >Venue</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="this.isLoggedIn()">
-            <a class="nav-link text-dark" [routerLink]="['/wedding/gifts']"
-              >Gifts</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="this.isLoggedIn()">
-            <a class="nav-link text-dark" [routerLink]="['/wedding/rsvp']"
-              >RSVP</a
-            >
-          </li>
-          <!-- <li class="nav-item" *ngIf="this.isLoggedIn()">
-            <a class="nav-link text-dark" href={{this.logout()}}>
-              Logout
-            </a>
-          </li> -->
+  <!-- <nav> -->
+    <div class="nav-wrapper">
+      <ul class="nav-list">
+          <li appDropdown id="apple-logo">
+            <img src="../../assets/img/apple.png">
+            <ul class="menu command_button hide">
+                <li id="menu-about"><img src="../../assets/img/mac.png" width="16" alt="About">
+                  <a [routerLinkActive]="['link-active']" [routerLink]="['/about']">
+                    About
+                  </a>
+                </li>
+            </ul>
+        </li>
+        <li appDropdown id="file">
+            File
+            <ul class="menu command_button hide">
+                <li id="menu-controls">
+                    <img src="../../assets/img/controls.png" width="16" alt="Wedding site home">
+                    <a [routerLinkActive]="['link-active']" [routerLink]="['/']">
+                      Home
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li appDropdown id="edit">
+            Edit
+            <ul class="menu command_button hide">
+                <li class="disabled noimg">Copy</li>
+                <li class="disabled noimg">Paste</li>
+            </ul>
+        </li>
+        <li appDropdown id="weddingmenu" *ngIf="this.isLoggedIn()">
+            Wedding
+            <ul class="menu command_button hide">
+                <li id="menu-controls">
+                  <img src="../../assets/img/about.png" width="16" alt="Wedding home">
+                  <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding']">
+                    Wedding Home
+                  </a>
+                </li>
+              <hr>
+              <li id="menu-controls">
+                <img src="../../assets/img/web.png" width="16" alt="Officiant information">
+                <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/officiant']">
+                  Officiant
+                </a>
+              </li>
+              <li id="menu-controls">
+                <img src="../../assets/img/news.png" width="16" alt="Venue information">
+                <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/venue']">
+                  Venue
+                </a>
+              </li>
+              <li class="menu-controls" id="menu-controls">
+                <img src="../../assets/img/gifts.png" width="16" alt="Gifts">
+                <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/gifts']">
+                  Gifts
+                </a>
+              </li>
+              <li class="noimg">
+                <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/rsvp']">
+                  RSVP here
+                </a>
+              </li>
+           </ul>
+        </li>
+        <li appDropdown id="specialmenu" *ngIf="this.isLoggedIn()">
+          Special
+          <ul class="menu command_button hide">
+            <li id="trash" [ngClass]="this.trashEnabled ? 'noimg' : 'noimg disabled'" (click)="this.emptyTrash()">Empty Trash</li>
         </ul>
-      </div>
+        <li id="macoslogo" class="nav-list">
+            <img src="../../assets/img/macos.svg" width="16" alt="MacOS">
+        </li>
+        <li id="time" class="time text-center timeText">{{time | date:'mediumTime'}}</li>
+    </ul>
     </div>
-  </nav>
+  <!-- </nav> -->
 </header>
+
+<!-- <header>
+  <nav>
+    <nav>
+      <div cdkMenuBar>
+        <button class="example-menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="file">File</button>
+        <button class="example-menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="edit">Edit</button>
+        <button class="example-menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="format">Format</button>
+      </div>
+
+      <ng-template #file>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Share</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem [cdkMenuTriggerFor]="new_doc">
+            New <span>&#10148;</span>
+          </button>
+          <button class="example-menu-item" cdkMenuItem>Open</button>
+          <button class="example-menu-item" cdkMenuItem>Make a Copy</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem [cdkMenuTriggerFor]="download">
+            Download <span>&#10148;</span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #edit>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Undo</button>
+          <button class="example-menu-item" cdkMenuItem>Redo</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem>Cut</button>
+          <button class="example-menu-item" cdkMenuItem>Copy</button>
+          <button class="example-menu-item" cdkMenuItem>Paste</button>
+        </div>
+      </ng-template>
+
+      <ng-template #format >
+        <div class="example-menu" cdkMenu>
+          <div class="example-menu-group" cdkMenuGroup>
+            <button cdkMenuItemCheckbox class="example-menu-item" cdkMenuItemChecked>Bold</button>
+            <button cdkMenuItemCheckbox class="example-menu-item">Italic</button>
+          </div>
+          <hr />
+          <div class="example-menu-group" cdkMenuGroup>
+            <button cdkMenuItemRadio class="example-menu-item">Small</button>
+            <button cdkMenuItemRadio class="example-menu-item" cdkMenuItemChecked>Normal</button>
+            <button cdkMenuItemRadio class="example-menu-item">Big</button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #new_doc>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Document</button>
+          <button class="example-menu-item" cdkMenuItem>From template</button>
+          <hr />
+          <button class="example-menu-item" cdkMenuItem>Spreadsheet</button>
+          <button class="example-menu-item" cdkMenuItem>Presentation</button>
+          <button class="example-menu-item" cdkMenuItem>Form</button>
+        </div>
+      </ng-template>
+
+      <ng-template #download>
+        <div class="example-menu" cdkMenu>
+          <button class="example-menu-item" cdkMenuItem>Microsoft Word</button>
+          <button class="example-menu-item" cdkMenuItem>PDF</button>
+          <button class="example-menu-item" cdkMenuItem>Plain text</button>
+        </div>
+      </ng-template>
+    </nav>
+  </header> -->

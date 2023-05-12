@@ -1,0 +1,40 @@
+.green {
+  background-color: #62BC46;
+}
+
+.blue {
+  background-color: #009DDC;
+}
+
+.yellow {
+  background-color: #FDB828;
+}
+
+.orange {
+  background-color: #F5821F;
+}
+
+.red {
+  background-color: #E1393E;
+}
+
+.purple {
+  background-color: #963C97;
+}
+
+.accordion-header .collapsed {
+  color: #000;
+}
+
+.accordion-button {
+  color: #fff;
+}
+
+.platinum.accordion-button {
+  color: #000;
+}
+
+strong {
+  font-weight:normal;
+  text-decoration: underline;
+}

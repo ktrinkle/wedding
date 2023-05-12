@@ -1,16 +1,460 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./assets/css/platinum.css";
+@import "./assets/css/scrollbar.css";
+
+@font-face {
+  font-family: carthage;
+  src: url('./assets/carthage.ttf');
+}
+
+@font-face {
+  font-family: charcoal;
+  src: url('./assets/charcoal.ttf');
+}
+
+/* h3 with charcoal */
+h3 {
+  text-decoration: underline;
+  font-size: 1em;
+  font-family: charcoal;
+}
+
+/* Show and hide classes */
+
+.showMain {
+  display: block;
+  min-height: 80px;
+}
+
+.hideMain {
+  display: none;
+  min-height: 0px;
+  height: auto;
+}
+
+.textcenter {
+  text-align:center;
+}
+
+.textright {
+  text-align: right;
+}
+
+.icon {
+  font-family: 'Geneva', 'Arial', 'Helvetica';
+  font-size: 9pt;
+}
+
+.icon-text {
+  background: #fff;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-top: 3px;
+}
+
+#icon-holder-trash {
+  bottom: 0;
+  right: 0;
+  clear: both;
+  float: right;
+  margin: 1rem 0;
+  position: absolute;
+  text-align: center;
+
+  width: 10em;
+}
+
+.icon img {
+  display: block;
+  height: 32px;
+  margin: auto;
+  width: 32px;
+}
+
+img.oscar  {
+  display: block;
+  height: 64px;
+  margin: auto;
+  width: 32px;
+}
 
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
 }
 
-code {
-  color: #e01a76;
+body {
+  background-color: #C7C8C1;
+  font-family: charcoal;
+  font-size: 15px;
+}
+
+container {
+  position: relative;
 }
 
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.form-control {
+  font-family: charcoal;
+  font-size: 15px;
+  border-color: #000;
+  border-width: 1px;
+  border-style: inset;
+  box-shadow: -1px -1px 1px 1px rgba(42, 42, 42, 0.2);
+}
+
+.menu-bar-item {
+  cursor: pointer;
+  border: none;
+
+  user-select: none;
+  min-width: 34px;
+  line-height: 26px;
+  padding: 0 16px;
+}
+
+.menu-bar-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.menu {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 180px;
+  max-width: 280px;
+  /* background-color: rgb(255, 255, 255); */
+  padding: 6px 0;
+}
+
+.menu hr {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.12);
+}
+
+.menu {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.menu .menu-item {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+
+  user-select: none;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+}
+
+.menu-item > span {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.menu .menu-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.menu .menu-item:active {
+  background-color: rgb(170, 170, 170);
+}
+
+.menu-bar-item[aria-expanded='true'],
+.menu-item[aria-expanded='true'] {
+  background-color: rgb(208, 208, 208) !important;
+}
+
+ul .menu {
+  box-shadow: 2px 2px 2px black;
+}
+
+.accordion .accordion-item {
+  width: 100%;
+}
+
+.content ul {
+  font-size: 13px;
+}
+
+.inner {
+  font-size: 13px;
+}
+
+.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
+  padding: 10px;
+}
+
+/* Bootstrap accordion */
+
+h2 .accordion-header .collapsed {
+  margin-block-start: 0px;
+}
+
+.accordion-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  padding: 20;
+  text-align: left;
+  border: 0;
+  border-radius: 0;
+  overflow-anchor: none;
+
+  &:not(.collapsed) {
+    box-shadow: inset 0 0 0 0;
+
+    &::after {
+      background-image: var(--#{$prefix}accordion-btn-active-icon);
+      transform: var(--#{$prefix}accordion-btn-icon-transform);
+    }
+  }
+
+  // Accordion icon
+  &::after {
+    flex-shrink: 0;
+    width: var(--#{$prefix}accordion-btn-icon-width);
+    height: var(--#{$prefix}accordion-btn-icon-width);
+    margin-left: auto;
+    content: "";
+    background-image: var(--#{$prefix}accordion-btn-icon);
+    background-repeat: no-repeat;
+    background-size: var(--#{$prefix}accordion-btn-icon-width);
+  }
+
+  &:hover {
+    z-index: 2;
+  }
+
+  &:focus {
+    z-index: 3;
+    outline: 0;
+  }
+}
+
+.accordion-header {
+  margin-bottom: 0;
+}
+
+/* ngbAccordionbody - from bootstrap */
+
+ngbAccordionBody
+
+.accordion-item {
+  border: 1px;
+  border-color: #000;
+
+  &:first-of-type {
+    @include border-top-radius: 1px;
+
+    .accordion-button {
+      @include border-top-radius: 1px;
+    }
+  }
+
+  &:not(:first-of-type) {
+    border-top: 0;
+  }
+
+  // Only set a border-radius on the last item if the accordion is collapsed
+  &:last-of-type {
+    @include border-bottom-radius 1px;
+
+    .accordion-button {
+      &.collapsed {
+        @include border-bottom-radius 1px;
+      }
+    }
+  }
+}
+
+
+/* Flush accordion items
+//
+ Remove borders and border-radius to keep accordion items edge-to-edge. */
+
+.accordion-flush {
+  .accordion-collapse {
+    border-width: 0;
+  }
+
+  .accordion-item {
+    border-right: 0;
+    border-left: 0;
+    @include border-radius: 0;
+
+    &:first-child { border-top: 0; }
+    &:last-child { border-bottom: 0; }
+
+    .accordion-button {
+      &,
+      &.collapsed {
+        @include border-radius(0);
+      }
+    }
+  }
+}
+
+.cdk-drag {
+  z-index: 500;
+}
+
+.flexbox {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+}
+
+@media only screen and (min-width: 767px) {
+	/* desktop and ipad layout */
+  #wedding {
+    width: 750px !important;
+  }
+
+  #wedding .inner {
+    height: 500px;
+  }
+
+  .stack {
+    width: 50%;
+  }
+
+  .centerbutton {
+    text-align: center;
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+	/* mobile layout */
+
+  div .content {
+    width: 100%;
+    padding: 0;
+  }
+
+  div.content .inner {
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
+	.align_left, .align_right, .align_center {
+		display: block;
+		float: none;
+		margin: 1em auto;
+		max-width: 100%;
+	}
+
+  table,
+  tbody {
+      display: block;
+      width: 100%;
+  }
+  thead { display: none; }
+  table tr,
+  table th,
+  table td {
+      display: block;
+      padding: 0;
+      text-align: left;
+      white-space: normal;
+  }
+  table tr {
+      border: 1px solid #000;
+      padding-bottom: 11px;
+      margin-bottom: 11px;
+  }
+  table th[data]:before,
+  table td[data]:before {
+      content: attr(data) ":\00A0";
+      width: 100%;
+  }
+  table td {
+      border: none;
+      width: 100%;
+      padding-bottom: 10px;
+  }
+  table td:empty { display: none; }
+  table td:first-child {
+      color: #333;
+  }
+  table td:first-child:before {
+    content: '';
+  }
+
+  #wedding .inner {
+    height: 85vh;
+    width: 100%;
+  }
+
+  #icon-holder {
+    display: none;
+  }
+
+  #icon-holder-trash {
+    display: none;
+  }
+
+  .stack {
+    width: 100%;
+  }
+
+  .danny {
+    width: 75vw;
+  }
+
+  .centerbutton {
+    text-align: left;
+  }
+
+  .textright {
+    text-align: left;
+  }
+
+}
+
+@media print {
+  /* print page */
+  header {
+    display: none;
+  }
+
+  #wedding {
+    width: 100%;
+  }
+  .control-box {
+    display: none;
+  }
+
+  #icon-holder {
+    display: none;
+  }
+
+  #icon-holder-trash {
+    display: none;
+  }
+
+  .inner {
+    border: none;
+    height: 100%;
+    overflow-y: visible;
+  }
+
+  ::ng-deep .ui-accordion-content-wrapper-overflown {
+    overflow: visible;
+    height: auto !important;
+  }
 }

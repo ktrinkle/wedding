@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.4",
+    "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.2.4",
     "@angular/compiler": "^15.2.4",
     "@angular/core": "^15.2.4",
@@ -28,7 +29,6 @@
     "@ngrx/effects": "^15.4.0",
     "@ngrx/store": "^15.4.0",
     "@popperjs/core": "^2.11.7",
-    "bootstrap": "^5.2.3",
     "install": "^0.13.0",
     "jquery": "^3.6.0",
     "npm": "^9.6.2",

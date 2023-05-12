@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,7 +8,13 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  constructor(private authService: AuthService) {}
+
+  time: Date = new Date();
+  trashEnabled: boolean = true;
+
+  constructor(private authService: AuthService, private eventService: EventService) {
+    this.getCurrentDate();
+  }
 
   isExpanded = false;
   userLoggedIn = false;
@@ -26,6 +33,17 @@ export class NavMenuComponent {
 
   logout() {
     this.authService.processLogout();
+  }
+
+  getCurrentDate() {
+    setInterval(() => {
+    this.time = new Date(); //set time variable with current date
+   }, 1000); // set it every one seconds}
+  }
+
+  emptyTrash() {
+    this.eventService.emptyTrashEmit();
+    this.trashEnabled = false;
   }
 
 }

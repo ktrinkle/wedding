@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./venue.component.css']
 })
 export class VenueComponent {
+  windowVisible: boolean = true;
 
+  toggleCollapse(): void {
+    this.windowVisible = !this.windowVisible;
+  }
 }

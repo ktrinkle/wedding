@@ -13,6 +13,8 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public bootStatus: boolean = false;
+
   // login stuff
   public sendEmailLogin(userLogin: frontLogin): Observable<bearerDto> {
     var uri = this.REST_API_SERVER + '/Login/login';
@@ -39,8 +41,13 @@ export class DataService {
     return this.httpClient.get<weddingPartyMemberDto[]>(uri);
   }
 
-  public saveRsvp(party: weddingPartyMemberDto): Observable<weddingPartyDto> {
+  public saveRsvp(party: weddingPartyMemberDto): Observable<weddingPartyMemberDto[]> {
     var uri = this.REST_API_SERVER + '/Rsvp/saveRsvp';
-    return this.httpClient.post<weddingPartyDto>(uri, party);
+    return this.httpClient.post<weddingPartyMemberDto[]>(uri, party);
+  }
+
+  public deleteMember(party: weddingPartyMemberDto): Observable<weddingPartyMemberDto[]> {
+    var uri = this.REST_API_SERVER + '/Rsvp/removeMember';
+    return this.httpClient.post<weddingPartyMemberDto[]>(uri, party);
   }
 }

@@ -1,1 +1,65 @@
-<p>rsvp works!</p>
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>RSVP</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/news.png" alt="News" />
+    </div>
+    <ul>
+      <li style="text-align: left;">
+<p>Here are the people we have in your party. Please let us know if you are attending!</p>
+<div class="container border bg-white">
+<form [formGroup]="weddingArray">
+<div class="table-responsive">
+<table class="table table-striped">
+<thead>
+  <th></th>
+  <th>Name (first and last)</th>
+  <th>Are they attending?</th>
+  <th>Any comments? (Dietary restrictions, etc)</th>
+</thead>
+<tbody formArrayName="partyMembers">
+  <tr *ngFor="let member of getPartyMembers(weddingArray); let i = index" [formGroupName]="i">
+    <td>
+      <img *ngIf="i>0" src="../../../assets/img/trash.png" width="16px" (click)="this.removePartyMember(i);">
+    </td>
+    <td data="Full name">
+      <input type="text" class="form-control" formControlName="groupMemberName" name="groupMemberName" id="member{{i}}" value="{{member.value.groupMemberName}}" (blur)="saveRsvp(i)">
+    </td>
+    <td>
+      <div class="squaredfour">
+        <input class="squaredfour" type="checkbox" id="rsvpYes" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
+        <label class="form-check-label" for="rsvpYes">Attending</label>
+      </div>
+    </td>
+    <td data="Any comments? (Dietary restrictions, etc)">
+      <input type="text" class="form-control" formControlName="rsvpComment" name="rsvpComment" id="rsvpComment{{i}}" value="{{member.value.rsvpComment}}" (blur)="saveRsvp(i)">
+    </td>
+    </tr>
+    <tr><td colspan="4">
+      <div class="centerbutton">
+        <button class="command_button boot-button" (click)="this.addPartyMember()">Add new party member</button>
+      </div></td></tr>
+</tbody>
+</table>
+</div>
+</form>
+</div>
+</li>
+</ul>
+</cdk-virtual-scroll-viewport>
+</div>
+</div>

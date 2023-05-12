@@ -1,5 +1,23 @@
-<div>
-  <h1>The venue</h1>
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>The Venue</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/news.png" alt="News" />
+    </div>
 <p>For those who don't want to come to Texas, don't worry - we're getting married in Denver, Colorado!</p>
 <p><a href="https://www.townhallcollaborative.com/" target="_blank">Town Hall Collaborative</a> is where we will be
 getting married.</p>
@@ -7,12 +25,15 @@ getting married.</p>
   525 Santa Fe Drive
   Denver, CO 80204
 </div>
-<p>Winner of the Best of Denver 2023 ‘Best LGBTQ+ Safe Space and Bar’ as well as ‘Best All-Ages Club’ from Westword Magazine!</p>
+<div style="text-align: center;">
+  <img src="../../../assets/roadmap.png" width="400px;"/>
+</div>
+<p>Winner of the Best of Denver 2023 &quot;Best LGBTQ+ Safe Space and Bar&quot; as well as &quot;Best All-Ages Club&quot; from Westword Magazine!</p>
 <p>Town Hall Collaborative is a women-owned community gathering space that features a bar, events, live music, and a creative space for classes and artist studio rentals. Their social mission is rooted in supporting and empowering women and other underrepresented groups. </p>
 <p>Santa Fe Dr. is a one-way northbound street. Southbound traffic will need to take Kalamath Street and turn left on 5th avenue, then left on Santa Fe to access the venue.</p>
 <p>Beer, Wine and Cocktails are available, as well as coffee and mocktails.</p>
 
-<div><h2>Venue policy:</h2>
+<div><h3>Venue policy:</h3>
   <p>Town Hall Collaborative is a welcoming space. There are rules established by the venue to keep it that way, but the short version is:</p>
 <ul>
   <li>Don't make people feel uncomfortable</li>
@@ -21,5 +42,7 @@ getting married.</p>
 </ul>
 <p>Those that violate the rules of Town Hall Collaborative will be asked to leave the venue.</p>
 <p>Smoking and vaping are only permitted on the patio with the doors closed.</p>
+</div>
+  </cdk-virtual-scroll-viewport>
 </div>
 </div>

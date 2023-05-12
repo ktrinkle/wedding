@@ -7,10 +7,12 @@ import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { RsvpComponent } from './wedding/rsvp/rsvp.component';
 import { VenueComponent } from './wedding/venue/venue.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] , children: [
     {
     path: 'officiant',

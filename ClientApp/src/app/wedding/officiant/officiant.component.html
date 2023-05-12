@@ -1,9 +1,37 @@
-<h1>Sister Helen Holy</h1>
-<div>
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/news.png" data-window-name="Wedding" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>Sister Helen Holy</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/news.png" alt="News" />
+    </div>
+    <ul>
+      <hr/>
+      <li style="text-align: left;">
+        <div style="text-align: center;">
+        <img src="../../../assets/sister.jpg" class="danny"/>
+        </div>
   <p><a href="http://www.pauljwilliams.com/about-sister-helen-holy/" target="_blank">Sister Helen Holy</a> has graciously agreed to serve as officiant.</p>
 <p>Sister is head of the 701 club, because she's just a little bit better than that other person. She is known
   for her pithy opinions and insistence on long hours of prayer, on your knees. Often found ministering on
   the high seas (to expand the ministry), Sister has become a well known figure in the Dallas entertainment scene.
 </p>
 <p>We are thrilled that Sister Helen Holy is available for our needs and can't wait for you to see the ministry.</p>
+</li>
+</ul>
+  </cdk-virtual-scroll-viewport>
+</div>
 </div>

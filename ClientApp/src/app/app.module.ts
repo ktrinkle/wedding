@@ -1,9 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Scroll } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkMenuModule } from '@angular/cdk/menu';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -19,6 +22,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { JwtModule } from "@auth0/angular-jwt";
+import { WeddingEffects } from './store/wedding.effects';
+import { metaReducers, reducers } from './store';
+import { DropdownDirective } from './nav-menu/dropdown.directive';
+import { AboutComponent } from './about/about.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -33,7 +40,9 @@ export function tokenGetter() {
     RsvpComponent,
     VenueComponent,
     GiftsComponent,
-    WeddingComponent
+    WeddingComponent,
+    DropdownDirective,
+    AboutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,6 +50,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'about', component: AboutComponent },
       { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] },
       { path: 'wedding/officiant', component: OfficiantComponent, canActivate: [AuthGuard] },
       { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },
@@ -48,12 +58,15 @@ export function tokenGetter() {
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
     ]),
     NgbModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule,
+    DragDropModule,
+    ScrollingModule,
+    CdkMenuModule,
+    StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot(WeddingEffects),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost","wedding.kevintrinkle.com"],
+        allowedDomains: ["localhost","wedding.kevintrinkle.com", "localhost:7096"],
         disallowedRoutes: [],
       },
     }),

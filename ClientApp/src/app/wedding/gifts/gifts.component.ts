@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class GiftsComponent {
 
+  windowVisible: boolean = true;
+
+  toggleCollapse(): void {
+    this.windowVisible = !this.windowVisible;
+  }
 }
