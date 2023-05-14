@@ -34,7 +34,7 @@ jobs:
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Generate scripts
-        run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent --context ContextWedding
+        run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/pg-script.sql --idempotent --context ContextWedding
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -54,6 +54,14 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: .net-app
+          
+      - name: Azure PostgreSQL Action
+        uses: Azure/postgresql@v1.2.0
+        with:
+          # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com
+          server-name: ${{ secrets.DB_SERVER }}
+          connection-string: ${{ secrets.CONNECTION_STRING }}
+          plsql-file: ${{env.DOTNET_ROOT}}/sql/pg-script.sql
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
