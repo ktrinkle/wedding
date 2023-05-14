@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     this.trashSound.currentTime = 0;
     this.trashSound.play();
     this.oscarActive = true;
-    timer(3300).subscribe(x => {
+    timer(3700).subscribe(x => {
       this.oscarActive = false;
       this.trashfull = false;
     })
