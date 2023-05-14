@@ -35,6 +35,8 @@ jobs:
 
       - name: Generate scripts
         run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/pg-script.sql --idempotent
+        env:
+          ConnectionStrings__Wedding: ${{ secrets.CONNECTION_STRING }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
