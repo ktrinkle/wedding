@@ -34,7 +34,7 @@ jobs:
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Generate scripts
-        run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/pg-script.sql --idempotent --connection '${{ secrets.CONNECTION_STRING }}'
+        run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/pg-script.sql --idempotent
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
