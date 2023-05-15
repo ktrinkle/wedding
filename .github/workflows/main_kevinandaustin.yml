@@ -63,7 +63,7 @@ jobs:
           # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com
           server-name: ${{ secrets.DB_SERVER }}
           connection-string: ${{ secrets.PSQL_CONNECTION_STRING }}
-          plsql-file: ${{env.DOTNET_ROOT}}/sql/pg-script.sql
+          plsql-file: "${{env.DOTNET_ROOT}}/sql/pg-script.sql"
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
