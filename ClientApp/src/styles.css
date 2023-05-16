@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./assets/css/platinum.css";
 @import "./assets/css/scrollbar.css";
+@import "./assets/css/chicago.css";
 
 @font-face {
   font-family: carthage;
@@ -195,6 +196,15 @@ ul .menu {
 
 .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
   padding: 10px;
+}
+
+#boot, #errorwindow .inner
+{
+  font-family: 'Chicago';
+}
+
+.picasso-mac .inner {
+  background-image: url(./assets/img/picasso.png);
 }
 
 /* Bootstrap accordion */
