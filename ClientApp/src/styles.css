@@ -405,6 +405,10 @@ ngbAccordionBody
     content: '';
   }
 
+  .wedding {
+    width: 97vw;
+  }
+
   #wedding .inner {
     height: 85vh;
     width: 100%;
