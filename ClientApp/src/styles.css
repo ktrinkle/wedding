@@ -279,13 +279,13 @@ ngbAccordionBody
     border-top: 0;
   }
 
-  // Only set a border-radius on the last item if the accordion is collapsed
+ /* Only set a border-radius on the last item if the accordion is collapsed */
   &:last-of-type {
     @include border-bottom-radius 1px;
 
     .accordion-button {
       &.collapsed {
-        @include border-bottom-radius 1px;
+        border-bottom-radius: (1);
       }
     }
   }
@@ -304,7 +304,7 @@ ngbAccordionBody
   .accordion-item {
     border-right: 0;
     border-left: 0;
-    @include border-radius: 0;
+    border-radius: 0;
 
     &:first-child { border-top: 0; }
     &:last-child { border-bottom: 0; }
@@ -312,7 +312,7 @@ ngbAccordionBody
     .accordion-button {
       &,
       &.collapsed {
-        @include border-radius(0);
+        border-radius: 0;
       }
     }
   }
@@ -464,6 +464,7 @@ ngbAccordionBody
   }
 
   ::ng-deep .ui-accordion-content-wrapper-overflown {
+    display: block;
     overflow: visible;
     height: auto !important;
   }
