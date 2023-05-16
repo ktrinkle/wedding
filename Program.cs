@@ -41,6 +41,8 @@ builder.Services.AddAuthentication(auth =>
     };
 });
 
+builder.Services.AddApplicationInsightsTelemetry();
+
 #region swagger
 
 if (builder.Environment.IsDevelopment())

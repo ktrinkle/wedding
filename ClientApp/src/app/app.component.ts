@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { timer } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from './services/event.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  constructor(public authService: AuthService, public eventService: EventService) { }
+  constructor(public authService: AuthService, public eventService: EventService,
+    private deviceService: DeviceDetectorService) { }
 
   loggedIn = this.authService.isLoggedIn();
   oscarActive: boolean = false;
@@ -27,6 +29,11 @@ export class AppComponent implements OnInit {
     this.eventService.emptyTrash.subscribe(() => {
       this.emptyTrash();
     });
+
+    if (this.deviceService.isMobile())
+    {
+      this.bootStatus = true;
+    }
   }
 
   changeBoot(): void {

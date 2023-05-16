@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./assets/css/platinum.css";
 @import "./assets/css/scrollbar.css";
+@import "./assets/css/chicago.css";
 
 @font-face {
   font-family: carthage;
@@ -197,6 +198,15 @@ ul .menu {
   padding: 10px;
 }
 
+#boot, #errorwindow .inner
+{
+  font-family: 'Chicago';
+}
+
+.picasso-mac .inner {
+  background-image: url(./assets/img/picasso.png);
+}
+
 /* Bootstrap accordion */
 
 h2 .accordion-header .collapsed {
@@ -269,13 +279,13 @@ ngbAccordionBody
     border-top: 0;
   }
 
-  // Only set a border-radius on the last item if the accordion is collapsed
+ /* Only set a border-radius on the last item if the accordion is collapsed */
   &:last-of-type {
     @include border-bottom-radius 1px;
 
     .accordion-button {
       &.collapsed {
-        @include border-bottom-radius 1px;
+        border-bottom-radius: (1);
       }
     }
   }
@@ -294,7 +304,7 @@ ngbAccordionBody
   .accordion-item {
     border-right: 0;
     border-left: 0;
-    @include border-radius: 0;
+    border-radius: 0;
 
     &:first-child { border-top: 0; }
     &:last-child { border-bottom: 0; }
@@ -302,7 +312,7 @@ ngbAccordionBody
     .accordion-button {
       &,
       &.collapsed {
-        @include border-radius(0);
+        border-radius: 0;
       }
     }
   }
@@ -395,6 +405,10 @@ ngbAccordionBody
     content: '';
   }
 
+  .wedding {
+    width: 97vw;
+  }
+
   #wedding .inner {
     height: 85vh;
     width: 100%;
@@ -454,6 +468,7 @@ ngbAccordionBody
   }
 
   ::ng-deep .ui-accordion-content-wrapper-overflown {
+    display: block;
     overflow: visible;
     height: auto !important;
   }
