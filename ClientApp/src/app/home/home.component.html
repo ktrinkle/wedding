@@ -25,8 +25,8 @@
             <p>Kevin and Austin are getting married! We just need some information before we can give you our information.</p>
             <hr>
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!this.isLoggedIn()">
-              <div class="flexbox">
               <div class="stack" *ngIf="this.loginError">We could not find an email address for you, or the city was wrong. Please try again.</div>
+              <div class="flexbox">
               <div class="stack textright">
                 <label for="emailAddress" class="form-label">Your email address:</label>
                 </div><div class="stack">

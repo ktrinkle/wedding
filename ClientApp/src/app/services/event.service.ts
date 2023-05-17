@@ -12,7 +12,6 @@ export class EventService {
   constructor() { }
 
   emptyTrashEmit() {
-    console.log('trash emptied');
     this.emptyTrash.emit();
   }
 }
