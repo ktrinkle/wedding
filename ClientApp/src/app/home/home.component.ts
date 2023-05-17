@@ -33,7 +33,7 @@ export class HomeComponent {
       }
       var loginStatus = this.authService.processLoginEmail(loginSubmit);
       console.log(loginStatus);
-      if (loginStatus == 1)
+      if (loginStatus == -1)
       {
         this.router.navigate(["wedding"]);
       }
