@@ -1,0 +1,56 @@
+th {
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+/* new CSS */
+
+// .classic-mac-checkbox {
+//   label {
+//     display: inline-block;	
+//     width: 60px;
+//     height: 24px;
+//     cursor: pointer;	
+//     background-image: url(../../../assets/img/checkbox.png);
+//     background-repeat: no-repeat;
+//     background-size: 20px 18px;
+//     background-position-x: left;
+//     padding-left: 24px;
+//   }
+//   input {
+//     visibility:hidden;
+//   }
+//   label input:checked {
+//       background-image: url(../../../assets/img/checkbox-checked.png);
+//       background-repeat: no-repeat;
+//       background-size: 20px 18px;
+//       background-position-x: left;
+//     }
+//   }
+
+.classic-mac-checkbox {
+  cursor: pointer;
+}
+
+.classic-mac-checkbox input[type="checkbox"] {
+  visibility:hidden;
+}
+
+.classic-mac-checkbox input + label {
+    display: inline-block;	
+    width: 60px;
+    height: 24px;
+    cursor: pointer;	
+    background-image: url(../../../assets/img/checkbox.png);
+    background-repeat: no-repeat;
+    background-size: 20px 18px;
+    background-position-x: left;
+    padding-left: 24px;
+  }
+
+.classic-mac-checkbox input[type="checkbox"]:checked + label {
+      background-image: url(../../../assets/img/checkbox-checked.png);
+      background-repeat: no-repeat;
+      background-size: 20px 18px;
+      background-position-x: left;
+    }

@@ -9,7 +9,7 @@ const DragConfig = {
 @Component({
   selector: 'app-wedding',
   templateUrl: './wedding.component.html',
-  styleUrls: ['./wedding.component.css'],
+  styleUrls: ['./wedding.component.scss'],
   providers: [{
     provide: CDK_DRAG_CONFIG, useValue: DragConfig
   }]
