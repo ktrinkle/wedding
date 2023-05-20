@@ -1,45 +1,3 @@
-.squaredFour {
-  width: 24px;
-  position: relative;
-  margin: 24px auto;
-  label {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #fcfff4;
-    background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-    border-radius: 4px;
-    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-    &:after {
-      content: '';
-      width: 9px;
-      height: 5px;
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      border: 3px solid #333;
-      border-top: none;
-      border-right: none;
-      background: transparent;
-      opacity: 0;
-      transform: rotate(-45deg);
-    }
-    &:hover::after {
-      opacity: 0.5;
-    }
-  }
-  input[type=checkbox] {
-    visibility: hidden;
-    &:checked + label:after {
-      opacity: 1;
-    }
-  }
-}
-/* end .squaredFour */
-
 th {
   font-weight: normal;
   text-decoration: underline;
@@ -47,11 +5,34 @@ th {
 
 /* new CSS */
 
+// .classic-mac-checkbox {
+//   label {
+//     display: inline-block;	
+//     width: 60px;
+//     height: 24px;
+//     cursor: pointer;	
+//     background-image: url(../../../assets/img/checkbox.png);
+//     background-repeat: no-repeat;
+//     background-size: 20px 18px;
+//     background-position-x: left;
+//     padding-left: 24px;
+//   }
+//   input {
+//     visibility:hidden;
+//   }
+//   input:checked~label {
+//       background-image: url(../../../assets/img/checkbox-checked.png);
+//       background-repeat: no-repeat;
+//       background-size: 20px 18px;
+//       background-position-x: left;
+//     }
+//   }
+
 .classic-mac-checkbox {
   cursor: pointer;
 }
 
-div.classic-mac-checkbox
+.classic-mac-checkbox
   label {
     display: inline-block;	
     width: 60px;
@@ -64,34 +45,78 @@ div.classic-mac-checkbox
     padding-left: 24px;
   }
 
-  div.classic-mac-checkbox 
+  .classic-mac-checkbox 
   input {
     visibility:hidden;
   }
 
-  div.classic-mac-checkbox input:checked~label {
+  .classic-mac-checkbox input:checked~label {
       background-image: url(../../../assets/img/checkbox-checked.png);
       background-repeat: no-repeat;
       background-size: 20px 18px;
       background-position-x: left;
     }
 
+/* revised generated HTML default style */
 
-/* .classic-mac-checkbox label {
-	display: inline-block;	
-	width: 60px;
-	height: 24px;
-	cursor: pointer;	
-	background-image: url(../../../assets/img/checkbox.png);
-  background-repeat: no-repeat;
-  background-size: 20px 18px;
-  background-position-x: left;
-  padding-left: 24px;
-} */
+.control {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  cursor: pointer;
+}
+  .control input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+  }
+.control_indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #e6e6e6;
+  border: 2px solid #000000;
+  border-radius: 4px;
+}
+.control:hover input ~ .control_indicator,
+.control input:focus ~ .control_indicator {
+  background: #cccccc;
+}
 
-/* .classic-mac-checkbox input:checked~label {
-	background-image: url(../../../assets/img/checkbox-checked.png);
-  background-repeat: no-repeat;
-  background-size: 20px 18px;
-  background-position-x: left;
-} */
+.control input:checked ~ .control_indicator {
+  background: #e6E6E6;
+}
+.control:hover input:not([disabled]):checked ~ .control_indicator,
+.control input:checked:focus ~ .control_indicator {
+  background: #0e6647;
+}
+.control input:disabled ~ .control_indicator {
+  background: #e6e6e6;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.control_indicator:after {
+  box-sizing: unset;
+  content: '';
+  position: absolute;
+  display: none;
+}
+.control input:checked ~ .control_indicator:after {
+  display: block;
+}
+.control-checkbox .control_indicator:after {
+  left: 7px;
+  top: -5px;
+  width: 6px;
+  height: 18px;
+  border: solid #000000;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.control-checkbox input:disabled ~ .control_indicator:after {
+  border-color: #7b7b7b;
+}

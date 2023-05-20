@@ -228,7 +228,6 @@ h2 .accordion-header .collapsed {
 
     &::after {
       background-image: url(./assets/img/triangle_down.png);
-      /* transform: var(--#{$prefix}accordion-btn-icon-transform); */
     }
   }
 
