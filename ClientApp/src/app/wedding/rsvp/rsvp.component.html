@@ -41,19 +41,9 @@
     </td>
     <td>
       <div class="classic-mac-checkbox">
-        <label>
-        <input type="checkbox" id="rsvpYes" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
-        Attending</label>
+        <input type="checkbox" id="rsvpYes{{i}}" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
+        <label for="rsvpYes{{i}}">Attending</label>
       </div>
-      <!--
-              <div class="control-group">
-        <label class="control control-checkbox">
-        <input type="checkbox" id="rsvpYes" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
-        Attending
-        <div class="control_indicator"></div>
-      </label>
-      </div>
-      -->
     </td>
     <td data="Any comments? (Dietary restrictions, etc)">
       <input type="text" class="form-control" formControlName="rsvpComment" name="rsvpComment" id="rsvpComment{{i}}" value="{{member.value.rsvpComment}}" (blur)="saveRsvp(i)">
