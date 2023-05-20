@@ -10,7 +10,7 @@ import { partyByAuth, removePartyMember, savePartyMember } from 'src/app/store/w
 @Component({
   selector: 'app-rsvp',
   templateUrl: './rsvp.component.html',
-  styleUrls: ['./rsvp.component.css']
+  styleUrls: ['./rsvp.component.scss']
 })
 export class RsvpComponent implements OnInit{
 

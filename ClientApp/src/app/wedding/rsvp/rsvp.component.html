@@ -40,9 +40,9 @@
       <input type="text" class="form-control" formControlName="groupMemberName" name="groupMemberName" id="member{{i}}" value="{{member.value.groupMemberName}}" (blur)="saveRsvp(i)">
     </td>
     <td>
-      <div class="squaredfour">
-        <input class="squaredfour" type="checkbox" id="rsvpYes" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
-        <label class="form-check-label" for="rsvpYes">Attending</label>
+      <div class="classic-mac-checkbox">
+        <input type="checkbox" id="rsvpYes" formControlName="rsvpYes{{i}}" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
+        <label for="rsvpYes">Attending</label>
       </div>
     </td>
     <td data="Any comments? (Dietary restrictions, etc)">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-officiant',
   templateUrl: './officiant.component.html',
-  styleUrls: ['./officiant.component.css']
+  styleUrls: ['./officiant.component.scss']
 })
 export class OfficiantComponent {
 
