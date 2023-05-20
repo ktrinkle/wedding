@@ -25,27 +25,39 @@
             <p>Kevin and Austin are getting married! We just need some information before we can give you our information.</p>
             <hr>
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!this.isLoggedIn()">
-              <div class="stack" *ngIf="this.loginError">We could not find an email address for you, or the city was wrong. Please try again.</div>
+              <div *ngIf="this.loginError && !this.loginProcessing">We could not find an email address for you, or the city was wrong. Please try again.</div>
+              <div *ngIf="!this.loginProcessing">
               <div class="flexbox">
-              <div class="stack textright">
-                <label for="emailAddress" class="form-label">Your email address:</label>
-                </div><div class="stack">
-                <input type="email" id="emailAddress" name="emailAddress" formControlName="emailAddress" class="form-control" placeholder="name@example.com">
-              </div>
-              <div class="stack textright">
-                <label for="password" class="form-label">What city are Austin and Kevin getting married in?</label>
-              </div><div class="stack">
-                <input id="password" name="password" formControlName="password" type="password" class="form-control" aria-labelledby="passwordHelpBlock">
-                <div id="passwordHelpBlock" class="form-text">
-                  Enter the city name. Don't enter the state name or airport code.
+                <div class="stack textright">
+                  <label for="emailAddress" class="form-label">Your email address:</label>
+                  </div>
+                <div class="stack">
+                  <input type="email" id="emailAddress" name="emailAddress" formControlName="emailAddress" class="form-control" placeholder="name@example.com">
+                </div>
+                <div class="stack textright">
+                  <label for="password" class="form-label">What city are Austin and Kevin getting married in?</label>
+                </div>
+                <div class="stack">
+                  <input id="password" name="password" formControlName="password" type="password" class="form-control" aria-labelledby="passwordHelpBlock">
+                    <div class="passwordHelpBlock">
+                      Enter the city name. Don't enter the state name or airport code.
+                    </div>
                 </div>
               </div>
-            </div>
-            <div class="centerbutton">
-              <button type="submit" class="command_button boot-button">Log In!</button>
-            </div>
+              <div class="centerbutton">
+                <button type="submit" class="command_button boot-button">Log In!</button>
+              </div>
+             </div>
             </form>
             <div *ngIf="this.isLoggedIn()">Please go to the wedding menu for <a [routerLink]="['/wedding']">information</a> about our wedding.</div>
   </div>
+  </div>
+</div>
+<div id="errorWindow" class="alert alert loginAlert content noscroll text-center" *ngIf="this.loginProcessing" >
+  <div class="inner">
+      <p style="font-weight: normal;">Please wait while we log you in.</p>
+      <br />
+      <br />
+      Scroll bar graphic goes here
   </div>
 </div>

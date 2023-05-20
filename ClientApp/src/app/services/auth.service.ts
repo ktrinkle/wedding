@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { partyByAuth } from '../store/wedding.actions';
+import { EventService } from '../services/event.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class AuthService {
 
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private dataService:DataService, private router: Router, private store: Store) { }
+  constructor(private dataService:DataService, private router: Router, private store: Store,
+    private eventService: EventService) { }
 
   public isLoggedIn():boolean {
       const token = localStorage.getItem('access_token'); // get token from local storage
@@ -36,24 +38,26 @@ export class AuthService {
   {
     if (loginDto.emailAddress != '' && loginDto.password != '')
     {
+      this.eventService.loginStartEmit();
       this.dataService.sendEmailLogin(loginDto).subscribe(al =>
+        // implement next, error, finally pattern here
         {
-          localStorage.setItem('access_token', al.bearerToken ?? "");
-          localStorage.setItem('partyAddress', al.partyAddress ?? "");
-          localStorage.setItem('partyGuid', al.partyGuid ?? "");
-
           if (al.bearerToken)
           {
+            localStorage.setItem('access_token', al.bearerToken ?? "");
+            localStorage.setItem('partyAddress', al.partyAddress ?? "");
+            localStorage.setItem('partyGuid', al.partyGuid ?? "");
             this.isLoggedIn();
             this.store.dispatch(partyByAuth());
+            this.eventService.loginEndEmit();
             return 1;
           }
           else
           {
+            this.eventService.loginEndEmit();
             return 0;
           }
         })
-        return 1;
     }
     else
     {

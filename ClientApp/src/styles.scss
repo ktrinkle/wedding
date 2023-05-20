@@ -41,7 +41,7 @@ h3 {
   text-align: right;
 }
 
-.icon {
+.icon, .passwordHelpBlock {
   font-family: 'Geneva', 'Arial', 'Helvetica';
   font-size: 9pt;
 }
@@ -234,13 +234,13 @@ h2 .accordion-header .collapsed {
   /* Accordion icon */
   &::after {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     margin-left: auto;
     content: "";
     background-image: url(./assets/img/triangle.png);
     background-repeat: no-repeat;
-    background-size: 24px;
+    background-size: 16px 16px;
   }
 
   &:hover {
@@ -343,6 +343,10 @@ ngbAccordionBody
   .centerbutton {
     text-align: center;
   }
+
+  .loginAlert {
+    width: 50%;
+  }
 }
 
 
@@ -350,7 +354,7 @@ ngbAccordionBody
 	/* mobile layout */
 
   div.content {
-    width: 98vw;
+    width: 100%;
     padding: 0;
   }
 
@@ -365,6 +369,10 @@ ngbAccordionBody
 		margin: 1em auto;
 		max-width: 100%;
 	}
+
+  .loginAlert {
+    width: 100%;
+  }
 
   table,
   tbody {
@@ -432,6 +440,10 @@ ngbAccordionBody
     text-align: left;
   }
 
+  .showMain {
+    margin-right: 8px;
+  }
+
 }
 
 @media print {
@@ -440,9 +452,11 @@ ngbAccordionBody
     display: none;
   }
 
-  #wedding {
+  #wedding, .container, cdk-virtual-scroll-viewport {
     width: 100%;
+    height: 100%;
   }
+
   .control-box {
     display: none;
   }
@@ -455,10 +469,22 @@ ngbAccordionBody
     display: none;
   }
 
+  .icon {
+    height: 100%;
+  }
+
   .inner {
     border: none;
     height: 100%;
-    overflow-y: visible;
+    overflow-y: visible !important;
+  }
+
+  ngbAccordion {
+    display: inline;
+  }
+
+  ngbAccordionCollapse {
+    display: inline-block;
   }
 
   ::ng-deep .ui-accordion-content-wrapper-overflown {
