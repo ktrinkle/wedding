@@ -492,4 +492,22 @@ ngbAccordionBody
     overflow: visible;
     height: auto !important;
   }
+
+  div.content {
+    height: 100%;
+  }
+
+  cdk-virtual-scroll-viewport {
+    contain: none !important;
+    overflow: visible !important;
+  }
+
+  .collapse {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .accordion-group .accordion-body.collapse {
+    height: auto !important;
+  }
 }
