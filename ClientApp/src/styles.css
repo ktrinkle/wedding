@@ -351,7 +351,7 @@ ngbAccordionBody
 	/* mobile layout */
 
   div.content {
-    width: 98vw;
+    width: 100%;
     padding: 0;
   }
 
@@ -465,6 +465,24 @@ ngbAccordionBody
   ::ng-deep .ui-accordion-content-wrapper-overflown {
     display: block;
     overflow: visible;
+    height: auto !important;
+  }
+
+  div.content {
+    height: 100%;
+  }
+
+  cdk-virtual-scroll-viewport {
+    contain: none !important;
+    overflow: visible !important;
+  }
+
+  .collapse {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .accordion-group .accordion-body.collapse {
     height: auto !important;
   }
 }
