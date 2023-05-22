@@ -30,4 +30,9 @@ export class WeddingComponent implements OnInit {
   toggleCollapse(): void {
     this.windowVisible = !this.windowVisible;
   }
+
+  printWindow(): void {
+    window.print();
+  }
+
 }

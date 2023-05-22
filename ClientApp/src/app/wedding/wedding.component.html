@@ -18,6 +18,9 @@
     <div class="icon">
       <img src="../../assets/img/about.png" alt="About" />
     </div>
+    <div class="textcenter">
+        <img src="../../assets/kevin_austin.jpeg" class="danny" />
+      </div>
         <p>Saturday, October 28 - 6:00 PM - Town Hall Collaborative, Denver, CO</p>
 
         <div ngbAccordion #accordion="ngbAccordion" [destroyOnHide]="false">
@@ -51,7 +54,8 @@
             <div ngbAccordionCollapse>
               <div ngbAccordionBody>
                 <ng-template>
-                  <p>This is <strong>not</strong> a white wedding. This is a costume party!</p>
+                  <p>This is <strong>not</strong> a white wedding - because it's after labor day, and neither of us look good in white.</p>
+                  <p><u>This is a costume party!</u></p>
                   <p>Wear your favorite costume. Or an easy costume. Or a suit.
                     Or a hawaiian shirt and shorts. We're good either way!</p>
                 </ng-template>
@@ -151,7 +155,7 @@
                   <p>Check out the
                     <a routerLink="/wedding/rsvp">RSVP</a> page!
                   </p>
-                  <p>Please RSVP no later than October 21st, 2023.</p>
+                  <p>Please RSVP no later than October 14th, 2023.</p>
                 </ng-template>
               </div>
             </div>
@@ -172,6 +176,7 @@
             </div>
           </div>
         </div>
+        <button (click)="accordion.expandAll();this.printWindow();" class="printButton centerButton">Print this page</button>
   <!-- </div> -->
 </cdk-virtual-scroll-viewport>
 </div>

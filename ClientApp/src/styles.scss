@@ -347,6 +347,10 @@ ngbAccordionBody
   .loginAlert {
     width: 50%;
   }
+
+  .printButton {
+    margin-top: 20px;
+  }
 }
 
 
@@ -444,6 +448,10 @@ ngbAccordionBody
     margin-right: 8px;
   }
 
+  .printButton {
+    margin-top: 10px;
+  }
+
 }
 
 @media print {
@@ -509,5 +517,9 @@ ngbAccordionBody
 
   .accordion-group .accordion-body.collapse {
     height: auto !important;
+  }
+
+  .printButton {
+    display: none;
   }
 }

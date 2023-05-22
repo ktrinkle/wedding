@@ -38,3 +38,38 @@ strong {
   font-weight:normal;
   text-decoration: underline;
 }
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact!important;
+     print-color-adjust: exact!important;
+  }
+
+  .green {
+    background-color: #62BC46 !important;
+  }
+
+  .blue {
+    background-color: #009DDC !important;
+  }
+
+  .yellow {
+    background-color: #FDB828 !important;
+  }
+
+  .orange {
+    background-color: #F5821F !important;
+  }
+
+  .red {
+    background-color: #E1393E !important;
+  }
+
+  .purple {
+    background-color: #963C97 !important;
+  }
+
+  .wedding, .content, body {
+    background-color: #fff;
+  }
+}
