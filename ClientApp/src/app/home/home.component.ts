@@ -3,14 +3,16 @@ import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms
 import { AuthService } from 'src/app/services/auth.service';
 import { frontLogin } from 'src/app/data/data';
 import { Router } from '@angular/router';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   public loginError: boolean = false;
+  public loginProcessing: boolean = false;
 
   public loginForm: UntypedFormGroup = new UntypedFormGroup({
     emailAddress: new UntypedFormControl('', [Validators.email]),
@@ -19,7 +21,14 @@ export class HomeComponent {
 
   windowVisible: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, 
+    private eventService: EventService) { }
+
+  ngOnInit(): void {
+    this.eventService.loginEmitter.subscribe(ev => {
+      this.updateLoginDisplay(ev);
+    });
+  }
 
   submitLogin(): void {
     this.loginError = false;
@@ -51,5 +60,9 @@ export class HomeComponent {
 
   toggleCollapse(): void {
     this.windowVisible = !this.windowVisible;
+  }
+
+  updateLoginDisplay(state: Event): void {
+    this.loginProcessing = state.toString() == 'start'? true : false;
   }
 }
