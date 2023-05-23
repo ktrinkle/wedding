@@ -15,7 +15,7 @@ export class AuthService {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private dataService:DataService, private router: Router, private store: Store,
-    private eventService: EventService) { }
+    public eventService: EventService) { }
 
   public isLoggedIn():boolean {
       const token = localStorage.getItem('access_token'); // get token from local storage
@@ -38,33 +38,36 @@ export class AuthService {
   {
     if (loginDto.emailAddress != '' && loginDto.password != '')
     {
+      var returnVal = 0;
       this.eventService.loginStartEmit();
-      this.dataService.sendEmailLogin(loginDto).subscribe(al =>
-        // implement next, error, finally pattern here
-        {
+      this.dataService.sendEmailLogin(loginDto).subscribe({
+        next: (al: any) => {
           if (al.bearerToken)
           {
+            console.log(al);
             localStorage.setItem('access_token', al.bearerToken ?? "");
             localStorage.setItem('partyAddress', al.partyAddress ?? "");
             localStorage.setItem('partyGuid', al.partyGuid ?? "");
             this.isLoggedIn();
             this.store.dispatch(partyByAuth());
             this.eventService.loginEndEmit();
-            return 1;
+            returnVal = -1;
           }
           else
           {
-            this.eventService.loginEndEmit();
-            return 0;
+            returnVal = 0;
           }
-        })
+        },
+        error: () => {
+          returnVal = 1;
+        },
+        complete: () => {
+          this.eventService.loginEndEmit();
+          return returnVal;
+        }
+      });
     }
-    else
-    {
-      return -1;
-    }
-
-    return 2;
+    return 1;
   }
 
   public processLogout(): void
@@ -73,7 +76,8 @@ export class AuthService {
     localStorage.removeItem('partyAddress');
     localStorage.removeItem('partyGuid');
 
-    this.router.navigate(["home"]);
+    this.router.navigate(['']);
   }
 
 }
+

@@ -282,9 +282,7 @@ ngbAccordionBody
     border-bottom-radius: 1px;
 
     .accordion-button {
-      &.collapsed {
-        border-bottom-radius: 1px;
-      }
+      &.collapsed {border-bottom-radius: 1px;}
     }
   }
 }
@@ -338,6 +336,8 @@ ngbAccordionBody
 
   .stack {
     width: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .centerbutton {
@@ -346,6 +346,7 @@ ngbAccordionBody
 
   .loginAlert {
     width: 50%;
+    z-index: 4000;
   }
 
   .printButton {
@@ -376,6 +377,7 @@ ngbAccordionBody
 
   .loginAlert {
     width: 100%;
+    z-index: 4000;
   }
 
   table,

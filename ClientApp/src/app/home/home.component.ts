@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   windowVisible: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router, 
+  constructor(private authService: AuthService, private router: Router,
     private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -41,10 +41,9 @@ export class HomeComponent implements OnInit {
         password: this.loginForm.value.password
       }
       var loginStatus = this.authService.processLoginEmail(loginSubmit);
-      console.log(loginStatus);
       if (loginStatus == -1)
       {
-        this.router.navigate(["wedding"]);
+        this.router.navigate(["/wedding"]);
       }
       else
       {
@@ -63,6 +62,17 @@ export class HomeComponent implements OnInit {
   }
 
   updateLoginDisplay(state: Event): void {
-    this.loginProcessing = state.toString() == 'start'? true : false;
+    switch (state.toString()) {
+      case 'start':
+        this.loginProcessing == true;
+        break;
+      case 'fail':
+        this.loginProcessing == false;
+        this.loginError == true;
+        break;
+      default:
+        this.loginProcessing == false;
+        break;
+    }
   }
 }

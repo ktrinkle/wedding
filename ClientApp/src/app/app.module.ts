@@ -27,6 +27,8 @@ import { metaReducers, reducers } from './store';
 import { DropdownDirective } from './nav-menu/dropdown.directive';
 import { AboutComponent } from './about/about.component';
 
+import { HttperrorInterceptor } from './services/httperror.interceptor';
+
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
@@ -71,7 +73,9 @@ export function tokenGetter() {
       },
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttperrorInterceptor, multi: true },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
