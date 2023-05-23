@@ -23,4 +23,8 @@ export class EventService {
   loginEndEmit() {
     this.loginEmitter.emit('end');
   }
+
+  loginFailEmit() {
+    this.loginEmitter.emit('fail');
+  }
 }
