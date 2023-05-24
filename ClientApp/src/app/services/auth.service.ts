@@ -44,7 +44,6 @@ export class AuthService {
         next: (al: any) => {
           if (al.bearerToken)
           {
-            console.log(al);
             localStorage.setItem('access_token', al.bearerToken ?? "");
             localStorage.setItem('partyAddress', al.partyAddress ?? "");
             localStorage.setItem('partyGuid', al.partyGuid ?? "");
