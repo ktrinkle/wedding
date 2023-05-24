@@ -40,7 +40,6 @@ export class RsvpComponent implements OnInit{
 
       const mArray = this.formBuilder.array([]);
       for (let member of this.weddingPartyMembers) {
-        console.log(member);
         mArray.push(
           this.formBuilder.group({
             groupMemberId: new UntypedFormControl(member.groupMemberId),
@@ -84,7 +83,6 @@ export class RsvpComponent implements OnInit{
     // for use when we rebuild the database
     this.removeFlag = true;
     var removeParty = this.partyMembers.at(i).value as weddingPartyMemberDto;
-    console.log(removeParty);
 
     this.store.dispatch(removePartyMember({ partyMember: removeParty }));
 
@@ -99,7 +97,6 @@ export class RsvpComponent implements OnInit{
 
     var newParty = this.partyMembers.at(i).value as weddingPartyMemberDto;
     newParty.groupMemberId = i + 1;
-    console.log(newParty);
 
     this.store.dispatch(savePartyMember({ partyMember: newParty }));
 

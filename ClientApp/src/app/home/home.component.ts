@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   updateLoginDisplay(state: Event): void {
     switch (state.toString()) {
       case 'start':
+        console.log('start');
         this.loginProcessing == true;
         break;
       case 'fail':
