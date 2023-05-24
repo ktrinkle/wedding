@@ -22,9 +22,6 @@ export class WeddingComponent implements OnInit {
   constructor (private readonly mediaMatcher: MediaMatcher) {}
 
   ngOnInit() {
-    this.mediaMatcher.matchMedia('print').addEventListener("beforeprint", (event) => {
-      console.log('printing');
-    });
   }
 
   toggleCollapse(): void {

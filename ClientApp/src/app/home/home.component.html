@@ -25,9 +25,9 @@
             <p>Kevin and Austin are getting married! We just need some information before we can give you our information.</p>
             <hr>
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!this.isLoggedIn()">
-              <div *ngIf="this.loginError && !this.loginProcessing">We could not find an email address for you, or the city was wrong. Please try again.</div>
               <div *ngIf="!this.loginProcessing">
-              <div class="flexbox">
+                <div *ngIf="this.loginError"><p>We could not find an email address for you, or the city was wrong. Please try again.</p></div>
+                <div class="flexbox">
                 <div class="stack textright">
                   <label for="emailAddress" class="form-label">Your email address:</label>
                   </div>
@@ -57,7 +57,5 @@
   <div class="inner">
       <p style="font-weight: normal;">Please wait while we log you in.</p>
       <br />
-      <br />
-      Scroll bar graphic goes here
   </div>
 </div>
