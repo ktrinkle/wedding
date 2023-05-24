@@ -22,7 +22,7 @@ public class LoginService : ILoginService
         We also require a fixed password from AppSettings.
         */
         
-        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress == emailAddr);
+        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.ToLower() == emailAddr.ToLower());
         if (loginInfo is null)
         {
             return null;
@@ -57,7 +57,7 @@ public class LoginService : ILoginService
         We also require a fixed password from AppSettings.
         */
         
-        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress == emailAddr);
+        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.ToLower() == emailAddr.ToLower());
         if (emailAddr != _appSettings.AdminUser)
         {
             return null;
