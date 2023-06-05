@@ -42,8 +42,7 @@ export class AuthService {
         const payload = window.atob(token.split('.')[1]); // decode payload of token
 
         const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
-        console.log(parsedPayload.role);
-        console.log(parsedPayload.role == "Admin");
+
         return parsedPayload.role == "Admin"; // check if token has role and is admin
       }
 

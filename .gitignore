@@ -234,4 +234,4 @@ _Pvt_Extensions
 .angular/
 
 # Local environment
-**/environment.ts
+**/environment.dev.ts
