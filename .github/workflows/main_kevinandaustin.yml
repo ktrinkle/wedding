@@ -15,6 +15,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Replace secrets
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/*.js"]'
+        env:
+          APP_INSIGHTS: ${{secrets.APP_INSIGHT_KEY}}
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3
