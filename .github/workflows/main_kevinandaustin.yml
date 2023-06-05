@@ -19,7 +19,7 @@ jobs:
       - name: Replace secrets
         uses: cschleiden/replace-tokens@v1
         with:
-          files: '["**/*.js"]'
+          files: '["**/env*.ts"]'
         env:
           APP_INSIGHTS: ${{secrets.APP_INSIGHT_KEY}}
 
