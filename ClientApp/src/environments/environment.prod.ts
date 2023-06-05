@@ -3,6 +3,6 @@ export const environment = {
   api_url: "https://www.kevinandaustin.com",
   app_url: "https://www.kevinandaustin.com",
   appInsights: {
-    instrumentationKey: ''
+    instrumentationKey: '#{APP_INSIGHTS}#'
   }
 };
