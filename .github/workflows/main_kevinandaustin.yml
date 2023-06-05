@@ -17,12 +17,12 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Replace secrets
-        uses: cschleiden/replace-tokens@v1
+        uses: Lambdaspire/action-substitute-secrets-in-file@v1.0.0
         with:
-          files: '["**/env*.ts"]'
-        env:
-          APP_INSIGHTS: ${{secrets.APP_INSIGHT_KEY}}
-
+          file: ClientApp/src/environments/environment.prod.ts
+          tokenPattern: ${TOKEN}
+          secretsJson: ${{ toJSON(secrets) }}
+    
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3
         with:
