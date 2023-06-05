@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { DataService } from '../services/data.service';
-import { partyByAuth, partyByAuthSuccess, savePartyMember, savePartyMemberSuccess, removePartyMember, removePartyMemberSuccess } from './wedding.actions';
+import { partyByAuth, partyByAuthSuccess, savePartyMember, savePartyMemberSuccess, removePartyMember, removePartyMemberSuccess, rsvpList, rsvpListSuccess } from './wedding.actions';
 
 @Injectable()
 export class WeddingEffects {
@@ -37,6 +37,18 @@ export class WeddingEffects {
     switchMap(payload =>
       this.dataService.deleteMember(payload.partyMember).pipe(map(party =>
         removePartyMemberSuccess({ partyMembers: party })
+      ))
+      )
+    )
+  );
+
+  // admin function region
+  getRsvpList$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(rsvpList),
+    switchMap(payload =>
+      this.dataService.getAdminRsvpList().pipe(map(rsvp =>
+        rsvpListSuccess({ rsvpList: rsvp })
       ))
       )
     )

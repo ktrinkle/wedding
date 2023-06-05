@@ -30,5 +30,14 @@ export const removePartyMemberSuccess = createAction(
   props<{ partyMembers: weddingPartyMemberDto[] }>()
 );
 
+export const rsvpList = createAction(
+  '[Wedding] RsvpList',
+);
+
+export const rsvpListSuccess = createAction(
+  '[Wedding] RsvpListSuccess',
+  props<{ rsvpList: weddingPartyMemberDto[] }>()
+);
+
 
 

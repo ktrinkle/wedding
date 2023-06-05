@@ -28,6 +28,9 @@ import { DropdownDirective } from './nav-menu/dropdown.directive';
 import { AboutComponent } from './about/about.component';
 
 import { HttperrorInterceptor } from './services/httperror.interceptor';
+import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminGuard } from 'src/guards/admin.guard';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -44,7 +47,9 @@ export function tokenGetter() {
     GiftsComponent,
     WeddingComponent,
     DropdownDirective,
-    AboutComponent
+    AboutComponent,
+    RsvplistComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,6 +63,8 @@ export function tokenGetter() {
       { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },
       { path: 'wedding/venue', component: VenueComponent, canActivate: [AuthGuard] },
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
+      { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
     ]),
     NgbModule,
     DragDropModule,

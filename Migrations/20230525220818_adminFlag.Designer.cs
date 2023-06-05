@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using wedding.Data;
@@ -11,9 +12,10 @@ using wedding.Data;
 namespace wedding.Migrations
 {
     [DbContext(typeof(ContextWedding))]
-    partial class ContextWeddingModelSnapshot : ModelSnapshot
+    [Migration("20230525220818_adminFlag")]
+    partial class adminFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,37 +23,6 @@ namespace wedding.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("wedding.Data.WeddingGifts", b =>
-                {
-                    b.Property<Guid>("GroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("group_id");
-
-                    b.Property<float?>("GiftAmount")
-                        .HasColumnType("real")
-                        .HasColumnName("gift_amount");
-
-                    b.Property<string>("GiftComment")
-                        .HasColumnType("text")
-                        .HasColumnName("gift_comment");
-
-                    b.Property<DateTime?>("GiftDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("gift_date");
-
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.HasKey("GroupId");
-
-                    b.ToTable("wedding_gifts");
-                });
 
             modelBuilder.Entity("wedding.Data.WeddingGroup", b =>
                 {
@@ -61,10 +32,6 @@ namespace wedding.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("AdminFlag")
-                        .HasColumnType("boolean")
-                        .HasColumnName("admin_flag");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()

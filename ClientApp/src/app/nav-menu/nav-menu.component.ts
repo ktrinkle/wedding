@@ -31,14 +31,18 @@ export class NavMenuComponent {
     return this.authService.isLoggedIn();
   }
 
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
+
   logout() {
     this.authService.processLogout();
   }
 
   getCurrentDate() {
     setInterval(() => {
-    this.time = new Date(); //set time variable with current date
-   }, 1000); // set it every one seconds}
+      this.time = new Date(); //set time variable with current date
+    }, 1000); // set it every one seconds}
   }
 
   emptyTrash() {

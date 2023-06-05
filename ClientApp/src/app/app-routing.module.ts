@@ -7,7 +7,10 @@ import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { RsvpComponent } from './wedding/rsvp/rsvp.component';
 import { VenueComponent } from './wedding/venue/venue.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
 import { AboutComponent } from './about/about.component';
+import { AdminComponent } from './admin/admin.component';
+import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -31,6 +34,13 @@ const routes: Routes = [
       component: VenueComponent,
       canActivate: [AuthGuard]
     },
+  ]},
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard], children: [
+    {
+      path: 'rsvplist',
+      component: RsvplistComponent,
+      canActivate: [AuthGuard, AdminGuard]
+    }
   ]}
 ];
 

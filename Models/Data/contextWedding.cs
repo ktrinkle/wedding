@@ -10,6 +10,7 @@ public partial class ContextWedding : DbContext
 
     public virtual DbSet<WeddingGroup> WeddingGroup { get; set; } = null!;
     public virtual DbSet<WeddingGroupName> WeddingGroupName { get; set; } = null!;
+    public virtual DbSet<WeddingGifts> WeddingGifts { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,5 +33,9 @@ public partial class ContextWedding : DbContext
                 .HasPrincipalKey(e => e.GroupId);
         
         modelBuilder.Entity<WeddingGroupName>(entity => entity.HasKey(k => new { k.GroupId, k.GroupMemberId }));
+
+        modelBuilder.Entity<WeddingGifts>()
+                .HasKey(e => e.GroupId);
+        
     }
 }

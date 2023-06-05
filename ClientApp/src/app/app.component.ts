@@ -3,6 +3,7 @@ import { timer } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from './services/event.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoggingService } from './services/logging.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 })
 export class AppComponent implements OnInit {
   constructor(public authService: AuthService, public eventService: EventService,
-    private deviceService: DeviceDetectorService) { }
+    private deviceService: DeviceDetectorService, private loggingService: LoggingService) { }
 
   loggedIn = this.authService.isLoggedIn();
   oscarActive: boolean = false;
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit {
     this.trashSound.currentTime = 0;
     this.trashSound.play();
     this.oscarActive = true;
-    timer(3700).subscribe(x => {
+    timer(3800).subscribe(x => {
       this.oscarActive = false;
       this.trashfull = false;
     })

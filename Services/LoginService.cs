@@ -28,7 +28,7 @@ public class LoginService : ILoginService
             return null;
         }
 
-        var fixedPwd = _appSettings.Password;
+        var fixedPwd = GetMasterPassword(loginInfo.AdminFlag ?? false);
         if (password.ToLower() != fixedPwd.ToLower())
         {
             return null;
@@ -44,36 +44,7 @@ public class LoginService : ILoginService
         {
             PartyGuid = loginInfo.GroupId.ToString(),
             PartyAddress = loginInfo.EmailAddress,
-            BearerToken = GenerateToken(loginInfo.GroupId, loginInfo.EmailAddress)
-        };
-
-        return returnUser;
-    }
-
-    public async Task<BearerDto> LoginAdminAsync(string emailAddr, string password)
-    {
-        /*
-        This is a very simple login method just calling for the email address.
-        We also require a fixed password from AppSettings.
-        */
-        
-        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.ToLower() == emailAddr.ToLower());
-        if (emailAddr != _appSettings.AdminUser)
-        {
-            return null;
-        }
-
-        var fixedPwd = _appSettings.AdminPassword;
-        if (password.ToLower() != fixedPwd.ToLower())
-        {
-            return null;
-        }
-
-        var returnUser = new BearerDto()
-        {
-            PartyGuid = _appSettings.AdminGuid.ToString(),
-            PartyAddress = _appSettings.AdminUser,
-            BearerToken = GenerateToken(new Guid(_appSettings.AdminGuid), _appSettings.AdminUser)
+            BearerToken = GenerateToken(loginInfo.GroupId, loginInfo.EmailAddress, loginInfo.AdminFlag ?? false)
         };
 
         return returnUser;
@@ -114,7 +85,13 @@ public class LoginService : ILoginService
         return weddingParty;                 
     }
 
-    private string GenerateToken(Guid partyGuid, string? emailAddress)
+    private string GetMasterPassword(bool adminFlag)
+    {
+        // gets either the admin password or user password based on the email address
+        return adminFlag ? _appSettings.AdminPassword : _appSettings.Password;
+    }
+
+    private string GenerateToken(Guid partyGuid, string? emailAddress, bool adminFlag)
     {
         var appSecret = Encoding.UTF8.GetBytes(_appSettings.Secret!);
         var appSecurityKey = new SymmetricSecurityKey(appSecret) { KeyId = _appSettings.JWTKeyId };
@@ -128,7 +105,7 @@ public class LoginService : ILoginService
             new Claim("username", emailAddress ?? ""),
         });
 
-        if (emailAddress == _appSettings.AdminUser)
+        if (adminFlag)
         {
             claims.AddClaim(new Claim("role", "Admin"));
         }

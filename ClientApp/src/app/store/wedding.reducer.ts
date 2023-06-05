@@ -1,15 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { weddingPartyMemberDto } from 'src/app/data/data';
-import { partyByAuthSuccess, savePartyMemberSuccess, removePartyMemberSuccess } from './wedding.actions';
+import { partyByAuthSuccess, savePartyMemberSuccess, removePartyMemberSuccess, rsvpListSuccess } from './wedding.actions';
 
 export interface State {
   currentEmail: string,
   partyMembers: weddingPartyMemberDto[],
+  rsvpList: weddingPartyMemberDto[]
 }
 
 export const initialState: State = {
   currentEmail: '',
   partyMembers: new Array<weddingPartyMemberDto>(),
+  rsvpList: new Array<weddingPartyMemberDto>(),
 };
 
 
@@ -29,6 +31,11 @@ export const weddingReducer = createReducer(
   on(removePartyMemberSuccess, (state, { partyMembers }) => ({
     ...state,
     partyMembers: partyMembers
+  })),
+
+  on(rsvpListSuccess, (state, { rsvpList }) => ({
+    ...state,
+    rsvpList: rsvpList
   }))
 
 );

@@ -19,3 +19,5 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 
 export const selectWeddingState = createFeatureSelector<fromWedding.State>('wedding');
 export const selectPartyMembers = createSelector(selectWeddingState, (state: fromWedding.State) => state.partyMembers);
+
+export const selectRsvpList = createSelector(selectWeddingState, (state: fromWedding.State) => state.rsvpList);
