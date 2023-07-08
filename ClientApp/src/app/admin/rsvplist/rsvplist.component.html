@@ -35,7 +35,9 @@
             <a ngbNavLink (click)="this.filterRsvpList(undefined);">No answer*</a>
           </li>
         </div>
+        <div class="file-folder-top"></div>
       </ul>
+      <div class="file-folder">
       <div *ngIf="this.filterStatus == undefined">If the party has logged in and not answered, their status is shown as no answer.</div>
       <div class="table-responsive">
       <table class="table table-striped">
@@ -56,6 +58,7 @@
       </table>
       </div>
       </div>
+    </div>
 
     </cdk-virtual-scroll-viewport>
   </div>
