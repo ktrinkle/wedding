@@ -78,7 +78,7 @@ jobs:
           server-name: ${{ secrets.DB_SERVER }}
           connection-string: ${{ secrets.PSQL_CONNECTION_STRING }}
           # path is defined as var from previous action.
-          plsql-file: "${{steps.download.outputs.download-path}}/*.sql"
+          plsql-file: "sql/pg-script.sql"
 
   deploy-webapp:
     runs-on: ubuntu-latest
