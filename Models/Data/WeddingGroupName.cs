@@ -14,6 +14,7 @@ public partial class WeddingGroupName
     public string GroupMemberName { get; set; } = String.Empty;
     public bool? RsvpYes { get; set; }
     public string? RsvpComment { get; set; }
+    public int? DrinkTypeCd { get; set; }
 
     public WeddingGroup WeddingGroup { get; set; } = null!;
 }

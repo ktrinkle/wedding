@@ -1,0 +1,140 @@
+// Base class from Bootstrap
+//
+// Kickstart any navigation component with a set of style resets. Works with
+// `<nav>`s, `<ul>`s or `<ol>`s.
+
+.rsvpdetail {
+  font-family: finderskeepers;
+  font-size: 16pt;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: 10 5;
+  color: #000;
+  text-decoration: null;
+  // @include transition($nav-link-transition);
+
+  &:hover,
+  &:focus {
+    color: #00f;
+    text-decoration: none;
+  }
+
+  // Disabled state lightens text
+  &.disabled {
+    color: #000;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+//
+// Tabs
+//
+
+.nav-tabs {
+  border-bottom: 2 solid #000;
+
+  .nav-link {
+    margin-bottom: -2;
+    background: none;
+    border: 2 solid transparent;
+
+    &:hover,
+    &:focus {
+      border-color: #00f;
+      // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
+      isolation: isolate;
+    }
+
+    &.disabled {
+      color: #000;
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+//   .nav-link.active,
+//   .nav-item.show .nav-link {
+//     color: #00f;
+//     border-color: #00f;
+//   }
+
+//   .dropdown-menu {
+//     // Make dropdown border overlap tab border
+//     margin-top: -2;
+//     // Remove the top rounded corners here since there is a hard edge above the menu
+//     @include border-top-radius(0);
+//   }
+}
+
+
+// //
+// // Pills
+// //
+
+// .nav-pills {
+//   .nav-link {
+//     background: none;
+//     border: 0;
+//     @include border-radius($nav-pills-border-radius);
+//   }
+
+//   .nav-link.active,
+//   .show > .nav-link {
+//     color: $nav-pills-link-active-color;
+//     @include gradient-bg($nav-pills-link-active-bg);
+//   }
+// }
+
+
+// //
+// // Justified variants
+// //
+
+// .nav-fill {
+//   > .nav-link,
+//   .nav-item {
+//     flex: 1 1 auto;
+//     text-align: center;
+//   }
+// }
+
+// .nav-justified {
+//   > .nav-link,
+//   .nav-item {
+//     flex-basis: 0;
+//     flex-grow: 1;
+//     text-align: center;
+//   }
+// }
+
+// .nav-fill,
+// .nav-justified {
+//   .nav-item .nav-link {
+//     width: 100%; // Make sure button will grow
+//   }
+// }
+
+
+// Tabbable tabs
+//
+// Hide tabbable panes to start, show them when `.active`
+
+.tab-content {
+  > .tab-pane {
+    display: none;
+  }
+  > .active {
+    display: block;
+  }
+}

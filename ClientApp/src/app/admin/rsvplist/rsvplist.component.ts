@@ -17,11 +17,13 @@ import { rsvpList } from 'src/app/store/wedding.actions';
 export class RsvplistComponent {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  // we playw with this because we have 3 states.
+  // we play with this because we have 3 states.
   filterStatus?: boolean = true;
   windowVisible: boolean = true;
+  active = 1;
 
   public rsvpList: weddingPartyMemberDto[] = new Array<weddingPartyMemberDto>();
+  public filteredRsvpList: weddingPartyMemberDto[] = new Array<weddingPartyMemberDto>();
 
   constructor (private readonly mediaMatcher: MediaMatcher, private store: Store) {}
 
@@ -43,7 +45,9 @@ export class RsvplistComponent {
 
   filterRsvpList(filterState?: boolean) {
     this.filterStatus = filterState;
-    this.rsvpList.filter(x => x.rsvpYes == filterState);
+    console.log(filterState);
+    this.filteredRsvpList = this.rsvpList.filter(x => x.rsvpYes == filterState);
+    console.log(this.filteredRsvpList);
   }
 
   ngOnDestroy() {
