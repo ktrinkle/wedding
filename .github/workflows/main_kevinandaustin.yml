@@ -60,6 +60,7 @@ jobs:
   deploy-sql:
     runs-on: ubuntu-latest
     needs: build
+    continue-on-error: true
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -73,6 +74,7 @@ jobs:
           
       - name: Azure PostgreSQL Action
         uses: Azure/postgresql@v1.2.0
+        
         with:
           # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com
           server-name: ${{ secrets.DB_SERVER }}
