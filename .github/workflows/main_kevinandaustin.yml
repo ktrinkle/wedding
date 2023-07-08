@@ -69,6 +69,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: .sql-script
+          path: sql
           
       - name: Azure PostgreSQL Action
         uses: Azure/postgresql@v1.2.0
@@ -76,7 +77,7 @@ jobs:
           # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com
           server-name: ${{ secrets.DB_SERVER }}
           connection-string: ${{ secrets.PSQL_CONNECTION_STRING }}
-          plsql-file: "**/pg-script.sql"
+          plsql-file: "${{steps.download.outputs.download-path}}/*.sql"
 
   deploy-webapp:
     runs-on: ubuntu-latest
