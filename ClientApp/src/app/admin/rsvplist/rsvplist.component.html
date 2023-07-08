@@ -20,15 +20,21 @@
     </div>
     <div class="container border bg-white">
       <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-        <li [ngbNavItem]="1" class="navLink">
-          <a ngbNavLink (click)="this.filterRsvpList(true);">Yes</a>
-        </li>
-        <li [ngbNavItem]="2" class="navLink">
-          <a ngbNavLink (click)="this.filterRsvpList(false);">No</a>
-        </li>
-        <li [ngbNavItem]="3" class="navLink">
-          <a ngbNavLink (click)="this.filterRsvpList(undefined);">No answer*</a>
-        </li>
+        <div class="nav-link">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink (click)="this.filterRsvpList(true);">Yes</a>
+          </li>
+        </div>
+        <div class="nav-link">
+          <li [ngbNavItem]="2">
+            <a ngbNavLink (click)="this.filterRsvpList(false);">No</a>
+          </li>
+        </div>
+        <div class="nav-link">
+          <li [ngbNavItem]="3">
+            <a ngbNavLink (click)="this.filterRsvpList(undefined);">No answer*</a>
+          </li>
+        </div>
       </ul>
       <div *ngIf="this.filterStatus == undefined">If the party has logged in and not answered, their status is shown as no answer.</div>
       <div class="table-responsive">

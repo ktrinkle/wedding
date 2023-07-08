@@ -41,13 +41,20 @@
 // Tabs
 //
 
-.nav-tabs {
-  border-bottom: 2 solid #000;
+div.nav-link {
+  border-color: #000;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  // border-width: 1 0 1 1;
+  border-radius: 4px;
+}
 
+.nav-tabs {
   .nav-link {
     margin-bottom: -2;
     background: none;
-    border: 2 solid transparent;
+    padding: 10px;
 
     &:hover,
     &:focus {
