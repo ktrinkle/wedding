@@ -47,7 +47,7 @@ export class RsvplistComponent {
     this.filterStatus = filterState;
     console.log(filterState);
     this.filteredRsvpList = this.rsvpList.filter(x => x.rsvpYes == filterState);
-    console.log(this.filteredRsvpList);
+    console.log(this.filteredRsvpList.length);
   }
 
   ngOnDestroy() {

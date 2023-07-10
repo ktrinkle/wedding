@@ -31,6 +31,7 @@ import { HttperrorInterceptor } from './services/httperror.interceptor';
 import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { RsvpDrinkPipe } from './services/rsvp-drink.pipe';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -49,7 +50,8 @@ export function tokenGetter() {
     DropdownDirective,
     AboutComponent,
     RsvplistComponent,
-    AdminComponent
+    AdminComponent,
+    RsvpDrinkPipe,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -3,31 +3,6 @@ th {
   text-decoration: underline;
 }
 
-/* new CSS */
-
-// .classic-mac-checkbox {
-//   label {
-//     display: inline-block;	
-//     width: 60px;
-//     height: 24px;
-//     cursor: pointer;	
-//     background-image: url(../../../assets/img/checkbox.png);
-//     background-repeat: no-repeat;
-//     background-size: 20px 18px;
-//     background-position-x: left;
-//     padding-left: 24px;
-//   }
-//   input {
-//     visibility:hidden;
-//   }
-//   label input:checked {
-//       background-image: url(../../../assets/img/checkbox-checked.png);
-//       background-repeat: no-repeat;
-//       background-size: 20px 18px;
-//       background-position-x: left;
-//     }
-//   }
-
 .classic-mac-checkbox {
   cursor: pointer;
 }
@@ -37,10 +12,10 @@ th {
 }
 
 .classic-mac-checkbox input + label {
-    display: inline-block;	
+    display: inline-block;
     width: 60px;
     height: 24px;
-    cursor: pointer;	
+    cursor: pointer;
     background-image: url(../../../assets/img/checkbox.png);
     background-repeat: no-repeat;
     background-size: 20px 18px;
@@ -53,4 +28,25 @@ th {
       background-repeat: no-repeat;
       background-size: 20px 18px;
       background-position-x: left;
-    }
+  }
+
+    /* select menu */
+  select {
+    border: 1.5px solid;
+    height: auto;
+    width: 11rem;
+    font-family: charcoal;
+    font-size: 13px;
+    background-image: url('../../../assets/img/triangle_down.png');
+    background-position: top 2px right 2px;
+    background-repeat: no-repeat;
+    background-color: #dedede;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    padding-left: 10px;
+    -webkit-box-shadow: 2px 8px 0 0px var(--secondary);
+    -moz-box-shadow: 2px 8px 0 0px var(--secondary);
+    box-shadow: 2px 2px 0 -1px;
+  }

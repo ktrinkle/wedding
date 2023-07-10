@@ -44,7 +44,8 @@ public class RsvpService : IRsvpService
                 GroupMemberId = updateDto.GroupMemberId, // set in the UI
                 GroupMemberName = updateDto.GroupMemberName,
                 RsvpComment = updateDto.RsvpComment,
-                RsvpYes = updateDto.RsvpYes
+                RsvpYes = updateDto.RsvpYes,
+                DrinkTypeCd = updateDto.RsvpDrinkType
             };
             await _ContextWedding.WeddingGroupName.AddAsync(newUser);
         }
@@ -53,6 +54,7 @@ public class RsvpService : IRsvpService
             userInfo.GroupMemberName = updateDto.GroupMemberName;
             userInfo.RsvpComment = updateDto.RsvpComment;
             userInfo.RsvpYes = updateDto.RsvpYes;
+            userInfo.DrinkTypeCd = updateDto.RsvpDrinkType;
 
             _ContextWedding.WeddingGroupName.Update(userInfo);
         }
@@ -118,7 +120,8 @@ public class RsvpService : IRsvpService
                                 GroupMemberId = g.GroupMemberId,
                                 GroupMemberName = g.GroupMemberName,
                                 RsvpComment = g.RsvpComment,
-                                RsvpYes = g.RsvpYes
+                                RsvpYes = g.RsvpYes,
+                                RsvpDrinkType = g.DrinkTypeCd
                             }).ToListAsync();
 
         return partyList;

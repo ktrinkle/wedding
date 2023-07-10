@@ -1,3 +1,4 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -42,6 +43,13 @@ builder.Services.AddAuthentication(auth =>
 });
 
 builder.Services.AddApplicationInsightsTelemetry();
+
+// handle enum conversion. We also could just allow text values from the app?
+
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 #region swagger
 

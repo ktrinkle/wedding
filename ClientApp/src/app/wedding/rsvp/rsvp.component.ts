@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { weddingPartyMemberDto } from 'src/app/data/data';
+import { weddingPartyMemberDto, RsvpDrinkMapping, RsvpDrinkType } from 'src/app/data/data';
 import { selectPartyMembers } from 'src/app/store';
 import { partyByAuth, removePartyMember, savePartyMember } from 'src/app/store/wedding.actions';
 
@@ -27,6 +27,10 @@ export class RsvpComponent implements OnInit{
       updateOn: "blur"
     });
 
+  public rsvpDrinkMapping = RsvpDrinkMapping;
+
+  public drinkTypes = Object.values(RsvpDrinkMapping);
+
   constructor (private store: Store, private formBuilder: UntypedFormBuilder) {
     this.store.dispatch(partyByAuth());
   }
@@ -34,6 +38,8 @@ export class RsvpComponent implements OnInit{
   windowVisible: boolean = true;
 
   ngOnInit(): void {
+
+
 
     this.store.select(selectPartyMembers).pipe(takeUntil(this.destroy$)).subscribe(weddingParty => {
       this.weddingPartyMembers = weddingParty;
@@ -45,7 +51,8 @@ export class RsvpComponent implements OnInit{
             groupMemberId: new UntypedFormControl(member.groupMemberId),
             groupMemberName: new UntypedFormControl(member.groupMemberName),
             rsvpComment: new UntypedFormControl(member.rsvpComment),
-            rsvpYes: new UntypedFormControl(member.rsvpYes)
+            rsvpYes: new UntypedFormControl(member.rsvpYes),
+            rsvpDrinkType: new UntypedFormControl(member.rsvpDrinkType)
           })
         );
       }
@@ -73,7 +80,8 @@ export class RsvpComponent implements OnInit{
       groupMemberId: new UntypedFormControl(),
       groupMemberName: new UntypedFormControl(),
       rsvpComment: new UntypedFormControl(),
-      rsvpYes: new UntypedFormControl()
+      rsvpYes: new UntypedFormControl(),
+      rsvpDrinkType: new UntypedFormControl()
     });
 
     this.partyMembers.push(newGroup);
@@ -101,19 +109,6 @@ export class RsvpComponent implements OnInit{
     this.store.dispatch(savePartyMember({ partyMember: newParty }));
 
   }
-
-  private buildPartyChange(i: number): weddingPartyMemberDto
-  {
-    var partyChange: weddingPartyMemberDto = {
-      groupMemberId: this.partyMembers.at(i).get('groupMemberId')?.value,
-      groupMemberName: this.partyMembers.at(i).get('groupMemberName')?.value,
-      rsvpYes: this.partyMembers.at(i).get('rsvpYes')?.value,
-      rsvpComment: this.partyMembers.at(i).get('rsvpComment')?.value
-    };
-
-    return partyChange;
-  }
-
 
   toggleCollapse(): void {
     this.windowVisible = !this.windowVisible;

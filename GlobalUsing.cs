@@ -13,6 +13,7 @@ global using Serilog;
 global using System.Threading.Tasks;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Text;
+global using System.Text.Json.Serialization;
 
 global using wedding.Config;
 global using wedding.Data;

@@ -33,7 +33,8 @@ public class RsvpController : ControllerBase
             GroupMemberId = partyMember.GroupMemberId,
             GroupMemberName = partyMember.GroupMemberName,
             RsvpYes = partyMember.RsvpYes,
-            RsvpComment = partyMember.RsvpComment
+            RsvpComment = partyMember.RsvpComment,
+            RsvpDrinkType = (int?)partyMember.RsvpDrinkType
         };
 
         var updatedDto = await _rsvpService.SaveRsvpStatusSingleAsync(updateDto);

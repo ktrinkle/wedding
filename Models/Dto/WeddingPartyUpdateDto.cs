@@ -10,5 +10,6 @@ public partial class WeddingPartyUpdateDto
     public string GroupMemberName { get; set; } = String.Empty;
     public bool? RsvpYes { get; set; }
     public string? RsvpComment { get; set; }
+    public int? RsvpDrinkType { get; set; }
 
 }

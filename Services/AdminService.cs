@@ -22,7 +22,8 @@ public class AdminService : IAdminService
                                     GroupMemberId = w.GroupMemberId,
                                     GroupMemberName = w.GroupMemberName,
                                     RsvpYes = w.RsvpYes,
-                                    RsvpComment = w.RsvpComment
+                                    RsvpComment = w.RsvpComment,
+                                    RsvpDrinkType = w.DrinkTypeCd
                                 }).ToListAsync();
 
         if (weddingPartyList is null)

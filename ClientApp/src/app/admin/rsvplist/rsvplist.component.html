@@ -39,16 +39,21 @@
       </ul>
       <div class="file-folder">
       <div *ngIf="this.filterStatus == undefined">If the party has logged in and not answered, their status is shown as no answer.</div>
+      <div class="rsvpdetail" *ngIf="this.filterStatus == true">Total RSVPs: {{ this.filteredRsvpList.length }}</div>
       <div class="table-responsive">
       <table class="table table-striped">
       <thead>
         <th>Name (first and last)</th>
+        <th>Drink type</th>
         <th>Any comments? (Dietary restrictions, etc)</th>
       </thead>
       <tbody class="rsvpdetail">
         <tr *ngFor="let member of this.filteredRsvpList; let i = index">
           <td data="Full name">
             {{member.groupMemberName}}
+          </td>
+          <td data="Drink Type">
+            {{member.rsvpDrinkType | rsvpDrink }}
           </td>
           <td data="Any comments? (Dietary restrictions, etc)">
             {{member.rsvpComment}}
