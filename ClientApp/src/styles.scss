@@ -13,6 +13,11 @@
   src: url('./assets/charcoal.ttf');
 }
 
+@font-face {
+  font-family: finderskeepers;
+  src: url('./assets/finderskeepers.ttf');
+}
+
 /* h3 with charcoal */
 h3 {
   text-decoration: underline;
@@ -102,7 +107,7 @@ container {
 
 .form-control {
   font-family: charcoal;
-  font-size: 15px;
+  font-size: 13px;
   border-color: #000;
   border-width: 1px;
   border-style: inset;

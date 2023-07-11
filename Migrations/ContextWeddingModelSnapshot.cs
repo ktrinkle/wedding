@@ -22,6 +22,37 @@ namespace wedding.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("wedding.Data.WeddingGifts", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("group_id");
+
+                    b.Property<float?>("GiftAmount")
+                        .HasColumnType("real")
+                        .HasColumnName("gift_amount");
+
+                    b.Property<string>("GiftComment")
+                        .HasColumnType("text")
+                        .HasColumnName("gift_comment");
+
+                    b.Property<DateTime?>("GiftDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("gift_date");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("wedding_gifts");
+                });
+
             modelBuilder.Entity("wedding.Data.WeddingGroup", b =>
                 {
                     b.Property<int>("Id")
@@ -30,6 +61,10 @@ namespace wedding.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("AdminFlag")
+                        .HasColumnType("boolean")
+                        .HasColumnName("admin_flag");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
@@ -58,6 +93,10 @@ namespace wedding.Migrations
                     b.Property<int>("GroupMemberId")
                         .HasColumnType("integer")
                         .HasColumnName("group_member_id");
+
+                    b.Property<int?>("DrinkTypeCd")
+                        .HasColumnType("integer")
+                        .HasColumnName("drink_type_cd");
 
                     b.Property<string>("GroupMemberName")
                         .IsRequired()

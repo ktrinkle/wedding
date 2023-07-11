@@ -1,0 +1,70 @@
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/gift.png" data-window-name="RsvpList" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>RSVP List</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/gift.png" alt="Gifts" />
+    </div>
+    <div class="container border bg-white">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <div class="nav-link">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink (click)="this.filterRsvpList(true);">Yes</a>
+          </li>
+        </div>
+        <div class="nav-link">
+          <li [ngbNavItem]="2">
+            <a ngbNavLink (click)="this.filterRsvpList(false);">No</a>
+          </li>
+        </div>
+        <div class="nav-link">
+          <li [ngbNavItem]="3">
+            <a ngbNavLink (click)="this.filterRsvpList(undefined);">No answer*</a>
+          </li>
+        </div>
+        <div class="file-folder-top"></div>
+      </ul>
+      <div class="file-folder">
+      <div *ngIf="this.filterStatus == undefined">If the party has logged in and not answered, their status is shown as no answer.</div>
+      <div class="rsvpdetail" *ngIf="this.filterStatus == true">Total RSVPs: {{ this.filteredRsvpList.length }}</div>
+      <div class="table-responsive">
+      <table class="table table-striped">
+      <thead>
+        <th>Name (first and last)</th>
+        <th>Drink type</th>
+        <th>Any comments? (Dietary restrictions, etc)</th>
+      </thead>
+      <tbody class="rsvpdetail">
+        <tr *ngFor="let member of this.filteredRsvpList; let i = index">
+          <td data="Full name">
+            {{member.groupMemberName}}
+          </td>
+          <td data="Drink Type">
+            {{member.rsvpDrinkType | rsvpDrink }}
+          </td>
+          <td data="Any comments? (Dietary restrictions, etc)">
+            {{member.rsvpComment}}
+          </td>
+          </tr>
+      </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>

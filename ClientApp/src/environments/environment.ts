@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   api_url: "https://localhost:7096",
-  app_url: "https://localhost:44443"
+  app_url: "https://localhost:44443",
+  appInsights: {
+    instrumentationKey: ''
+  }
 };
 
 /*

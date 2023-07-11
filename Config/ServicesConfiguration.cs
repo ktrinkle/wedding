@@ -9,6 +9,7 @@ namespace wedding.Config
             // Services
             services.TryAddScoped<ILoginService, LoginService>();
             services.TryAddScoped<IRsvpService, RsvpService>();
+            services.TryAddScoped<IAdminService, AdminService>();
 
            // services.TryAddScoped<IClaimsTransformation, AddRolesClaimsTransformation>();
         }

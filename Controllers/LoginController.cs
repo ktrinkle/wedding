@@ -18,6 +18,8 @@ public class LoginController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<WeddingPartyDto>> Login(LoginDto loginDto)
     {
+        _logger.LogInformation("User login flow beginning - email address {email}", loginDto.EmailAddress?.Replace(Environment.NewLine, ""));
+        
         if (loginDto.EmailAddress is null)
         {
             return Unauthorized();
@@ -29,25 +31,6 @@ public class LoginController : ControllerBase
         }
 
         var loginResult = await _loginService.LoginAsync(loginDto.EmailAddress, loginDto.Password);
-
-        if (loginResult is null)
-        {
-            return Unauthorized();
-        }
-
-        return Ok(loginResult);
-    }
-
-    [AllowAnonymous]
-    [HttpPost("adminLogin")]
-    public async Task<ActionResult<WeddingPartyDto>> AdminLogin(string emailAddr, string password)
-    {
-        if (emailAddr is null)
-        {
-            return Unauthorized();
-        }
-
-        var loginResult = await _loginService.LoginAdminAsync(emailAddr, password);
 
         if (loginResult is null)
         {

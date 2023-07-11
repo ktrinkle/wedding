@@ -15,7 +15,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      
+      - name: Replace secrets
+        uses: Lambdaspire/action-substitute-secrets-in-file@v1.0.0
+        with:
+          file: ClientApp/src/environments/environment.prod.ts
+          tokenPattern: ${TOKEN}
+          secretsJson: ${{ toJSON(secrets) }}
+    
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3
         with:
@@ -44,9 +51,41 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .sql-script
+          path: ${{env.DOTNET_ROOT}}/sql
+
+  deploy-sql:
     runs-on: ubuntu-latest
     needs: build
+    continue-on-error: true
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download SQL artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .sql-script
+          path: sql
+          
+      - name: Azure PostgreSQL Action
+        uses: Azure/postgresql@v1.2.0
+        
+        with:
+          # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com
+          server-name: ${{ secrets.DB_SERVER }}
+          connection-string: ${{ secrets.PSQL_CONNECTION_STRING }}
+          # path is defined as var from previous action.
+          plsql-file: "sql/pg-script.sql"
+
+  deploy-webapp:
+    runs-on: ubuntu-latest
+    needs: deploy-sql
+    if: always()
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -56,14 +95,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: .net-app
-          
-      - name: Azure PostgreSQL Action
-        uses: Azure/postgresql@v1.2.0
-        with:
-          # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com
-          server-name: ${{ secrets.DB_SERVER }}
-          connection-string: ${{ secrets.PSQL_CONNECTION_STRING }}
-          plsql-file: "${{env.DOTNET_ROOT}}/sql/pg-script.sql"
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp

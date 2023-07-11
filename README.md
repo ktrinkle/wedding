@@ -22,11 +22,7 @@ Because I'm a total geek, this is our custom wedding site. Why? Well, have you s
 | AppSettings:Password | City that we are getting married in, aka the 'password' |
 | AppSettings:Issuer | JWT issuer, aka the Angular site URL |
 | AppSettings:Audience | JWT Audience, aka the root URL |
-| AppSettings:AdminUser | Admin username. Currently not used. |
-| AppSettings:AdminPassword | Admin password. Currently not used. |
-| AppSettings:AdminGuid | Admin unique ID to support the rest of auth. |
-
-**User secrets will be shifting as we move to home grown authentication.**
+| AppSettings:AdminPassword | Admin password. Used for all users who have adminFlag set to true in the DB. |
 
 * Update ClientApp/environment/environment.ts with the required URL changes
 * Run the initial database migration
@@ -58,6 +54,6 @@ Automated testing needs to be written.
 # Dependencies
 
 This site utilizes code from the following repos:
-Platinum - https://github.com/robbiebyrd/platinum
-Oscar The Grouch v1 - https://github.com/charlierobin/oscar-the-grouch-version-1
-Carthage Font - https://github.com/csyde/carthage-fonts
+- Platinum - https://github.com/robbiebyrd/platinum
+- Oscar The Grouch v1 - https://github.com/charlierobin/oscar-the-grouch-version-1
+- Carthage Font - https://github.com/csyde/carthage-fonts

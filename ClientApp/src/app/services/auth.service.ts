@@ -34,6 +34,22 @@ export class AuthService {
       return false;
     }
 
+    public isAdmin():boolean {
+      const token = localStorage.getItem('access_token'); // get token from local storage
+
+      if (token)
+      {
+        const payload = window.atob(token.split('.')[1]); // decode payload of token
+
+        const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
+
+        return parsedPayload.role == "Admin"; // check if token has role and is admin
+      }
+
+      // if the token is null, always return false since the user isn't logged in.
+      return false;
+    }
+
   public processLoginEmail(loginDto: frontLogin): number
   {
     if (loginDto.emailAddress != '' && loginDto.password != '')

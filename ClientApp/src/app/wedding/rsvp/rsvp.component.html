@@ -29,6 +29,7 @@
   <th></th>
   <th>Name (first and last)</th>
   <th>Are they attending?</th>
+  <th>What type of free drink?</th>
   <th>Any comments? (Dietary restrictions, etc)</th>
 </thead>
 <tbody formArrayName="partyMembers">
@@ -45,11 +46,18 @@
         <label for="rsvpYes{{i}}">Attending</label>
       </div>
     </td>
+    <td data="What type of free drink do they want?">
+        <select id="drinkType{{i}}" formControlName="rsvpDrinkType" (change)="saveRsvp(i)">
+            <option value='' disabled selected></option>
+            <option *ngFor="let drinkType of drinkTypes; let d = index" [value]="d"> {{drinkType}}
+            </option>
+          </select>
+    </td>
     <td data="Any comments? (Dietary restrictions, etc)">
       <input type="text" class="form-control" formControlName="rsvpComment" name="rsvpComment" id="rsvpComment{{i}}" value="{{member.value.rsvpComment}}" (blur)="saveRsvp(i)">
     </td>
     </tr>
-    <tr><td colspan="4">
+    <tr><td colspan="5">
       <div class="centerbutton">
         <button class="command_button boot-button" (click)="this.addPartyMember()">Add new party member</button>
       </div></td></tr>

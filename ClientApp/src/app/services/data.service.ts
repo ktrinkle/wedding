@@ -50,4 +50,9 @@ export class DataService {
     var uri = this.REST_API_SERVER + '/Rsvp/removeMember';
     return this.httpClient.post<weddingPartyMemberDto[]>(uri, party);
   }
+
+  public getAdminRsvpList(): Observable<any> {
+    var uri = this.REST_API_SERVER + '/Admin/currentRsvp';
+    return this.httpClient.get(uri);
+  }
 }
