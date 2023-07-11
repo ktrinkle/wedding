@@ -18,7 +18,7 @@ public class LoginController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<WeddingPartyDto>> Login(LoginDto loginDto)
     {
-        _logger.LogInformation("User login flow beginning - email address {email}", loginDto.EmailAddress);
+        _logger.LogInformation("User login flow beginning - email address {email}", loginDto.EmailAddress?.Replace(Environment.NewLine, ""));
         
         if (loginDto.EmailAddress is null)
         {

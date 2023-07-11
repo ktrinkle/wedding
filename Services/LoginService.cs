@@ -25,14 +25,15 @@ public class LoginService : ILoginService
         var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.ToLower() == emailAddr.ToLower());
         if (loginInfo is null)
         {
-            _logger.LogError("Email address {email} is not in the invite list.", emailAddr);
+            _logger.LogError("Email address {email} is not in the invite list.", emailAddr.Replace(Environment.NewLine, ""));
             return null;
         }
 
         var fixedPwd = GetMasterPassword(loginInfo.AdminFlag ?? false);
         if (password.ToLower() != fixedPwd.ToLower())
         {
-            _logger.LogError("User {email} entered city {city}", emailAddr, password);
+            _logger.LogError("User {email} entered city {city}", emailAddr.Replace(Environment.NewLine, ""),
+                 password.Replace(Environment.NewLine, ""));
             return null;
         }
 
