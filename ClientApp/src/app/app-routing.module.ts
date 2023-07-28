@@ -11,6 +11,7 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './admin/admin.component';
 import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
+import { GiftListComponent } from './admin/gifts/giftlist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -39,6 +40,11 @@ const routes: Routes = [
     {
       path: 'rsvplist',
       component: RsvplistComponent,
+      canActivate: [AuthGuard, AdminGuard]
+    },
+    {
+      path: 'giftlist',
+      component: GiftListComponent,
       canActivate: [AuthGuard, AdminGuard]
     }
   ]}

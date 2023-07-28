@@ -9,7 +9,7 @@ public static class ClaimsPrincipalExtension
         var claim = principal.Claims.FirstOrDefault(c => c.Type == "username");
         try
         {
-            return claim.Value;
+            return claim!.Value;
         }
         catch
         {
@@ -23,7 +23,7 @@ public static class ClaimsPrincipalExtension
         var claim = principal.Claims.FirstOrDefault(c => c.Type == "sessionid");
         try
         {
-            return claim.Value.ToString();
+            return claim!.Value.ToString();
         }
         catch
         {

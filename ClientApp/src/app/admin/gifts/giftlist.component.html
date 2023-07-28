@@ -1,0 +1,68 @@
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/gift.png" data-window-name="RsvpList" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>RSVP List</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/gift.png" alt="Gifts" />
+    </div>
+    <div class="container border bg-white">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <div class="nav-link">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink (click)="this.changeTab(1)">Current List</a>
+          </li>
+        </div>
+        <!--<div class="nav-link">
+          <li [ngbNavItem]="2">
+            <a ngbNavLink (click)="this.changeTab(2)">Add or update</a>
+          </li>
+        </div>-->
+        <div class="file-folder-top"></div>
+      </ul>
+      <div class="file-folder">
+      <div class="giftdetail">Total gift count: {{ this.giftList.length }}</div>
+      <div class="table-responsive">
+      <table class="table table-striped">
+      <thead>
+        <th>Primary Party member Name (first and last)</th>
+        <th>Gift amount</th>
+        <th>Gift comment</th>
+        <th>Gift date</th>
+      </thead>
+      <tbody class="giftdetail">
+        <tr *ngFor="let member of this.giftList; let i = index">
+          <td data="Full name">
+            {{member.firstGroupMemberName}}
+          </td>
+          <td data="Gift Amount">
+            {{member.giftAmount | currency:'USD'}}
+          </td>
+          <td data="Any comments? (Dietary restrictions, etc)">
+            {{member.giftComment }}
+          </td>
+          <td data="Any comments? (Dietary restrictions, etc)">
+            {{member.giftDate | date }}
+          </td>
+          </tr>
+      </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>

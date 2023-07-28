@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { partyByAuth, removePartyMember, savePartyMember } from 'src/app/store/w
   templateUrl: './rsvp.component.html',
   styleUrls: ['./rsvp.component.scss']
 })
-export class RsvpComponent implements OnInit{
+export class RsvpComponent implements OnInit, OnDestroy{
 
   destroy$: Subject<boolean> = new Subject<boolean>();
   removeFlag: boolean = false;

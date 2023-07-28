@@ -15,7 +15,8 @@ namespace wedding.Extensions
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last() ?? "";
+
             var userJwtDto = await ValidateJwtTokenAsync(token);
 
             if (userJwtDto != null && userJwtDto.PartyEmail != "")
@@ -37,7 +38,7 @@ namespace wedding.Extensions
             IdentityModelEventSource.ShowPII = true;
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_appSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(_appSettings.Secret!);
 
             tokenHandler.ValidateToken(token, new TokenValidationParameters
             {

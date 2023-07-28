@@ -75,6 +75,12 @@
                 RSVP list
               </a>
             </li>
+            <li class="menu-controls" id="menu-controls" *ngIf="this.isAdmin()">
+              <img src="../../assets/img/phone.png" width="16" alt="RSVP List">
+              <a [routerLinkActive]="['link-active']" [routerLink]="['/admin/giftlist']">
+                Gift list
+              </a>
+            </li>
             <hr *ngIf="this.isAdmin()">
             <li id="trash" [ngClass]="this.trashEnabled ? 'noimg' : 'noimg disabled'" (click)="this.emptyTrash()">Empty Trash</li>
         </ul>

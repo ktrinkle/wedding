@@ -29,7 +29,7 @@ public class RsvpController : ControllerBase
 
         var updateDto = new WeddingPartyUpdateDto()
         {
-            GroupId = jwtGroupId.Invoke(),
+            GroupId = jwtGroupId.Invoke()!,
             GroupMemberId = partyMember.GroupMemberId,
             GroupMemberName = partyMember.GroupMemberName,
             RsvpYes = partyMember.RsvpYes,

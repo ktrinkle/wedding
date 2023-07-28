@@ -16,6 +16,7 @@ import { RsvpComponent } from './wedding/rsvp/rsvp.component';
 import { VenueComponent } from './wedding/venue/venue.component';
 import { GiftsComponent } from './wedding/gifts/gifts.component';
 import { WeddingComponent } from './wedding/wedding.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from '../guards/auth.guard';
 import { StoreModule } from '@ngrx/store';
@@ -29,9 +30,11 @@ import { AboutComponent } from './about/about.component';
 
 import { HttperrorInterceptor } from './services/httperror.interceptor';
 import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
+import { GiftListComponent } from './admin/gifts/giftlist.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { RsvpDrinkPipe } from './services/rsvp-drink.pipe';
+import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -51,10 +54,12 @@ export function tokenGetter() {
     AboutComponent,
     RsvplistComponent,
     AdminComponent,
+    GiftListComponent,
     RsvpDrinkPipe,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -67,6 +72,7 @@ export function tokenGetter() {
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
+      { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]}
     ]),
     NgbModule,
     DragDropModule,
@@ -77,7 +83,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost","wedding.kevintrinkle.com", "localhost:7096"],
+        allowedDomains: ["localhost", "kevinandaustin.com", "localhost:7096"],
         disallowedRoutes: [],
       },
     }),

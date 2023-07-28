@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto } from '../data/data';
+import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto, weddingPartyGiftDto } from '../data/data';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -54,5 +54,20 @@ export class DataService {
   public getAdminRsvpList(): Observable<any> {
     var uri = this.REST_API_SERVER + '/Admin/currentRsvp';
     return this.httpClient.get(uri);
+  }
+
+  public saveAdminRsvpList(party: weddingPartyMemberDto): Observable<weddingPartyMemberDto[]> {
+    var uri = this.REST_API_SERVER + '/Admin/saveRsvp';
+    return this.httpClient.post<weddingPartyMemberDto[]>(uri, party);
+  }
+
+  public getAdminGiftList(): Observable<weddingPartyGiftDto[]> {
+    var uri = this.REST_API_SERVER + '/Admin/currentGifts';
+    return this.httpClient.get<weddingPartyGiftDto[]>(uri);
+  }
+
+  public saveAdminGift(partyGift: weddingPartyGiftDto): Observable<any> {
+    var uri = this.REST_API_SERVER + '/Admin/saveGift';
+    return this.httpClient.post<weddingPartyGiftDto[]>(uri, partyGift);
   }
 }

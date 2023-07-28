@@ -4,16 +4,11 @@ public class RsvpService : IRsvpService
 {
     private readonly ContextWedding _ContextWedding;
     private readonly ILogger<RsvpService> _logger;
-    private readonly AppSettings _appSettings;
-    private readonly ILoginService _loginService;
 
-    public RsvpService(ILogger<RsvpService> logger, ContextWedding context, 
-                        IOptions<AppSettings> appSettings, ILoginService loginService)
+    public RsvpService(ILogger<RsvpService> logger, ContextWedding context)
     {
         _logger = logger;
         _ContextWedding = context;
-        _appSettings = appSettings.Value;
-        _loginService = loginService;
     }
 
     public async Task<List<WeddingPartyMemberDto>?> SaveRsvpStatusSingleAsync(WeddingPartyUpdateDto updateDto)
