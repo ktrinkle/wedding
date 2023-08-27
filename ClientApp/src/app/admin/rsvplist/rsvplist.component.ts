@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CDK_DRAG_CONFIG } from '@angular/cdk/drag-drop';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { weddingPartyMemberDto } from 'src/app/data/data';
@@ -14,7 +14,7 @@ import { rsvpList } from 'src/app/store/wedding.actions';
   templateUrl: './rsvplist.component.html',
   styleUrls: ['./rsvplist.component.scss']
 })
-export class RsvplistComponent {
+export class RsvplistComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   // we play with this because we have 3 states.
@@ -28,9 +28,9 @@ export class RsvplistComponent {
   constructor (private readonly mediaMatcher: MediaMatcher, private store: Store) {}
 
   ngOnInit() {
+    this.store.dispatch(rsvpList());
     this.updateRsvpList();
     this.filterRsvpList(true);
-    this.store.dispatch(rsvpList());
   }
 
   toggleCollapse(): void {
@@ -45,9 +45,7 @@ export class RsvplistComponent {
 
   filterRsvpList(filterState?: boolean) {
     this.filterStatus = filterState;
-    console.log(filterState);
     this.filteredRsvpList = this.rsvpList.filter(x => x.rsvpYes == filterState);
-    console.log(this.filteredRsvpList.length);
   }
 
   ngOnDestroy() {

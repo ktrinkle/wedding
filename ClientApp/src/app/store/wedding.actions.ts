@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { weddingPartyDto, weddingPartyMemberDto, bearerDto } from '../data/data';
+import { weddingPartyMemberDto, weddingPartyGiftDto } from '../data/data';
 
 export const partyByAuth = createAction(
   '[Wedding] GetParty',
@@ -37,6 +37,25 @@ export const rsvpList = createAction(
 export const rsvpListSuccess = createAction(
   '[Wedding] RsvpListSuccess',
   props<{ rsvpList: weddingPartyMemberDto[] }>()
+);
+
+export const giftList = createAction(
+  '[Wedding] GiftList',
+);
+
+export const giftListSuccess = createAction(
+  '[Wedding] GiftListSuccess',
+  props<{ giftList: weddingPartyGiftDto[] }>()
+);
+
+export const saveGift = createAction(
+  '[Wedding] SaveGift',
+  props<{ partyGift: weddingPartyGiftDto }>()
+);
+
+export const saveGiftSuccess = createAction(
+  '[Wedding] SaveGiftSuccess',
+  props<{ partyGifts: weddingPartyGiftDto[] }>()
 );
 
 

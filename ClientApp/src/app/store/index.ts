@@ -21,3 +21,4 @@ export const selectWeddingState = createFeatureSelector<fromWedding.State>('wedd
 export const selectPartyMembers = createSelector(selectWeddingState, (state: fromWedding.State) => state.partyMembers);
 
 export const selectRsvpList = createSelector(selectWeddingState, (state: fromWedding.State) => state.rsvpList);
+export const selectGiftList = createSelector(selectWeddingState, (state: fromWedding.State) => state.giftList);

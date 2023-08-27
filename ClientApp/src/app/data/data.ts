@@ -29,6 +29,7 @@ export interface simpleUser {
 }
 
 export interface weddingPartyMemberDto {
+  groupId?: Guid,
   groupMemberId: number,
   groupMemberName: string,
   rsvpYes? : boolean,
@@ -40,4 +41,13 @@ export interface weddingPartyDto {
     groupId: string,
     emailAddress: string,
     partyMembers: [weddingPartyMemberDto]
+}
+
+export interface weddingPartyGiftDto {
+  groupId: Guid,
+  firstGroupMemberName?: string,
+  rsvpYes?: boolean,
+  giftComment?: string,
+  giftAmount?: number,
+  giftDate?: Date
 }

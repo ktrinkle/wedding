@@ -15,7 +15,7 @@ public class LoginService : ILoginService
         _appSettings = appSettings.Value;
     }
 
-    public async Task<BearerDto> LoginAsync(string emailAddr, string password)
+    public async Task<BearerDto?> LoginAsync(string emailAddr, string password)
     {
         /*
         This is a very simple login method just calling for the email address.

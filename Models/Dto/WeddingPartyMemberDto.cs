@@ -5,6 +5,7 @@ namespace wedding.Data;
 
 public partial class WeddingPartyMemberDto
 {
+    public Guid GroupId { get; set; }
     public int GroupMemberId { get; set; }
     public string GroupMemberName { get; set; } = String.Empty;
     public string? RsvpComment { get; set; }
