@@ -1,6 +1,13 @@
 
 namespace wedding.Models;
 
+public class Storage
+{
+    public string? AccountName { get; set; }
+    public string? AccountKey { get; set; }
+    public string? AccountUrl { get; set; }
+}
+
 public class AppSettings
 {
     public const string App = "AppSettings";
@@ -13,5 +20,6 @@ public class AppSettings
     public string AdminUser { get; set; } = String.Empty;
     public string AdminPassword { get; set; } = String.Empty;
     public string AdminGuid { get; set; } = String.Empty;
+    public Storage AzureStorage { get; set; } = new Storage();
 }
 
