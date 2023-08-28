@@ -35,6 +35,17 @@ public class PhotoService : IPhotoService
         return service;        
     }
 
+    public static async Task UploadFromStringAsync(
+        BlobContainerClient containerClient,
+        string blobName,
+        )
+    {
+        BlobClient blobClient = containerClient.GetBlobClient(blobName);
+        string blobContents = "Sample blob data";
+
+        await blobClient.UploadAsync(BinaryData.FromString(blobContents), overwrite: true);
+    }
+
     
 }
 
