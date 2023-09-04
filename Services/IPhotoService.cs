@@ -4,6 +4,7 @@ namespace wedding.Services;
 
 public interface IPhotoService
 {
-    public Task<BlobServiceClient?> GetConnectionAsync();
+    Task<BlobContainerClient?> GetConnectionAsync();
+    Task<string?> UploadFromStringAsync(BlobContainerClient containerClient, string fileName, byte[] attachmentData);
 }
 

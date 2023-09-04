@@ -33,6 +33,7 @@
         <div class="file-folder-top"></div>
       </ul>
       <div class="file-folder">
+      <div id="giftListDisplay" *ngIf="this.tabValue == 1">
       <div class="giftdetail">Total gift count: {{ this.giftList.length }}</div>
       <div class="table-responsive">
       <table class="table table-striped">
@@ -50,16 +51,32 @@
           <td data="Gift Amount">
             {{member.giftAmount | currency:'USD'}}
           </td>
-          <td data="Any comments? (Dietary restrictions, etc)">
+          <td data="Gift comment">
             {{member.giftComment }}
           </td>
-          <td data="Any comments? (Dietary restrictions, etc)">
-            {{member.giftDate | date }}
+          <td data="Gift Date">
+            {{member.giftDate | date:'shortDate' }}
           </td>
           </tr>
       </tbody>
       </table>
       </div>
+    </div>
+
+    <div id="changeGift" *ngIf="this.tabValue == 2">
+      <form [formGroup]="giftUpdateForm">
+        <select id="groupId" formControlName="groupId">
+          <option value='' disabled selected></option>
+          <option *ngFor="let party of this.rsvpList; let d = index" [value]="party.groupId"> {{party.groupMemberName}}
+          </option>
+        </select>
+        <label for="giftAmount">Gift amount (USD)</label>
+        <input type="text" id="giftAmount" formControlName="giftAmount">
+        <label for="giftComment">Gift comment</label>
+        <input type="text" id="giftComment" formControlName="giftComment">
+        <button type="submit" click="this.saveGiftEntry();">Save gift</button>
+      </form>
+    </div>
       </div>
     </div>
 

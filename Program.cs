@@ -23,6 +23,8 @@ builder.Services.AddCustomServices();
 
 builder.Services.AddCors();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,7 +59,7 @@ if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddSwaggerGen(c => {
         c.EnableAnnotations();
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wedding API", Version = "v1.0" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wedding API", Version = "v1.1" });
 
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -102,6 +104,8 @@ app.UseCors(builder =>
      .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
      .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
 });
+
+app.MapHealthChecks("/healthz");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

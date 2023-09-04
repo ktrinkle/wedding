@@ -18,8 +18,9 @@ public class PhotoService : IPhotoService
         _ContextWedding = context;
     }
 
-    public async Task<BlobServiceClient?> GetConnectionAsync()
+    public async Task<BlobContainerClient?> GetConnectionAsync()
     {
+        // Note: The container is to be included in the serviceUri in AppSettings.json.
         var accountName = _appSettings.AzureStorage.AccountName;
         var accountKey = _appSettings.AzureStorage.AccountKey;
         var serviceUri = new Uri(_appSettings.AzureStorage.AccountUrl!);
@@ -30,22 +31,41 @@ public class PhotoService : IPhotoService
             return null;
         }
 
-        var credential = new StorageSharedKeyCredential(accountName, accountKey);
-        var service = new BlobServiceClient(serviceUri, credential);
-        return service;        
+        try
+        {
+            var credential = new StorageSharedKeyCredential(accountName, accountKey);
+            var service = new BlobContainerClient(serviceUri, credential);
+            return service;   
+        }
+        catch
+        {
+            _logger.LogCritical("Unable to connect to blob container.");
+            return null;
+        }
     }
 
-    public static async Task UploadFromStringAsync(
-        BlobContainerClient containerClient,
-        string blobName,
-        )
+    public async Task<string?> UploadFromStringAsync(BlobContainerClient containerClient, string fileName, byte[] attachmentData)
     {
-        BlobClient blobClient = containerClient.GetBlobClient(blobName);
-        string blobContents = "Sample blob data";
+        BlobClient blobClient = containerClient.GetBlobClient(fileName);
 
-        await blobClient.UploadAsync(BinaryData.FromString(blobContents), overwrite: true);
+        try
+        {
+            var memoryStream = new MemoryStream(attachmentData);
+            await blobClient.UploadAsync(memoryStream, true);
+            memoryStream.Close();
+            return "Congratulations! We have your file!";
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex.ToString());
+            return "I'm sorry, an error happened.";
+        }
     }
 
+    #region TwilioApi
+
+
+    #endregion
     
 }
 

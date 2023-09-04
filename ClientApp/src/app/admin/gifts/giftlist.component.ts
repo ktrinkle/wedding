@@ -25,7 +25,7 @@ export class GiftListComponent implements OnInit, OnDestroy {
 
   public giftList: weddingPartyGiftDto[] = new Array<weddingPartyGiftDto>();
   public rsvpList: weddingPartyMemberDto[] = new Array<weddingPartyMemberDto>();
-  private rsvpUpdateForm: FormGroup = new FormGroup(
+  public giftUpdateForm: FormGroup = new FormGroup(
   {
     groupId: new FormControl('', Validators.required),
     giftAmt: new FormControl('', Validators.pattern('[0-9\.].')),
@@ -47,7 +47,7 @@ export class GiftListComponent implements OnInit, OnDestroy {
 
   updateRsvpList() {
     this.store.select(selectRsvpList).pipe(takeUntil(this.destroy$)).subscribe(rsvpList => {
-      this.rsvpList = rsvpList;
+      this.rsvpList = rsvpList.filter(x => x.groupMemberId == 1);
     });
   }
 
@@ -60,6 +60,25 @@ export class GiftListComponent implements OnInit, OnDestroy {
   changeTab(tabValue: number)
   {
     this.tabValue = tabValue;
+  }
+
+  saveGiftEntry()
+  {
+    var builtGroup: weddingPartyGiftDto =
+    {
+      groupId: this.giftUpdateForm.value.groupId,
+      giftAmount: this.giftUpdateForm.value.giftAmount,
+      giftComment: this.giftUpdateForm.value.giftComment,
+      giftDate: new Date()
+    }
+
+    if (builtGroup.groupId != null && builtGroup.giftAmount != null)
+    {
+      console.log(builtGroup);
+    }
+
+
+
   }
 
   ngOnDestroy() {
