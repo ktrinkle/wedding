@@ -58,6 +58,12 @@
                   Gifts
                 </a>
               </li>
+              <li class="menu-controls" id="menu-controls" *ngIf="this.isPhotoDate()">
+                <img src="../../assets/img/gift.png" width="16" alt="Photos">
+                <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/photos']">
+                  Photos
+                </a>
+              </li>
               <li class="menu-controls" id="menu-controls">
                 <img src="../../assets/img/phone.png" width="16" alt="RSVP">
                 <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/rsvp']">

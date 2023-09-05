@@ -11,6 +11,7 @@ export class NavMenuComponent {
 
   time: Date = new Date();
   trashEnabled: boolean = true;
+  checkPhotoMenu: boolean = new Date("2023-10-28") <= new Date();
 
   constructor(private authService: AuthService, private eventService: EventService) {
     this.getCurrentDate();
@@ -33,6 +34,10 @@ export class NavMenuComponent {
 
   isAdmin() {
     return this.authService.isAdmin();
+  }
+
+  isPhotoDate() {
+    return this.checkPhotoMenu || this.isAdmin();
   }
 
   logout() {

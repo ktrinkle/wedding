@@ -1,0 +1,36 @@
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/gift.png" data-window-name="Wedding" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>Photos</span></h1>
+  <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/gift.png" alt="Gifts" />
+    </div>
+<h3>Share your photos with us!</h3>
+
+  <input class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic"
+      (change)="onChange($event)">
+
+  <button (click)="onUpload()">
+    Upload
+  </button>
+
+<h3>Gallery</h3>
+
+<p>This is a future enhancement.</p>
+
+  </cdk-virtual-scroll-viewport>
+</div>
+</div>
