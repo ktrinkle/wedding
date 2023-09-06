@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -12,8 +13,10 @@ export class PhotosComponent implements OnInit, OnDestroy{
 
   destroy$: Subject<boolean> = new Subject<boolean>();
   file!: File; // Variable to store file
+  message: string | undefined;
+  progress: number | undefined;
 
-  constructor (private formBuilder: UntypedFormBuilder) {
+  constructor (private dataService: DataService) {
   }
 
   windowVisible: boolean = true;
@@ -24,15 +27,23 @@ export class PhotosComponent implements OnInit, OnDestroy{
     this.windowVisible = !this.windowVisible;
   }
 
-  onUpload() {
+  onUpload(): void {
 
-    // Create form data
-    // const formData = new FormData();
+    // basic filter, not 100% reliable
 
-    // // Store form name as "file" with file data
-    // formData.append("file", file, file.name);
+    if (this.file.type.startsWith("image/"))
+    {
+      // Create form data
+      const formData = new FormData();
+      formData.append("file", this.file, this.file.name);
 
-    // return this.dataSer.post(this.baseApiUrl, formData);
+      var rtnString: string;
+      this.dataService.savePhotoFile(formData).subscribe(x => {
+        console.log(x);
+        this.message = x;
+      });
+    }
+
   }
 
   onChange(event: any) {

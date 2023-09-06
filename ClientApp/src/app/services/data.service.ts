@@ -70,4 +70,10 @@ export class DataService {
     var uri = this.REST_API_SERVER + '/Admin/saveGift';
     return this.httpClient.post<weddingPartyGiftDto[]>(uri, partyGift);
   }
+
+  public savePhotoFile(fileForm: FormData): Observable<string> {
+    var uri = this.REST_API_SERVER + '/Photo/uploadPhotoFile';
+    return this.httpClient.post<string>(uri, fileForm);
+  }
+
 }

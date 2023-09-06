@@ -18,29 +18,20 @@ public class PhotoService : IPhotoService
         _ContextWedding = context;
     }
 
-    public async Task<BlobContainerClient?> GetConnectionAsync()
+    public async Task<BlobContainerClient> GetConnectionAsync()
     {
         // Note: The container is to be included in the serviceUri in AppSettings.json.
-        var accountName = _appSettings.AzureStorage.AccountName;
-        var accountKey = _appSettings.AzureStorage.AccountKey;
         var serviceUri = new Uri(_appSettings.AzureStorage.AccountUrl!);
-
-        if (accountName is null)
-        {
-            _logger.LogError("Blob storage configuration is not set properly");
-            return null;
-        }
 
         try
         {
-            var credential = new StorageSharedKeyCredential(accountName, accountKey);
-            var service = new BlobContainerClient(serviceUri, credential);
+            var service = new BlobContainerClient(serviceUri);
             return service;   
         }
         catch
         {
             _logger.LogCritical("Unable to connect to blob container.");
-            return null;
+            return new BlobContainerClient(null);
         }
     }
 
@@ -60,6 +51,20 @@ public class PhotoService : IPhotoService
             _logger.LogCritical(ex.ToString());
             return "I'm sorry, an error happened.";
         }
+    }
+
+    public async Task<string?> UploadFileAsync(Stream fileStream, string fileName, string contentType)
+    {
+        var containerClient = await GetConnectionAsync();
+
+        // swap to Guid to abstract file names
+        var fileGuid = Guid.NewGuid();
+
+        BlobClient blobClient = containerClient.GetBlobClient(fileGuid.ToString());
+
+        await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+        await blobClient.UploadAsync(fileStream, new BlobHttpHeaders { ContentType = contentType });
+        return blobClient.Uri.ToString();
     }
 
     #region TwilioApi
