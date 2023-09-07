@@ -20,12 +20,13 @@
     </div>
 <h3>Share your photos with us!</h3>
 
-  <input class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic,image/heif"
+  <input #fileInput class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic,image/heif"
       (change)="onChange($event)">
 
-  <button (click)="onUpload()">
+  <button (click)="onUpload(); fileInput.value=''">
     Upload
   </button>
+  <p>{{this.message}}</p>
 
 <h3>Gallery</h3>
 

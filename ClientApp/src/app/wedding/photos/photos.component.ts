@@ -40,7 +40,7 @@ export class PhotosComponent implements OnInit, OnDestroy{
       var rtnString: string;
       this.dataService.savePhotoFile(formData).subscribe(x => {
         console.log(x);
-        this.message = x;
+        this.message = "Your file has been uploaded!";
       });
     }
 
@@ -48,6 +48,7 @@ export class PhotosComponent implements OnInit, OnDestroy{
 
   onChange(event: any) {
     this.file = event.target.files[0];
+    this.message = "";
   }
 
   ngOnDestroy() {
