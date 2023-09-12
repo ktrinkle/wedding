@@ -9,6 +9,6 @@ public interface IPhotoService
     Task<string?> UploadFromStringAsync(BlobContainerClient containerClient, string fileName, byte[] attachmentData);
     Task<string?> UploadFileAsync(Stream fileStream, string fileName, string contentType);
     Task<List<PhotoListDto>> GetPreviewAsync();
-    Task<byte[]?> GetPhotoBlobAsync(Guid photoGuid);;
+    Task<byte[]?> GetPhotoBlobAsync(Guid photoGuid);
 }
 
