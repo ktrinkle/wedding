@@ -3,6 +3,7 @@ using Twilio;
 using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
 using Twilio.TwiML;
+using Wedding.Models;
 
 namespace wedding.Controllers;
 
@@ -46,6 +47,13 @@ public class PhotoController : TwilioController
             return StatusCode(500, $"Internal server error: {ex}");
         }
     }
+
+    [DisableRequestSizeLimit]
+    [Authorize]
+    [HttpGet("getThumbnails")]
+    public Task<List<PhotoListDto>> GetThumbnailsAsync()
+        => _photoService.GetPreviewAsync();
+
 
     [Authorize(Roles = "Twilio")]
     [HttpPost("savePhoto")]

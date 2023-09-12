@@ -1,3 +1,4 @@
+import { Binary } from "@angular/compiler";
 import { Guid } from "typescript-guid";
 
 export enum RsvpDrinkType {
@@ -50,4 +51,10 @@ export interface weddingPartyGiftDto {
   giftComment?: string,
   giftAmount?: number,
   giftDate?: Date
+}
+
+export interface photoListDto {
+  photoGuid: Guid,
+  photoPreview: Binary,
+  photoType: string
 }

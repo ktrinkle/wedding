@@ -6,6 +6,7 @@ public class Storage
     public string? SasKey { get; set; }
     public string? AccountKey { get; set; }
     public string? AccountUrl { get; set; }
+    public string? AccountName { get; set; }
 }
 
 public class AppSettings

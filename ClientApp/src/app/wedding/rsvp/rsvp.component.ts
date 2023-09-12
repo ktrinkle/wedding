@@ -16,6 +16,7 @@ export class RsvpComponent implements OnInit, OnDestroy{
 
   destroy$: Subject<boolean> = new Subject<boolean>();
   removeFlag: boolean = false;
+  disableForm: boolean = (new Date() > new Date("2023-10-14"));
 
   public weddingPartyMembers: weddingPartyMemberDto[] = new Array<weddingPartyMemberDto>();
 
@@ -48,11 +49,11 @@ export class RsvpComponent implements OnInit, OnDestroy{
       for (let member of this.weddingPartyMembers) {
         mArray.push(
           this.formBuilder.group({
-            groupMemberId: new UntypedFormControl(member.groupMemberId),
-            groupMemberName: new UntypedFormControl(member.groupMemberName),
-            rsvpComment: new UntypedFormControl(member.rsvpComment),
-            rsvpYes: new UntypedFormControl(member.rsvpYes),
-            rsvpDrinkType: new UntypedFormControl(member.rsvpDrinkType)
+            groupMemberId: new UntypedFormControl({value: member.groupMemberId, disabled: this.disableForm}),
+            groupMemberName: new UntypedFormControl({value: member.groupMemberName, disabled: this.disableForm}),
+            rsvpComment: new UntypedFormControl({value: member.rsvpComment, disabled: this.disableForm}),
+            rsvpYes: new UntypedFormControl({value: member.rsvpYes, disabled: this.disableForm}),
+            rsvpDrinkType: new UntypedFormControl({value: member.rsvpDrinkType, disabled: this.disableForm})
           })
         );
       }

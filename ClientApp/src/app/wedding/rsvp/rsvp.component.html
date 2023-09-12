@@ -20,7 +20,10 @@
     </div>
     <ul>
       <li style="text-align: left;">
-<p>Here are the people we have in your party. Please let us know by October 14th if you are attending!</p>
+<p>Here are the people we have in your party.
+  <span *ngIf="!this.disableForm">Please let us know by October 14th if you are attending!</span>
+  <span *ngIf="this.disableForm">We are past the RSVP deadline, so please let us know directly if something changes.</span>
+</p>
 <div class="container border bg-white">
 <form [formGroup]="weddingArray">
 <div class="table-responsive">
@@ -59,7 +62,7 @@
     </tr>
     <tr><td colspan="5">
       <div class="centerbutton">
-        <button class="command_button boot-button" (click)="this.addPartyMember()">Add new party member</button>
+        <button class="command_button boot-button" [disabled]="this.disableForm" (click)="this.addPartyMember()">Add new party member</button>
       </div></td></tr>
 </tbody>
 </table>

@@ -21,6 +21,13 @@
                       Home
                     </a>
                 </li>
+                <hr *ngIf="this.isLoggedIn()">
+                <li id="menu-controls" *ngIf="this.isLoggedIn()">
+                  <img src="../../assets/img/controls.png" width="16" alt="Logout">
+                  <a [routerLinkActive]="['link-active']" (click)="this.logout();">
+                    Logout
+                  </a>
+              </li>
             </ul>
         </li>
         <li appDropdown id="edit">

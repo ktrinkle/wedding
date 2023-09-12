@@ -9,7 +9,7 @@
   </div>
   <div class="control-box window-collapse">
       <div class="control-box-inner">
-          <div class="window-collapse-inner" (click)="toggleCollapse();"></div>
+          <div class="window-collapse-inner" (click)="toggleCollapse('main');"></div>
       </div>
   </div>
   <h1 class="titlebar" cdkDragHandle><span>Photos</span></h1>
@@ -21,17 +21,51 @@
 <h3>Share your photos with us!</h3>
 
   <input #fileInput class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic,image/heif"
-      (change)="onChange($event)">
+      multiple (change)="onChange($event)">
 
   <button (click)="onUpload(); fileInput.value=''">
-    Upload
+    Upload your files
   </button>
   <p>{{this.message}}</p>
 
 <h3>Gallery</h3>
 
-<p>This is a future enhancement.</p>
+<div class="d-flex flex-wrap" *ngFor="let p of this.photoList; let i = index">
+    <div class="p-2" (click)="this.showGallery(i);"><img [src]="'data:image;base64,' + p.photoPreview"></div>
+</div>
 
-  </cdk-virtual-scroll-viewport>
+</cdk-virtual-scroll-viewport>
 </div>
 </div>
+
+<!---Detailed gallery-->
+<div *ngIf="this.galleryDisplay" class="overlay">
+  <div id="gallery" class="content resizable draggable-window" data-window-icon="img/gift.png" data-window-name="Wedding" cdkDrag>
+    <div class="control-box close-box">
+        <a class="control-box-inner" (click)="this.galleryDisplay = false"></a>
+    </div>
+    <div class="control-box zoom-box">
+        <div class="control-box-inner">
+            <div class="zoom-box-inner"></div>
+        </div>
+    </div>
+    <div class="control-box window-collapse">
+        <div class="control-box-inner">
+            <div class="window-collapse-inner" (click)="toggleCollapse('gallery');"></div>
+        </div>
+    </div>
+    <h1 class="titlebar" cdkDragHandle><span>Gallery</span></h1>
+    <div [ngClass]="this.galleryExpanded ? 'showMain' : 'hideMain'">
+      <cdk-virtual-scroll-viewport scrollWindow itemSize="800" class="inner">
+        <ngb-carousel *ngIf="this.photoList">
+          <ng-template ngbSlide *ngFor="let p of this.photoList; let i = index">
+            <div class="picsum-img-wrapper">
+              <img src="/Photo/full/{{p.photoGuid}}" alt="Wedding gallery photo" />
+            </div>
+          </ng-template>
+        </ngb-carousel>
+      </cdk-virtual-scroll-viewport>
+    </div>
+  </div>
+</div>
+

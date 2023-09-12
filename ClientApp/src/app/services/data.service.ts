@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto, weddingPartyGiftDto } from '../data/data';
+import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto, weddingPartyGiftDto, photoListDto } from '../data/data';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -74,6 +74,11 @@ export class DataService {
   public savePhotoFile(fileForm: FormData): Observable<string> {
     var uri = this.REST_API_SERVER + '/Photo/uploadPhotoFile';
     return this.httpClient.post<string>(uri, fileForm);
+  }
+
+  public getThumbnails(): Observable<photoListDto[]> {
+    var uri = this.REST_API_SERVER + '/Photo/getThumbnails';
+    return this.httpClient.get<photoListDto[]>(uri);
   }
 
 }

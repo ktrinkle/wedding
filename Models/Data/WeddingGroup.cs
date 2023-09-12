@@ -13,6 +13,7 @@ public partial class WeddingGroup
     public string EmailAddress { get; set; } = String.Empty;
     public DateTime? LastLoginDate { get; set; }
     public bool? AdminFlag { get; set; }
+    public bool? AirlineFlag { get; set; }
 
     public ICollection<WeddingGroupName> WeddingGroupNames { get; set; } = null!;
 }

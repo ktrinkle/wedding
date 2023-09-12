@@ -74,6 +74,7 @@ export class AuthService {
           }
         },
         error: () => {
+          this.eventService.loginFailEmit();
           returnVal = 1;
         },
         complete: () => {
