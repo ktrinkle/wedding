@@ -60,7 +60,7 @@
         <ngb-carousel *ngIf="this.photoList">
           <ng-template ngbSlide *ngFor="let p of this.photoList; let i = index">
             <div class="picsum-img-wrapper">
-              <img src="/Photo/full/{{p.photoGuid}}" alt="Wedding gallery photo" />
+              <img src="/Photo/full/{{p.photoType}}/{{p.photoGuid}}" alt="Wedding gallery photo" />
             </div>
           </ng-template>
         </ngb-carousel>

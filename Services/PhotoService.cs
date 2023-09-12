@@ -84,7 +84,7 @@ public class PhotoService : IPhotoService
 
         // reset filestream for the thumbnail
         fileStream.Position = 0;
-        GenerateThumbnail(fileStream, fileGuid, contentType);
+        GenerateThumbnail(fileStream, fileGuid, fileSuffix);
 
         return blobClient.Uri.ToString();
     }

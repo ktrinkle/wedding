@@ -48,11 +48,15 @@ public class PhotoController : TwilioController
         }
     }
 
-    [DisableRequestSizeLimit]
     [Authorize]
     [HttpGet("getThumbnails")]
     public Task<List<PhotoListDto>> GetThumbnailsAsync()
         => _photoService.GetPreviewAsync();
+
+    [Authorize]
+    [HttpGet("full/{photoType}/{photoGuid}")]
+    public Task<byte[]?> GetPhotoAsync(Guid photoGuid, string photoType)
+        => _photoService.GetPhotoBlobAsync(photoGuid, photoType);
 
 
     [Authorize(Roles = "Twilio")]
