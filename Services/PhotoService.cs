@@ -6,6 +6,7 @@ using SkiaSharp;
 using Wedding.Models;
 using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Azure.Storage.Sas;
 
 namespace wedding.Services;
 
@@ -150,10 +151,10 @@ public class PhotoService : IPhotoService
         }
     }
 
-    public async Task<byte[]?> GetPhotoBlobAsync(Guid photoGuid, string photoType)
+    public async Task<Stream?> GetPhotoBlobAsync(Guid photoGuid, string photoType)
     {
         var containerClient = await GetConnectionAsync(PhotoBlob);
-        byte[] tempImage;
+        // byte[] tempImage;
 
         if (!(photoType == "jpg" || photoType == "heic" || photoType == "png"))
         {
@@ -166,11 +167,11 @@ public class PhotoService : IPhotoService
 
             using (var imageStream = await blobClient.OpenReadAsync())
             {
-                tempImage = new byte[imageStream.Length];
-                await imageStream.ReadAsync(tempImage.AsMemory(0, (int)tempImage.Length));
+                imageStream.Position = 0;
+                return imageStream;
+                // tempImage = new byte[imageStream.Length];
+                // await imageStream.ReadAsync(tempImage.AsMemory(0, (int)tempImage.Length));
             }
-
-            return tempImage;
         }
         catch (Exception ex)
         {
@@ -179,8 +180,6 @@ public class PhotoService : IPhotoService
         }
 
     }
-
-    // add method here for getting actual blob
 
     #region TwilioApi
 

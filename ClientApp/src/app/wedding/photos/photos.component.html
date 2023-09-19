@@ -30,7 +30,7 @@
 
 <h3>Gallery</h3>
 
-<div class="d-flex flex-wrap" *ngFor="let p of this.photoList; let i = index">
+<div class="d-inline-flex flex-wrap" *ngFor="let p of this.photoList$ | async; let i = index">
     <div class="p-2" (click)="this.showGallery(i);"><img [src]="'data:image;base64,' + p.photoPreview"></div>
 </div>
 
@@ -57,10 +57,10 @@
     <h1 class="titlebar" cdkDragHandle><span>Gallery</span></h1>
     <div [ngClass]="this.galleryExpanded ? 'showMain' : 'hideMain'">
       <cdk-virtual-scroll-viewport scrollWindow itemSize="800" class="inner">
-        <ngb-carousel *ngIf="this.photoList">
-          <ng-template ngbSlide *ngFor="let p of this.photoList; let i = index">
+        <ngb-carousel *ngIf="this.photoList$ | async">
+          <ng-template ngbSlide *ngFor="let p of this.photoList$ | async; let i = index">
             <div class="picsum-img-wrapper">
-              <img src="/Photo/full/{{p.photoType}}/{{p.photoGuid}}" alt="Wedding gallery photo" />
+              <img src="{{this.storageUri}}{{p.photoGuid}}.{{p.photoType}}?{{this.sasKey}}" alt="Wedding gallery photo" />
             </div>
           </ng-template>
         </ngb-carousel>

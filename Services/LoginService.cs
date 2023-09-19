@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
 
 namespace wedding.Services;
 
@@ -7,12 +9,14 @@ public class LoginService : ILoginService
     private readonly ContextWedding _ContextWedding;
     private readonly ILogger<LoginService> _logger;
     private readonly AppSettings _appSettings;
+    private readonly IPhotoService _photoService;
 
-    public LoginService(ILogger<LoginService> logger, ContextWedding context, IOptions<AppSettings> appSettings)
+    public LoginService(ILogger<LoginService> logger, ContextWedding context, IOptions<AppSettings> appSettings, IPhotoService photoService)
     {
         _logger = logger;
         _ContextWedding = context;
         _appSettings = appSettings.Value;
+        _photoService = photoService;
     }
 
     public async Task<BearerDto?> LoginAsync(string emailAddr, string password)
@@ -20,6 +24,7 @@ public class LoginService : ILoginService
         /*
         This is a very simple login method just calling for the email address.
         We also require a fixed password from AppSettings.
+        We also get the SAS token if the login is successful.
         */
         
         var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.ToLower() == emailAddr.ToLower());
@@ -43,11 +48,15 @@ public class LoginService : ILoginService
         _ContextWedding.WeddingGroup.Update(loginInfo);
         await _ContextWedding.SaveChangesAsync();
 
+        // get SAS token
+        var sasToken = await GetAzureSASTokenAsync();
+
         var returnUser = new BearerDto()
         {
             PartyGuid = loginInfo.GroupId.ToString(),
             PartyAddress = loginInfo.EmailAddress,
-            BearerToken = GenerateToken(loginInfo.GroupId, loginInfo.EmailAddress, loginInfo.AdminFlag ?? false)
+            BearerToken = GenerateToken(loginInfo.GroupId, loginInfo.EmailAddress, loginInfo.AdminFlag ?? false),
+            SasToken = sasToken
         };
 
         return returnUser;
@@ -125,6 +134,36 @@ public class LoginService : ILoginService
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+
+    public async Task<string> GetAzureSASTokenAsync()
+    {
+        var containerName = "/photos";
+        var containerClient = await _photoService.GetConnectionAsync(containerName);
+        var expiryMinutes = 240;
+
+        if (!containerClient.CanGenerateSasUri) 
+        {
+            return string.Empty;
+        }
+
+        var sasBuilder = new BlobSasBuilder
+        {
+            BlobContainerName = containerClient.Name,
+            Resource = "c",
+            ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(expiryMinutes),
+            Protocol = SasProtocol.Https
+        };
+
+        sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+
+        // signedVersion
+        // signedProtocol https
+        // canonicalizedResource = "/blob/myaccount/music" 
+
+        var sasUri = containerClient.GenerateSasUri(sasBuilder);
+
+        return sasUri.Query.TrimStart('?');
     }
 }
 

@@ -21,7 +21,8 @@ export interface frontLogin {
 export interface bearerDto {
   partyGuid?: string,
   partyAddress?: string,
-  bearerToken?: string
+  bearerToken?: string,
+  sasToken?: string
 }
 
 export interface simpleUser {
@@ -56,5 +57,6 @@ export interface weddingPartyGiftDto {
 export interface photoListDto {
   photoGuid: Guid,
   photoPreview: Binary,
-  photoType: string
+  photoType: string,
+  contentType?: string
 }

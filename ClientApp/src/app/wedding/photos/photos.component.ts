@@ -1,8 +1,11 @@
-import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, map } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 import { photoListDto } from 'src/app/data/data';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { Guid } from 'typescript-guid';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -13,20 +16,31 @@ import { DataService } from 'src/app/services/data.service';
 export class PhotosComponent implements OnInit, OnDestroy{
 
   destroy$: Subject<boolean> = new Subject<boolean>();
-  file!: File; // Variable to store file
   files!: File[]; // array of files for future use
   message: string | undefined;
   progress: number | undefined;
   galleryDisplay: boolean = false;
-  photoList: photoListDto[] | undefined;
+  images!: any[]; // for the array of images in the gallery
+  storageUri: string = "https://photo.kevinandaustin.com/";
+  sasKey: string = "";
 
-  constructor (private dataService: DataService) { }
+  constructor (private dataService: DataService, private sanitizer: DomSanitizer, private authService: AuthService) { }
 
   windowVisible: boolean = true;
   galleryExpanded: boolean = true;
 
+  private photoListSubject : BehaviorSubject<photoListDto[]> | undefined;
+  public photoList$ : Observable<photoListDto[]> | undefined;
+
   ngOnInit(): void {
+    this.photoListSubject = new BehaviorSubject<photoListDto[]>([]);
+
+    this.photoList$ = this.photoListSubject.asObservable();
+
+    this.sasKey = this.authService.getSasToken();
+
     this.getThumbsFromApi();
+
   }
 
   toggleCollapse(winType: string): void {
@@ -65,18 +79,13 @@ export class PhotosComponent implements OnInit, OnDestroy{
 
   getThumbsFromApi()
   {
-    // clean old results
-    this.photoList = undefined;
-
-    this.dataService.getThumbnails().subscribe(pr =>
-      this.photoList = pr
-    );
+    this.dataService.getThumbnails().subscribe(pr => {
+      this.photoListSubject!.next(pr)
+    });
   }
 
   onChange(event: any) {
-    this.file = event.target.files[0];
     this.files = event.target.files;
-    console.log(this.files);
     this.message = "";
   }
 

@@ -99,4 +99,18 @@ public class LoginController : ControllerBase
         return Ok(partyResult);
     }
 
+    [Authorize]
+    [HttpGet("fulltoken")]
+    public async Task<ActionResult<string>> GetAzureSAS()
+    {
+        var sasToken = await _loginService.GetAzureSASTokenAsync();
+
+        if (sasToken == string.Empty)
+        {
+            return Unauthorized("We could not get access to photos");
+        }
+
+        return Ok(sasToken);
+    }
+
 }

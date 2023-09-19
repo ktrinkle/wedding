@@ -3,6 +3,7 @@ using Twilio;
 using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
 using Twilio.TwiML;
+using wedding.Extensions;
 using Wedding.Models;
 
 namespace wedding.Controllers;
@@ -13,7 +14,6 @@ public class PhotoController : TwilioController
 {
     private readonly ILogger<PhotoController> _logger;
     private readonly IPhotoService _photoService;
-
     public string[] ContentTypes = {"image/jpeg", "image/png", "image/heic", "image/tiff", "video/mp4"}; 
 
     public PhotoController(ILogger<PhotoController> logger, IPhotoService photoService)
@@ -30,7 +30,7 @@ public class PhotoController : TwilioController
         try
         {                
             var formCollection = await Request.ReadFormAsync();
-            var file = formCollection.Files.First();
+            var file = formCollection.Files[0];
             if (file.Length > 0 && ContentTypes.Contains(file.ContentType))
             {
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName!.Trim('"');
@@ -50,14 +50,35 @@ public class PhotoController : TwilioController
 
     [Authorize]
     [HttpGet("getThumbnails")]
-    public Task<List<PhotoListDto>> GetThumbnailsAsync()
-        => _photoService.GetPreviewAsync();
+    public async Task<List<PhotoListDto>> GetThumbnailsAsync()
+        => await _photoService.GetPreviewAsync();
+
+
+    // public async Task<IActionResult> GetPhotoAsync(Guid photoGuid, string photoType)
+    // {
+    //     var photoReturn = await _photoService.GetPhotoBlobAsync(photoGuid, photoType);
+
+    //     if (photoReturn is null)
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     return Ok(File(photoReturn.Photo!, photoReturn.ContentType!, photoReturn.PhotoName));
+    // }
 
     [Authorize]
     [HttpGet("full/{photoType}/{photoGuid}")]
-    public Task<byte[]?> GetPhotoAsync(Guid photoGuid, string photoType)
-        => _photoService.GetPhotoBlobAsync(photoGuid, photoType);
+    public async Task<ActionResult<FileStreamResult>?> GetPhotoAsyncTemp(Guid photoGuid, string photoType)
+    {
+        var photoReturn = await _photoService.GetPhotoBlobAsync(photoGuid, photoType);
 
+        if (photoReturn is null)
+        {
+            return BadRequest();
+        }
+
+        return Ok(new FileStreamResult(photoReturn, "image/" + photoType));
+    }
 
     [Authorize(Roles = "Twilio")]
     [HttpPost("savePhoto")]
