@@ -46,13 +46,13 @@ jobs:
           ConnectionStrings__Wedding: ${{ secrets.CONNECTION_STRING }}
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: .sql-script
           path: ${{env.DOTNET_ROOT}}/sql
@@ -73,7 +73,7 @@ jobs:
           path: sql
           
       - name: Azure PostgreSQL Action
-        uses: Azure/postgresql@v1.2.0
+        uses: Azure/postgresql@v1
         
         with:
           # Server name of Azure DB for PostgreSQL. Example: fabrikam.postgres.database.azure.com

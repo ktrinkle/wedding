@@ -17,7 +17,7 @@ export class AuthService {
   constructor(private dataService:DataService, private router: Router, private store: Store,
     public eventService: EventService) { }
 
-  public isLoggedIn():boolean {
+    public isLoggedIn():boolean {
       const token = localStorage.getItem('access_token'); // get token from local storage
 
       if (token)
@@ -32,6 +32,17 @@ export class AuthService {
 
       // if the token is null, always return false since the user isn't logged in.
       return false;
+    }
+
+    public getSasToken():string{
+      const token = localStorage.getItem('sasToken');
+
+      if (token)
+      {
+        return token;
+      }
+
+      return "";
     }
 
     public isAdmin():boolean {
@@ -63,6 +74,7 @@ export class AuthService {
             localStorage.setItem('access_token', al.bearerToken ?? "");
             localStorage.setItem('partyAddress', al.partyAddress ?? "");
             localStorage.setItem('partyGuid', al.partyGuid ?? "");
+            localStorage.setItem('sasToken', al.sasToken ?? "");
             this.isLoggedIn();
             this.store.dispatch(partyByAuth());
             this.eventService.loginEndEmit();
@@ -74,6 +86,7 @@ export class AuthService {
           }
         },
         error: () => {
+          this.eventService.loginFailEmit();
           returnVal = 1;
         },
         complete: () => {

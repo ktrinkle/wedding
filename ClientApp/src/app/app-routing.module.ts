@@ -12,6 +12,8 @@ import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './admin/admin.component';
 import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
 import { GiftListComponent } from './admin/gifts/giftlist.component';
+import { PhotosComponent } from './wedding/photos/photos.component';
+import { PhotoGuard } from 'src/guards/photo.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -34,7 +36,11 @@ const routes: Routes = [
       path: 'venue',
       component: VenueComponent,
       canActivate: [AuthGuard]
-    },
+    }, {
+      path: 'photos',
+      component: PhotosComponent,
+      canActivate: [AuthGuard, PhotoGuard]
+    }
   ]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard], children: [
     {

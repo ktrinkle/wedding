@@ -15,6 +15,7 @@ public partial class WeddingGroupName
     public bool? RsvpYes { get; set; }
     public string? RsvpComment { get; set; }
     public int? DrinkTypeCd { get; set; }
+    public bool? ConditionalRsvpYes { get; set; }
 
     public WeddingGroup WeddingGroup { get; set; } = null!;
 }

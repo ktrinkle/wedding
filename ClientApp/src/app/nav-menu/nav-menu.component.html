@@ -21,6 +21,13 @@
                       Home
                     </a>
                 </li>
+                <hr *ngIf="this.isLoggedIn()">
+                <li id="menu-controls" *ngIf="this.isLoggedIn()">
+                  <img src="../../assets/img/controls.png" width="16" alt="Logout">
+                  <a [routerLinkActive]="['link-active']" (click)="this.logout();">
+                    Logout
+                  </a>
+              </li>
             </ul>
         </li>
         <li appDropdown id="edit">
@@ -56,6 +63,12 @@
                 <img src="../../assets/img/gift.png" width="16" alt="Gifts">
                 <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/gifts']">
                   Gifts
+                </a>
+              </li>
+              <li class="menu-controls" id="menu-controls" *ngIf="this.isPhotoDate()">
+                <img src="../../assets/img/gift.png" width="16" alt="Photos">
+                <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/photos']">
+                  Photos
                 </a>
               </li>
               <li class="menu-controls" id="menu-controls">

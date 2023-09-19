@@ -1,15 +1,17 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto, weddingPartyGiftDto } from '../data/data';
+import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto, weddingPartyGiftDto, photoListDto } from '../data/data';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Guid } from 'typescript-guid';
+import { Binary } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private REST_API_SERVER = environment.api_url;
+  public REST_API_SERVER = environment.api_url;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -70,4 +72,25 @@ export class DataService {
     var uri = this.REST_API_SERVER + '/Admin/saveGift';
     return this.httpClient.post<weddingPartyGiftDto[]>(uri, partyGift);
   }
+
+  public savePhotoFile(fileForm: FormData): Observable<string> {
+    var uri = this.REST_API_SERVER + '/Photo/uploadPhotoFile';
+    return this.httpClient.post<string>(uri, fileForm);
+  }
+
+  public getThumbnails(): Observable<photoListDto[]> {
+    var uri = this.REST_API_SERVER + '/Photo/getThumbnails';
+    return this.httpClient.get<photoListDto[]>(uri);
+  }
+
+  public getPhoto(photoGuid: Guid, photoType: string): any {
+    var uri = this.REST_API_SERVER + '/Photo/full/' + encodeURIComponent(photoType) + '/' + encodeURIComponent(photoGuid.toString()) + '';
+    return this.httpClient.get(uri);
+  }
+
+  public getSasKey(): Observable<string> {
+    var uri = this.REST_API_SERVER + '/Photo/fulltoken';
+    return this.httpClient.get<string>(uri);
+  }
+
 }

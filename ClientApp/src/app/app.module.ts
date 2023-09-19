@@ -33,8 +33,10 @@ import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
 import { GiftListComponent } from './admin/gifts/giftlist.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { PhotoGuard } from 'src/guards/photo.guard';
 import { RsvpDrinkPipe } from './services/rsvp-drink.pipe';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
+import { PhotosComponent } from './wedding/photos/photos.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -56,6 +58,7 @@ export function tokenGetter() {
     AdminComponent,
     GiftListComponent,
     RsvpDrinkPipe,
+    PhotosComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -70,6 +73,7 @@ export function tokenGetter() {
       { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },
       { path: 'wedding/venue', component: VenueComponent, canActivate: [AuthGuard] },
       { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
+      { path: 'wedding/photos', component: PhotosComponent, canActivate: [AuthGuard, PhotoGuard]},
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]}
