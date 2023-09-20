@@ -13,13 +13,13 @@ namespace wedding.Services;
 public class PhotoService : IPhotoService
 {
     private readonly ContextWedding _ContextWedding;
-    private readonly ILogger<AdminService> _logger;
+    private readonly ILogger<PhotoService> _logger;
     private readonly AppSettings _appSettings;
 
     const string PhotoBlob = "/photos";
     const string ThumbBlob = "/thumbs";
 
-    public PhotoService(ILogger<AdminService> logger, IOptions<AppSettings> appSettings, ContextWedding context)
+    public PhotoService(ILogger<PhotoService> logger, IOptions<AppSettings> appSettings, ContextWedding context)
     {
         _logger = logger;
         _appSettings = appSettings.Value;
@@ -83,7 +83,7 @@ public class PhotoService : IPhotoService
         await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
         await blobClient.UploadAsync(fileStream, new BlobHttpHeaders { ContentType = contentType });
 
-        _logger.LogInformation("Uploaded stream {}", fileGuid.ToString());
+        _logger.LogCritical("Uploaded stream {}", fileGuid.ToString());
         // reset filestream for the thumbnail
         fileStream.Position = 0;
         GenerateThumbnail(fileStream, fileGuid, fileSuffix);
@@ -93,7 +93,7 @@ public class PhotoService : IPhotoService
 
     private async void GenerateThumbnail(Stream fileStream, Guid fileGuid, string contentType)
     {
-        _logger.LogInformation("Start GenerateThumbnail");
+        _logger.LogCritical("Start GenerateThumbnail");
         var containerClient = await GetConnectionAsync(ThumbBlob);
 
         BlobClient blobClient = containerClient.GetBlobClient(fileGuid.ToString() + contentType);

@@ -29,6 +29,7 @@ public class PhotoController : TwilioController
     {
         try
         {                
+            _logger.LogInformation("Starting photo upload");
             var formCollection = await Request.ReadFormAsync();
             var file = formCollection.Files[0];
             if (file.Length > 0 && ContentTypes.Contains(file.ContentType))
