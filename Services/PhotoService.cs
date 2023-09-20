@@ -83,6 +83,7 @@ public class PhotoService : IPhotoService
         await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
         await blobClient.UploadAsync(fileStream, new BlobHttpHeaders { ContentType = contentType });
 
+        _logger.LogInformation("Uploaded stream {}", fileGuid.ToString());
         // reset filestream for the thumbnail
         fileStream.Position = 0;
         GenerateThumbnail(fileStream, fileGuid, fileSuffix);
@@ -92,10 +93,13 @@ public class PhotoService : IPhotoService
 
     private async void GenerateThumbnail(Stream fileStream, Guid fileGuid, string contentType)
     {
+        _logger.LogInformation("Start GenerateThumbnail");
         var containerClient = await GetConnectionAsync(ThumbBlob);
 
         BlobClient blobClient = containerClient.GetBlobClient(fileGuid.ToString() + contentType);
 
+        _logger.LogInformation("start SKbitmap");
+        _logger.LogInformation(blobClient.Name.ToString());
         // code from Ben Abt here since the SK docs are lacking, slightly modified
         using (SKBitmap image = SKBitmap.Decode(fileStream))
         {
