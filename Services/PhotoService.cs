@@ -85,8 +85,9 @@ public class PhotoService : IPhotoService
 
         _logger.LogCritical("Uploaded stream {}", fileGuid.ToString());
         // reset filestream for the thumbnail
-        fileStream.Position = 0;
-        GenerateThumbnail(fileStream, fileGuid, fileSuffix);
+        // temporary disable
+        // fileStream.Position = 0;
+        // GenerateThumbnail(fileStream, fileGuid, fileSuffix);
 
         return blobClient.Uri.ToString();
     }
