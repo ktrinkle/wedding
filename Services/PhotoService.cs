@@ -2,11 +2,13 @@ using Azure;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using SkiaSharp;
+// using SkiaSharp;
 using Wedding.Models;
 using System;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Azure.Storage.Sas;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace wedding.Services;
 
@@ -86,13 +88,14 @@ public class PhotoService : IPhotoService
         _logger.LogCritical("Uploaded stream {}", fileGuid.ToString());
         // reset filestream for the thumbnail
         // temporary disable
-        // fileStream.Position = 0;
-        // GenerateThumbnail(fileStream, fileGuid, fileSuffix);
+        fileStream.Position = 0;
+        _logger.LogInformation("Starting thumbnail process");
+        await GenerateThumbnail(fileStream, fileGuid, fileSuffix);
 
         return blobClient.Uri.ToString();
     }
 
-    private async void GenerateThumbnail(Stream fileStream, Guid fileGuid, string contentType)
+    private async Task GenerateThumbnail(Stream fileStream, Guid fileGuid, string contentType)
     {
         _logger.LogCritical("Start GenerateThumbnail");
         var containerClient = await GetConnectionAsync(ThumbBlob);
@@ -102,19 +105,41 @@ public class PhotoService : IPhotoService
         _logger.LogInformation("start SKbitmap");
         _logger.LogInformation(blobClient.Name.ToString());
         // code from Ben Abt here since the SK docs are lacking, slightly modified
-        using (SKBitmap image = SKBitmap.Decode(fileStream))
-        {
-            var divisor = image.Width / 150;
-            var height = Convert.ToInt32(Math.Round((decimal)(image.Height / divisor)));
+        // using (SKBitmap image = SKBitmap.Decode(fileStream))
+        // {
+        //     var divisor = image.Width / 150;
+        //     var height = Convert.ToInt32(Math.Round((decimal)(image.Height / divisor)));
 
-            using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(150, height), SKFilterQuality.Medium);
-            using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
-            using SKData outputThumb = scaledImage.Encode();
-            {
-                await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
-                await blobClient.UploadAsync(outputThumb.AsStream());
-            }
+        //     using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(150, height), SKFilterQuality.Medium);
+        //     using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
+        //     using SKData outputThumb = scaledImage.Encode();
+        //     {
+        //         await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+        //         await blobClient.UploadAsync(outputThumb.AsStream());
+        //     }
+        // }
+
+        IImageFormat format;
+
+        using (Image<Rgba32> input = Image.Load<Rgba32>(fileStream, out format))
+        {
+            Stream? imageSmall = null;
+            ResizeImage(input, imageSmall, format);
+            var returnByte = Array.Empty<byte>();
+            await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+            await blobClient.UploadAsync(imageSmall);
         }
+    }
+
+    public static void ResizeImage(Image<Rgba32> input, Stream? output, IImageFormat format)
+    {
+        var divisor = input.Height / 100;
+        var width = Convert.ToInt32(Math.Round((decimal)(input.Width / divisor)));
+        
+        var xSize = 100;
+
+        input.Mutate(x => x.Resize(xSize, width));
+        input.Save(output, format);
     }
 
     public async Task<List<PhotoListDto>> GetPreviewAsync()
