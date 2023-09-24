@@ -13,6 +13,7 @@ import { AdminComponent } from './admin/admin.component';
 import { RsvplistComponent } from './admin/rsvplist/rsvplist.component';
 import { GiftListComponent } from './admin/gifts/giftlist.component';
 import { PhotosComponent } from './wedding/photos/photos.component';
+import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 import { PhotoGuard } from 'src/guards/photo.guard';
 
 const routes: Routes = [
@@ -53,7 +54,8 @@ const routes: Routes = [
       component: GiftListComponent,
       canActivate: [AuthGuard, AdminGuard]
     }
-  ]}
+  ]},
+  { path: 'photos/{deeplink}', component: PhotoUploadComponent }
 ];
 
 

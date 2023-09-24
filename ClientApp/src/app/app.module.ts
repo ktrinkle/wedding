@@ -37,6 +37,7 @@ import { PhotoGuard } from 'src/guards/photo.guard';
 import { RsvpDrinkPipe } from './services/rsvp-drink.pipe';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { PhotosComponent } from './wedding/photos/photos.component';
+import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -59,6 +60,7 @@ export function tokenGetter() {
     GiftListComponent,
     RsvpDrinkPipe,
     PhotosComponent,
+    PhotoUploadComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,7 +78,8 @@ export function tokenGetter() {
       { path: 'wedding/photos', component: PhotosComponent, canActivate: [AuthGuard, PhotoGuard]},
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
-      { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]}
+      { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]},
+      { path: 'photos/{deeplink}', component: PhotoUploadComponent }
     ]),
     NgbModule,
     DragDropModule,

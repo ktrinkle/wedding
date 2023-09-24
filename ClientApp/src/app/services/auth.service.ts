@@ -61,6 +61,21 @@ export class AuthService {
       return false;
     }
 
+    public isPhotoUpload():boolean {
+      const token = localStorage.getItem('access_token'); // get token from local storage
+
+      if (token)
+      {
+        const payload = window.atob(token.split('.')[1]); // decode payload of token
+
+        const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
+
+        return parsedPayload.role == "photoUpload"; // check if token has role and is admin
+      }
+
+      return false;
+    }
+
   public processLoginEmail(loginDto: frontLogin): number
   {
     if (loginDto.emailAddress != '' && loginDto.password != '')
@@ -103,6 +118,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('partyAddress');
     localStorage.removeItem('partyGuid');
+    localStorage.removeItem('sasToken');
 
     this.router.navigate(['']);
   }
