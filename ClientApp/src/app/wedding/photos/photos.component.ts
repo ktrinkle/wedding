@@ -70,11 +70,10 @@ export class PhotosComponent implements OnInit, OnDestroy{
         this.dataService.savePhotoFile(formData).subscribe(x => {
           console.log(x);
           this.message = "Your file has been uploaded!";
+          this.getThumbsFromApi();
         });
       }
     };
-
-    this.getThumbsFromApi();
   }
 
   getThumbsFromApi()

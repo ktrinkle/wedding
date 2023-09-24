@@ -1,8 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using Twilio;
-using Twilio.AspNet.Common;
-using Twilio.AspNet.Core;
-using Twilio.TwiML;
 using wedding.Extensions;
 using Wedding.Models;
 
@@ -10,7 +6,7 @@ namespace wedding.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PhotoController : TwilioController
+public class PhotoController : ControllerBase
 {
     private readonly ILogger<PhotoController> _logger;
     private readonly IPhotoService _photoService;
@@ -29,6 +25,7 @@ public class PhotoController : TwilioController
     {
         try
         {                
+            _logger.LogInformation("Starting photo upload");
             var formCollection = await Request.ReadFormAsync();
             var file = formCollection.Files[0];
             if (file.Length > 0 && ContentTypes.Contains(file.ContentType))
@@ -78,17 +75,6 @@ public class PhotoController : TwilioController
         }
 
         return Ok(new FileStreamResult(photoReturn, "image/" + photoType));
-    }
-
-    [Authorize(Roles = "Twilio")]
-    [HttpPost("savePhoto")]
-    public TwiMLResult Index(SmsRequest incomingMessage)
-    {
-        var messagingResponse = new MessagingResponse();
-        messagingResponse.Message("The copy cat says: " +
-                                    incomingMessage.Body);
-
-        return TwiML(messagingResponse);
     }
     
 }

@@ -40,6 +40,33 @@ public class LoginController : ControllerBase
         return Ok(loginResult);
     }
 
+    [AllowAnonymous]
+    [HttpGet("{loginGuid}")]
+    public async Task<ActionResult<WeddingPartyDto>> Login(string loginGuid)
+    {
+        _logger.LogInformation("User login flow beginning - deep link");
+        
+        if (loginGuid is null)
+        {
+            return Unauthorized();
+        }
+
+        if (loginGuid.Length < 20)
+        {
+            return Unauthorized();
+        }
+
+        var loginResult = await _loginService.LoginDeepLinkAsync(loginGuid);
+
+        if (loginResult is null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(loginResult);
+    }
+    
+
     [Authorize]
     [HttpGet("partyByEmail")]
     public async Task<ActionResult<WeddingPartyDto>> GetPartyByEmail(string emailAddr)

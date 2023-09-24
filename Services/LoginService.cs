@@ -62,6 +62,33 @@ public class LoginService : ILoginService
         return returnUser;
     }
 
+    public async Task<BearerDto?> LoginDeepLinkAsync(string loginToken)
+    {
+        if (loginToken is null)
+        {
+            return null;
+        }
+
+        if (loginToken != _appSettings.PhotoToken)
+        {
+            return null;
+        }
+
+        // partyGuid is made up
+        var partyGuid = new Guid();
+        
+        // sasToken is null because we don't have access to the components, only to the upload page
+        var returnUser = new BearerDto()
+        {
+            PartyGuid = partyGuid.ToString(),
+            PartyAddress = "photoupload@psa-history.org",
+            BearerToken = GenerateToken(partyGuid, "photoupload@psa-history.org", false),
+            SasToken = null
+        };
+
+        return returnUser;
+    }
+
     public async Task<WeddingPartyDto?> GetPartyEmailAsync(string emailAddr)
     {
         var partyGuid = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(w => w.EmailAddress == emailAddr);

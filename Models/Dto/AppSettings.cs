@@ -14,13 +14,14 @@ public class AppSettings
     public const string App = "AppSettings";
     public string? Secret { get; set; }
     public string? Salt { get; set; }
-    public string Issuer { get; set; } = String.Empty;
-    public string Audience { get; set; } = String.Empty;
-    public string JWTKeyId { get; set; } = String.Empty;
-    public string Password { get; set; } = String.Empty;
-    public string AdminUser { get; set; } = String.Empty;
-    public string AdminPassword { get; set; } = String.Empty;
-    public string AdminGuid { get; set; } = String.Empty;
+    public string Issuer { get; set; } = string.Empty;
+    public string Audience { get; set; } = string.Empty;
+    public string JWTKeyId { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string AdminUser { get; set; } = string.Empty;
+    public string AdminPassword { get; set; } = string.Empty;
+    public string AdminGuid { get; set; } = string.Empty;
+    public string PhotoToken { get; set; } = string.Empty;
     public Storage AzureStorage { get; set; } = new Storage();
 }
 
