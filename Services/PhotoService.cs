@@ -4,11 +4,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using SkiaSharp;
 using Wedding.Models;
-using System;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace wedding.Services;
 
@@ -87,7 +82,6 @@ public class PhotoService : IPhotoService
 
         _logger.LogInformation("Uploaded stream {}", fileGuid.ToString());
         // reset filestream for the thumbnail
-        // temporary disable
         fileStream.Position = 0;
         _logger.LogInformation("Starting thumbnail process");
         await GenerateThumbnail(fileStream, fileGuid, fileSuffix);
@@ -105,44 +99,19 @@ public class PhotoService : IPhotoService
         _logger.LogInformation("start SKbitmap");
         _logger.LogInformation(blobClient.Name.ToString());
         // code from Ben Abt here since the SK docs are lacking, slightly modified
-        using (SKBitmap image = SKBitmap.Decode(fileStream))
+        using SKBitmap image = SKBitmap.Decode(fileStream);
+        var divisor = image.Height / 100;
+        var width = Convert.ToInt32(Math.Round((decimal)(image.Width / divisor)));
+
+        _logger.LogInformation("divisor generated");
+        using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(100, width), SKFilterQuality.Medium);
+        using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
+        using SKData outputThumb = scaledImage.Encode();
         {
-            var divisor = image.Width / 150;
-            var height = Convert.ToInt32(Math.Round((decimal)(image.Height / divisor)));
-
-            _logger.LogInformation("divisor generated");
-            using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(150, height), SKFilterQuality.Medium);
-            using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
-            using SKData outputThumb = scaledImage.Encode();
-            {
-                _logger.LogInformation("encode complete, uploading blob");
-                await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
-                await blobClient.UploadAsync(outputThumb.AsStream());
-            }
+            _logger.LogInformation("encode complete, uploading blob");
+            await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+            await blobClient.UploadAsync(outputThumb.AsStream());
         }
-
-        // IImageFormat format;
-
-        // using (Image<Rgba32> input = Image.Load<Rgba32>(fileStream, out format))
-        // {
-        //     Stream? imageSmall = null;
-        //     ResizeImage(input, imageSmall, format);
-        //     _logger.LogInformation("resize complete");
-        //     var returnByte = Array.Empty<byte>();
-        //     await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
-        //     await blobClient.UploadAsync(imageSmall);
-        // }
-    }
-
-    public static void ResizeImage(Image<Rgba32> input, Stream? output, IImageFormat format)
-    {
-        var divisor = input.Height / 100;
-        var width = Convert.ToInt32(Math.Round((decimal)(input.Width / divisor)));
-        
-        var xSize = 100;
-
-        input.Mutate(x => x.Resize(xSize, width));
-        input.Save(output, format);
     }
 
     public async Task<List<PhotoListDto>> GetPreviewAsync()
@@ -187,7 +156,6 @@ public class PhotoService : IPhotoService
     public async Task<Stream?> GetPhotoBlobAsync(Guid photoGuid, string photoType)
     {
         var containerClient = await GetConnectionAsync(PhotoBlob);
-        // byte[] tempImage;
 
         if (!(photoType == "jpg" || photoType == "heic" || photoType == "png"))
         {
@@ -198,13 +166,9 @@ public class PhotoService : IPhotoService
         {   
             BlobClient blobClient = containerClient.GetBlobClient(photoGuid.ToString() + "." + photoType);
 
-            using (var imageStream = await blobClient.OpenReadAsync())
-            {
-                imageStream.Position = 0;
-                return imageStream;
-                // tempImage = new byte[imageStream.Length];
-                // await imageStream.ReadAsync(tempImage.AsMemory(0, (int)tempImage.Length));
-            }
+            using var imageStream = await blobClient.OpenReadAsync();
+            imageStream.Position = 0;
+            return imageStream;
         }
         catch (Exception ex)
         {
@@ -213,11 +177,6 @@ public class PhotoService : IPhotoService
         }
 
     }
-
-    #region TwilioApi
-
-
-    #endregion
     
 }
 

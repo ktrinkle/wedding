@@ -21,7 +21,7 @@
 <h3>Share your photos with us!</h3>
 
   <input #fileInput class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic,image/heif"
-      multiple (change)="onChange($event)">
+      multiple limit=5 (change)="onChange($event)">
 
   <button (click)="onUpload(); fileInput.value=''">
     Upload your files

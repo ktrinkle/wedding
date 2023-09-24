@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { frontLogin, bearerDto, weddingPartyDto, weddingPartyMemberDto, weddingPartyGiftDto, photoListDto } from '../data/data';
 import { Observable } from 'rxjs';
@@ -73,9 +73,9 @@ export class DataService {
     return this.httpClient.post<weddingPartyGiftDto[]>(uri, partyGift);
   }
 
-  public savePhotoFile(fileForm: FormData): Observable<string> {
+  public savePhotoFile(fileForm: FormData): Observable<HttpEvent<string>> {
     var uri = this.REST_API_SERVER + '/Photo/uploadPhotoFile';
-    return this.httpClient.post<string>(uri, fileForm);
+    return this.httpClient.post<string>(uri, fileForm, {observe: 'events', reportProgress: true});
   }
 
   public getThumbnails(): Observable<photoListDto[]> {
