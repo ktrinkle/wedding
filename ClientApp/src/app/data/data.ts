@@ -60,3 +60,10 @@ export interface photoListDto {
   photoType: string,
   contentType?: string
 }
+
+export interface fileLoader {
+  file: File,
+  uploadPercent: number,
+  uploadSuccess?: boolean,
+  uploadMessage: string
+}

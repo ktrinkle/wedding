@@ -140,7 +140,7 @@ public class LoginService : ILoginService
 
         var claims = new ClaimsIdentity(new Claim[]
         {
-            new Claim("sessionid", partyGuid.ToString()),
+            new("sessionid", partyGuid.ToString()),
             new Claim("username", emailAddress ?? ""),
         });
 
@@ -152,6 +152,11 @@ public class LoginService : ILoginService
         if (emailAddress == "photoupload@psa-history.org")
         {
             claims.AddClaim(new Claim("role", "photoUpload"));
+        }
+
+        if (emailAddress != "photoupload@psa-history.org")
+        {
+            claims.AddClaim(new Claim("role", "websiteUser"));
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();

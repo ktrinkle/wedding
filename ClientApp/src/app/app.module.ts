@@ -79,7 +79,7 @@ export function tokenGetter() {
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]},
-      { path: 'photos/{deeplink}', component: PhotoUploadComponent }
+      { path: 'photos/:deeplink', component: PhotoUploadComponent }
     ]),
     NgbModule,
     DragDropModule,

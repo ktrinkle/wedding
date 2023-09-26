@@ -55,7 +55,7 @@ const routes: Routes = [
       canActivate: [AuthGuard, AdminGuard]
     }
   ]},
-  { path: 'photos/{deeplink}', component: PhotoUploadComponent }
+  { path: 'photos/:deeplink', component: PhotoUploadComponent }
 ];
 
 
