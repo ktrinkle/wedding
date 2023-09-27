@@ -104,7 +104,7 @@ public class PhotoService : IPhotoService
         var width = Convert.ToInt32(Math.Round((decimal)(image.Width / divisor)));
 
         _logger.LogInformation("divisor generated");
-        using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(100, width), SKFilterQuality.Medium);
+        using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(width, 100), SKFilterQuality.Medium);
         using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
         using SKData outputThumb = scaledImage.Encode();
         {

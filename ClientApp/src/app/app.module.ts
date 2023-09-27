@@ -38,6 +38,7 @@ import { RsvpDrinkPipe } from './services/rsvp-drink.pipe';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { PhotosComponent } from './wedding/photos/photos.component';
 import { PhotoUploadComponent } from './photo-upload/photo-upload.component';
+import { UploadPhotoCommonComponent } from './services/upload-photo-common/upload-photo-common.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -61,6 +62,7 @@ export function tokenGetter() {
     RsvpDrinkPipe,
     PhotosComponent,
     PhotoUploadComponent,
+    UploadPhotoCommonComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

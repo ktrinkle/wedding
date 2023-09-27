@@ -77,7 +77,6 @@ export class PhotoUploadComponent implements OnInit, OnDestroy {
       {
         // Create form data
         const formData = new FormData();
-        console.log('start form');
         formData.append("file", newfile, newfile.name);
 
         this.dataService.savePhotoFile(formData).pipe(
@@ -86,7 +85,9 @@ export class PhotoUploadComponent implements OnInit, OnDestroy {
               this.fileLoader[index].uploadPercent =
                 Math.round(100 * (event.loaded / event.total));
             }
-          })).subscribe();
+          })).subscribe(q => {
+            this.fileLoader[index].uploadMessage = "The file was successfully saved."
+          });
       }
     };
   }
