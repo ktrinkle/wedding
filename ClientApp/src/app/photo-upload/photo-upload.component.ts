@@ -22,10 +22,6 @@ export class PhotoUploadComponent implements OnInit, OnDestroy {
   public authenticated: boolean = false;
   public authenticateStatus: string = "Please wait for this page to be available.";
   windowVisible: boolean = true;
-  files!: File[]; // array of files for future use
-  fileLoader!: fileLoader[];
-  message: string | undefined;
-  progress: number | undefined;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -37,9 +33,9 @@ export class PhotoUploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      console.log(params);
+      // console.log(params);
       var photoKeyString = params.get("deeplink");
-      console.log(photoKeyString);
+      // console.log(photoKeyString);
       this.photoKey = Guid.parse(photoKeyString ?? "");
       if (Guid.isGuid(photoKeyString ?? ""))
       {
@@ -53,67 +49,7 @@ export class PhotoUploadComponent implements OnInit, OnDestroy {
               this.authenticateStatus = "Please upload your photos here!";
             }}});
       }
-      console.log('photoKey');
-      console.log(this.photoKey);
     });
-  }
-
-  async onUpload(): Promise<void> {
-    // basic filter, not 100% reliable
-
-    console.log(this.authenticated);
-    if (!this.authenticated)
-    {
-      return;
-    }
-
-    console.log('start loop');
-    console.log(this.fileLoader);
-    for(let index = 0; index < this.fileLoader.length; index++)
-    {
-      var newfile = this.fileLoader[index].file;
-      console.log(newfile.type);
-      if (newfile.type.startsWith("image/"))
-      {
-        // Create form data
-        const formData = new FormData();
-        formData.append("file", newfile, newfile.name);
-
-        this.dataService.savePhotoFile(formData).pipe(
-          tap((event: any) => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.fileLoader[index].uploadPercent =
-                Math.round(100 * (event.loaded / event.total));
-            }
-          })).subscribe(q => {
-            this.fileLoader[index].uploadMessage = "The file was successfully saved."
-          });
-      }
-    };
-  }
-
-  onChange(event: any) {
-    this.files = event.target.files;
-    this.buildFileList(this.files);
-    this.message = "";
-  }
-
-  buildFileList(fileList: File[]) : void {
-    this.fileLoader = new Array();
-    Array.from(fileList).forEach((item: File) => {
-      console.log(item);
-      const newFile: fileLoader = {
-        file: item,
-        uploadPercent: 0,
-        uploadMessage: '',
-        uploadSuccess: undefined
-        };
-      console.log(newFile);
-      // never triggers this
-      this.fileLoader.push(newFile);
-      console.log(this.fileLoader);
-    });
-    console.log(this.fileLoader);
   }
 
   ngOnDestroy(): void {

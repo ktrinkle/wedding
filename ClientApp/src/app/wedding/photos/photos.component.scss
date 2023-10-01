@@ -290,68 +290,25 @@ input[type="file"]::after {
   padding: 0.5rem !important;
 }
 
-.picsum-img-wrapper {
-  height: 100%;
-}
-
-progress {
-  vertical-align: baseline;
-}
-
-.progress,
-.progress-stacked {
-  --bs-progress-height: 1rem;
-  --bs-progress-font-size: 0.75rem;
-  --bs-progress-bg: var(--bs-secondary-bg);
-  --bs-progress-border-radius: var(--bs-border-radius);
-  --bs-progress-box-shadow: var(--bs-box-shadow-inset);
-  --bs-progress-bar-color: #fff;
-  --bs-progress-bar-bg: #0d6efd;
-  --bs-progress-bar-transition: width 0.6s ease;
-  display: flex;
-  height: var(--bs-progress-height);
-  overflow: hidden;
-  font-size: var(--bs-progress-font-size);
-  background-color: var(--bs-progress-bg);
-  border-radius: var(--bs-progress-border-radius);
-}
-
-.progress-bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  color: var(--bs-progress-bar-color);
-  text-align: center;
-  white-space: nowrap;
-  background-color: var(--bs-progress-bar-bg);
-  transition: var(--bs-progress-bar-transition);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar {
-    transition: none;
+@media (min-width: 768px) {
+  .picsum-img-wrapper img {
+    height: 75vh;
+    object-fit:cover;
+    aspect-ratio:initial;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    // width: 100%;
   }
 }
 
-.progress-bar-striped {
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-size: var(--bs-progress-height) var(--bs-progress-height);
-}
-
-.progress-stacked > .progress {
-  overflow: visible;
-}
-
-.progress-stacked > .progress > .progress-bar {
-  width: 100%;
-}
-
-.progress-bar-animated {
-  animation: 1s linear infinite progress-bar-stripes;
-}
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar-animated {
-    animation: none;
+@media (max-width: 767px) {
+  .picsum-img-wrapper img {
+    height: auto;
+    object-fit:cover;
+    aspect-ratio:initial;
+    display: block;
+    width: 100%;
   }
 }
+

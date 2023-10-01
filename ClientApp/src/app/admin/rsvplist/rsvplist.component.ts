@@ -25,11 +25,12 @@ export class RsvplistComponent implements OnInit, OnDestroy {
   public rsvpList: weddingPartyMemberDto[] = new Array<weddingPartyMemberDto>();
   public filteredRsvpList: weddingPartyMemberDto[] = new Array<weddingPartyMemberDto>();
 
-  constructor (private readonly mediaMatcher: MediaMatcher, private store: Store) {}
-
-  ngOnInit() {
+  constructor (private readonly mediaMatcher: MediaMatcher, private store: Store) {
     this.store.dispatch(rsvpList());
     this.updateRsvpList();
+  }
+
+  ngOnInit() {
     this.filterRsvpList(true);
   }
 
