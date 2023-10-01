@@ -16,17 +16,12 @@
   <div [ngClass]="this.windowVisible ? 'showMain' : 'hideMain'">
   <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
     <div class="icon">
-      <img src="../../assets/img/gift.png" alt="Gifts" />
+      <img src="../../assets/img/quicktake.png" alt="Photos" />
     </div>
 <h3>Share your photos with us!</h3>
 
-  <input #fileInput class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic,image/heif"
-      multiple limit=5 (change)="onChange($event)">
-
-  <button (click)="onUpload(); fileInput.value=''">
-    Upload your files
-  </button>
-  <p>{{this.message}}</p>
+<app-upload-photo-common>
+</app-upload-photo-common>
 
 <h3>Gallery</h3>
 
@@ -56,15 +51,15 @@
     </div>
     <h1 class="titlebar" cdkDragHandle><span>Gallery</span></h1>
     <div [ngClass]="this.galleryExpanded ? 'showMain' : 'hideMain'">
-      <cdk-virtual-scroll-viewport scrollWindow itemSize="800" class="inner">
-        <ngb-carousel *ngIf="this.photoList$ | async">
-          <ng-template ngbSlide *ngFor="let p of this.photoList$ | async; let i = index">
+      <div class="inner">
+        <ngb-carousel *ngIf="this.photoList$ | async" [activeId]=this.activeSlide>
+          <ng-template ngbSlide *ngFor="let p of this.photoList$ | async; let i = index" id="slide-{{i}}">
             <div class="picsum-img-wrapper">
               <img src="{{this.storageUri}}{{p.photoGuid}}.{{p.photoType}}?{{this.sasKey}}" alt="Wedding gallery photo" />
             </div>
           </ng-template>
         </ngb-carousel>
-      </cdk-virtual-scroll-viewport>
+      </div>
     </div>
   </div>
 </div>

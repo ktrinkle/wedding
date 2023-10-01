@@ -1,0 +1,16 @@
+<div>
+  <input #fileInput class="form-control" type="file" accept="image/x-png,image/jpeg,image/heic,image/heif"
+      multiple (change)="onChange($event)">
+
+  <button (click)="onUpload(); fileInput.value=''">
+    Upload your files
+  </button>
+<!-- list of files-->
+<div *ngFor="let p of this.fileLoader; let i = index">
+  <p *ngIf="p.uploadMessage === ''">{{p.file.name}}</p>
+  <p *ngIf="p.uploadMessage != ''">{{p.uploadMessage}}</p>
+  <p><ngb-progressbar type="info" height="20px" [value]=p.uploadPercent></ngb-progressbar></p>
+  <hr>
+</div>
+
+</div>

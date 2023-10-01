@@ -8,6 +8,7 @@ export class EventService {
 
   emptyTrash = new EventEmitter();
   loginEmitter = new EventEmitter();
+  photoUploadEmitter = new EventEmitter();
   subsVar: Subscription = new Subscription;
 
   constructor() { }
@@ -26,5 +27,9 @@ export class EventService {
 
   loginFailEmit() {
     this.loginEmitter.emit('fail');
+  }
+
+  photoUploadSuccessEmit() {
+    this.photoUploadEmitter.emit();
   }
 }

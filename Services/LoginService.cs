@@ -75,7 +75,7 @@ public class LoginService : ILoginService
         }
 
         // partyGuid is made up
-        var partyGuid = new Guid();
+        var partyGuid = Guid.NewGuid();
         
         // sasToken is null because we don't have access to the components, only to the upload page
         var returnUser = new BearerDto()
@@ -140,13 +140,23 @@ public class LoginService : ILoginService
 
         var claims = new ClaimsIdentity(new Claim[]
         {
-            new Claim("sessionid", partyGuid.ToString()),
+            new("sessionid", partyGuid.ToString()),
             new Claim("username", emailAddress ?? ""),
         });
 
         if (adminFlag)
         {
             claims.AddClaim(new Claim("role", "Admin"));
+        }
+
+        if (emailAddress == "photoupload@psa-history.org")
+        {
+            claims.AddClaim(new Claim("role", "photoUpload"));
+        }
+
+        if (emailAddress != "photoupload@psa-history.org")
+        {
+            claims.AddClaim(new Claim("role", "websiteUser"));
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();

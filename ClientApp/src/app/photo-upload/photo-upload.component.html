@@ -1,0 +1,28 @@
+<div id="wedding" class="content resizable draggable-window" data-window-icon="img/gift.png" data-window-name="Wedding" cdkDrag>
+  <div class="control-box close-box">
+      <a class="control-box-inner"></a>
+  </div>
+  <div class="control-box zoom-box">
+      <div class="control-box-inner">
+          <div class="zoom-box-inner"></div>
+      </div>
+  </div>
+  <div class="control-box window-collapse">
+      <div class="control-box-inner">
+          <div class="window-collapse-inner"></div>
+      </div>
+  </div>
+  <h1 class="titlebar" cdkDragHandle><span>Photos</span></h1>
+  <div><!--always visible-->
+  <cdk-virtual-scroll-viewport scrollWindow itemSize="600" class="inner">
+    <div class="icon">
+      <img src="../../assets/img/quicktake.png" alt="Photos" />
+    </div>
+<h3>{{this.authenticateStatus}}</h3>
+<div *ngIf="this.authenticated">
+  <app-upload-photo-common>
+  </app-upload-photo-common>
+</div>
+</cdk-virtual-scroll-viewport>
+</div>
+</div>

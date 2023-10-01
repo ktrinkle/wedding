@@ -27,7 +27,7 @@ export class AuthService {
 
         const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
 
-        return parsedPayload.exp > Date.now() / 1000; // check if token is expired
+        return parsedPayload.role != "photoUpload" && parsedPayload.exp > Date.now() / 1000; // check if token is expired
       }
 
       // if the token is null, always return false since the user isn't logged in.
@@ -54,10 +54,25 @@ export class AuthService {
 
         const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
 
-        return parsedPayload.role == "Admin"; // check if token has role and is admin
+        return parsedPayload.role.includes("Admin") && parsedPayload.exp > Date.now() / 1000; // check if token has role and is admin
       }
 
       // if the token is null, always return false since the user isn't logged in.
+      return false;
+    }
+
+    public isPhotoUpload():boolean {
+      const token = localStorage.getItem('access_token'); // get token from local storage
+
+      if (token)
+      {
+        const payload = window.atob(token.split('.')[1]); // decode payload of token
+
+        const parsedPayload = JSON.parse(payload.toString()); // convert payload into an Object
+
+        return parsedPayload.role == "photoUpload" && parsedPayload.exp > Date.now() / 1000; // check if token has role and is admin
+      }
+
       return false;
     }
 
@@ -103,6 +118,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('partyAddress');
     localStorage.removeItem('partyGuid');
+    localStorage.removeItem('sasToken');
 
     this.router.navigate(['']);
   }

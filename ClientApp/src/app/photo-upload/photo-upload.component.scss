@@ -1,0 +1,29 @@
+.overlay {
+  z-index: 5000;
+}
+
+@media only screen and (min-width: 767px) {
+	/* desktop and ipad layout */
+  #gallery {
+    width: 95% !important;
+    z-index: 5000;
+  }
+
+  #gallery .inner {
+    min-height: 85vh;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 766px) {
+	/* mobile layout */
+  #gallery {
+    width: 99% !important;
+    z-index: 5000;
+  }
+
+  #gallery .inner {
+    min-height: 95vh;
+    width: 100%;
+  }
+}

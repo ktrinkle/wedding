@@ -93,4 +93,9 @@ export class DataService {
     return this.httpClient.get<string>(uri);
   }
 
+  public loginPhotoUpload(loginGuid: Guid): Observable<bearerDto> {
+    var uri = this.REST_API_SERVER + '/Login/'  + encodeURIComponent(loginGuid.toString()) + '';;
+    return this.httpClient.get<bearerDto>(uri);
+  }
+
 }

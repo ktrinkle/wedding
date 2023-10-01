@@ -63,12 +63,25 @@ input[type="file"]::after {
 @media only screen and (min-width: 767px) {
 	/* desktop and ipad layout */
   #gallery {
-    width: 750px !important;
+    width: 95% !important;
     z-index: 5000;
   }
 
   #gallery .inner {
-    height: 85vh;
+    min-height: 85vh;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 766px) {
+	/* mobile layout */
+  #gallery {
+    width: 99% !important;
+    z-index: 5000;
+  }
+
+  #gallery .inner {
+    min-height: 95vh;
     width: 100%;
   }
 }
@@ -277,7 +290,25 @@ input[type="file"]::after {
   padding: 0.5rem !important;
 }
 
-.picsum-img-wrapper {
-  height: 100%;
+@media (min-width: 768px) {
+  .picsum-img-wrapper img {
+    height: 75vh;
+    object-fit:cover;
+    aspect-ratio:initial;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    // width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .picsum-img-wrapper img {
+    height: auto;
+    object-fit:cover;
+    aspect-ratio:initial;
+    display: block;
+    width: 100%;
+  }
 }
 

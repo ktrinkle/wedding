@@ -1,0 +1,57 @@
+/* file upload button */
+input[type="file"] {
+  outline: none;
+  padding: 4px;
+  margin: -4px;
+  margin-right: 10px;
+  position: relative;
+}
+
+input[type="file"]::file-selector-button {
+  cursor: pointer;
+  height: 22px;
+  color: transparent;
+  background-color: #dedede;
+  border: 1px solid #000;
+  border-radius: 3px;
+  box-shadow: var(--button-box-shadow);
+  font-family: inherit;
+  font-size: inherit;
+  width: 100px;
+}
+
+input[type="file"]:focus-within::file-selector-button,
+input[type="file"]:focus::file-selector-button {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+  box-shadow: var(--button-box-shadow), var(--button-hover-bezel);
+
+  --button-box-shadow: inset -1px -1px 0 0 #777, inset -2px -2px 0 0 #aaa,
+    inset 1px 1px 0 0 #ddd, inset 2px 2px 0 0 #fff;
+  --button-hover-bezel: 0 0 0 1px #aaa, 0 0 0 2px #ddd, 0 0 0 3px #000;
+}
+
+input[type="file"]::before {
+  position: absolute;
+  pointer-events: none;
+  top: 6px;
+  left: 12px;
+  height: 20px;
+  width: 0px;
+  content: "";
+}
+
+input[type="file"]::after {
+  position: absolute;
+  pointer-events: none;
+  top: 6px;
+  left: 12px;
+  color: #000;
+  content: "Select Image";
+}
+
+@supports (-moz-appearance: none) {
+  input[type="file"]::file-selector-button {
+    color: #000;
+  }
+}
