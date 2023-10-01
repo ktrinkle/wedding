@@ -2,7 +2,8 @@ using Azure;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using SkiaSharp;
+//using SkiaSharp;
+using ImageMagick;
 using Wedding.Models;
 
 namespace wedding.Services;
@@ -72,6 +73,7 @@ public class PhotoService : IPhotoService
             "image/jpeg"  => ".jpg",
             "image/png" => ".png",
             "image/heic" => ".heic",
+            "image/gif" => ".gif",
             _ => ""
         };
 
@@ -84,34 +86,115 @@ public class PhotoService : IPhotoService
         // reset filestream for the thumbnail
         fileStream.Position = 0;
         _logger.LogInformation("Starting thumbnail process");
-        await GenerateThumbnail(fileStream, fileGuid, fileSuffix);
+
+        // HEIC to JPG handler
+        if (contentType == "image/heic")
+        {
+            await GenerateHeicThumbnail(fileStream, fileGuid);
+            // this will call generateThumbnail
+        }
+
+        if (contentType != "image/heic")
+        {
+            // PNG or JPG can work natively
+            await GenerateThumbnail(fileStream, fileGuid, fileSuffix);
+        }
+        
 
         return blobClient.Uri.ToString();
     }
 
+    private async Task GenerateHeicThumbnail(Stream fileStream, Guid fileGuid)
+    {
+        _logger.LogInformation("Start GenerateHeicThumbnail");
+        var containerClient = await GetConnectionAsync(PhotoBlob);
+
+        BlobClient blobClient = containerClient.GetBlobClient(fileGuid.ToString() + ".jpg");
+
+        _logger.LogInformation("start imageMagick");
+        _logger.LogInformation(blobClient.Name.ToString());
+        // originally this was SkiaSharp but that does not support HEIC in .NET
+
+        var imageType = MagickFormat.Jpeg;
+
+        var imageSettings = new MagickReadSettings { Format = MagickFormat.Heic };
+        using var image = new MagickImage(fileStream, imageSettings);
+
+        _logger.LogInformation("write to new stream");
+        try 
+        {
+            using MemoryStream memStream = new();
+            // ImageMagick.MagickMissingDelegateErrorException
+            await image.WriteAsync(memStream, imageType);
+            memStream.Position = 0;
+            _logger.LogInformation("encode complete, uploading blob");
+
+            await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+            await blobClient.UploadAsync(memStream);
+
+            memStream.Position = 0;
+            await GenerateThumbnail(memStream, fileGuid, ".jpg");
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "An exception happened");
+        }
+
+    }
     private async Task GenerateThumbnail(Stream fileStream, Guid fileGuid, string contentType)
     {
-        _logger.LogCritical("Start GenerateThumbnail");
+        _logger.LogInformation("Start GenerateThumbnail");
         var containerClient = await GetConnectionAsync(ThumbBlob);
 
         BlobClient blobClient = containerClient.GetBlobClient(fileGuid.ToString() + contentType);
 
-        _logger.LogInformation("start SKbitmap");
+        _logger.LogInformation("start imageMagick");
         _logger.LogInformation(blobClient.Name.ToString());
-        // code from Ben Abt here since the SK docs are lacking, slightly modified
-        using SKBitmap image = SKBitmap.Decode(fileStream);
+        // originally this was SkiaSharp but that does not support HEIC in .NET
+
+        var imageType = contentType switch {
+            ".jpg"  => MagickFormat.Jpeg,
+            ".png" => MagickFormat.Png,
+            ".heic" => MagickFormat.Heic,
+            ".gif" => MagickFormat.Gif,
+            _ => MagickFormat.Raw
+        };
+
+        var imageSettings = new MagickReadSettings { Format = imageType };
+        using var image = new MagickImage(fileStream, imageSettings);
+
         var divisor = image.Height / 100;
         var width = Convert.ToInt32(Math.Round((decimal)(image.Width / divisor)));
 
-        _logger.LogInformation("divisor generated");
-        using SKBitmap scaledBitmap = image.Resize(new SKImageInfo(width, 100), SKFilterQuality.Medium);
-        using SKImage scaledImage = SKImage.FromBitmap(scaledBitmap);
-        using SKData outputThumb = scaledImage.Encode();
+        _logger.LogInformation("divisor generated, new size {divisor} x {width}", divisor, width);
+
+        var size = new MagickGeometry(width, 100)
         {
+            // the calcs handle this, but being safe by keeping aspect ratio
+            IgnoreAspectRatio = false
+        };
+        image.Resize(size);
+
+        _logger.LogInformation("write to new stream");
+        try 
+        {
+            byte[] data = image.ToByteArray(imageType);
+
+            using MemoryStream memStream = new(data);
+            // ImageMagick.MagickMissingDelegateErrorException
+            // await image.WriteAsync(memStream);
+            memStream.Position = 0;
             _logger.LogInformation("encode complete, uploading blob");
+
             await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
-            await blobClient.UploadAsync(outputThumb.AsStream());
+            await blobClient.UploadAsync(memStream);
         }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "An exception happened");
+        }
+        // convert to byte and skip writeasync
+        
     }
 
     public async Task<List<PhotoListDto>> GetPreviewAsync()
