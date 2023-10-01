@@ -86,11 +86,61 @@ public class PhotoService : IPhotoService
         // reset filestream for the thumbnail
         fileStream.Position = 0;
         _logger.LogInformation("Starting thumbnail process");
-        await GenerateThumbnail(fileStream, fileGuid, fileSuffix);
+
+        // HEIC to JPG handler
+        if (contentType == "image/heic")
+        {
+            await GenerateHeicThumbnail(fileStream, fileGuid);
+            // this will call generateThumbnail
+        }
+
+        if (contentType != "image/heic")
+        {
+            // PNG or JPG can work natively
+            await GenerateThumbnail(fileStream, fileGuid, fileSuffix);
+        }
+        
 
         return blobClient.Uri.ToString();
     }
 
+    private async Task GenerateHeicThumbnail(Stream fileStream, Guid fileGuid)
+    {
+        _logger.LogInformation("Start GenerateHeicThumbnail");
+        var containerClient = await GetConnectionAsync(PhotoBlob);
+
+        BlobClient blobClient = containerClient.GetBlobClient(fileGuid.ToString() + ".jpg");
+
+        _logger.LogInformation("start imageMagick");
+        _logger.LogInformation(blobClient.Name.ToString());
+        // originally this was SkiaSharp but that does not support HEIC in .NET
+
+        var imageType = MagickFormat.Jpeg;
+
+        var imageSettings = new MagickReadSettings { Format = MagickFormat.Heic };
+        using var image = new MagickImage(fileStream, imageSettings);
+
+        _logger.LogInformation("write to new stream");
+        try 
+        {
+            using MemoryStream memStream = new();
+            // ImageMagick.MagickMissingDelegateErrorException
+            await image.WriteAsync(memStream, imageType);
+            memStream.Position = 0;
+            _logger.LogInformation("encode complete, uploading blob");
+
+            await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+            await blobClient.UploadAsync(memStream);
+
+            memStream.Position = 0;
+            await GenerateThumbnail(memStream, fileGuid, ".jpg");
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "An exception happened");
+        }
+
+    }
     private async Task GenerateThumbnail(Stream fileStream, Guid fileGuid, string contentType)
     {
         _logger.LogInformation("Start GenerateThumbnail");
@@ -112,6 +162,7 @@ public class PhotoService : IPhotoService
 
         var imageSettings = new MagickReadSettings { Format = imageType };
         using var image = new MagickImage(fileStream, imageSettings);
+
         var divisor = image.Height / 100;
         var width = Convert.ToInt32(Math.Round((decimal)(image.Width / divisor)));
 
