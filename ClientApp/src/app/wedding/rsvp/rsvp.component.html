@@ -45,7 +45,7 @@
     </td>
     <td>
       <div class="classic-mac-checkbox">
-        <input type="checkbox" id="rsvpYes{{i}}" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" (change)="saveRsvp(i)">
+        <input type="checkbox" id="rsvpYes{{i}}" formControlName="rsvpYes" value="{{member.value.rsvpYes}}" [indeterminate]="member.value.rsvpYes == null" (change)="saveRsvp(i)">
         <label for="rsvpYes{{i}}">Attending</label>
       </div>
     </td>
