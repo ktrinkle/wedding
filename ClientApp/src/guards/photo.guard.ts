@@ -16,7 +16,11 @@ export class PhotoGuard implements CanActivate {
       const photoDate: boolean = new Date("2023-10-26") >= new Date();
       console.log(this.auth.isAdmin() || photoDate);
 
-    return this.auth.isAdmin() || photoDate;
+    // post wedding use
+    return true;
+
+    
+    // return this.auth.isAdmin() || photoDate;
   }
 
 }
