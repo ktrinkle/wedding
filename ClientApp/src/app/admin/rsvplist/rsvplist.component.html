@@ -46,6 +46,7 @@
         <th>Name (first and last)</th>
         <th>Drink type</th>
         <th>Any comments? (Dietary restrictions, etc)</th>
+        <th>Change status</th>
       </thead>
       <tbody class="rsvpdetail">
         <tr *ngFor="let member of this.filteredRsvpList; let i = index">
@@ -57,6 +58,10 @@
           </td>
           <td data="Any comments? (Dietary restrictions, etc)">
             {{member.rsvpComment}}
+          </td>
+          <td>
+            <button (click)="this.changeStatus(member, true)">Yes</button>
+            <button (click)="this.changeStatus(member, false)">No</button>
           </td>
           </tr>
       </tbody>

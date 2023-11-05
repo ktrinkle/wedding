@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { selectRsvpList } from 'src/app/store';
-import { rsvpList } from 'src/app/store/wedding.actions';
+import { rsvpList, savePartyMember } from 'src/app/store/wedding.actions';
+import { Guid } from 'typescript-guid';
 
 
 @Component({
@@ -44,9 +45,27 @@ export class RsvplistComponent implements OnInit, OnDestroy {
     });
   }
 
+  changeStatus(partyInfo: weddingPartyMemberDto, rsvpStatus: boolean)
+  {
+    var newParty:weddingPartyMemberDto = {
+      rsvpYes: rsvpStatus,
+      groupId: partyInfo.groupId,
+      groupMemberId: partyInfo.groupMemberId,
+      groupMemberName: partyInfo.groupMemberName,
+      rsvpComment: partyInfo.rsvpComment
+    };
+
+    // console.log(newParty);
+
+    this.store.dispatch(savePartyMember({ partyMember: newParty }));
+    this.store.dispatch(rsvpList());
+    this.updateRsvpList();
+  }
+
   filterRsvpList(filterState?: boolean) {
     this.filterStatus = filterState;
     this.filteredRsvpList = this.rsvpList.filter(x => x.rsvpYes == filterState);
+    // console.log(this.filteredRsvpList);
   }
 
   ngOnDestroy() {

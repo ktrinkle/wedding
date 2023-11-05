@@ -39,9 +39,6 @@ export class RsvpComponent implements OnInit, OnDestroy{
   windowVisible: boolean = true;
 
   ngOnInit(): void {
-
-
-
     this.store.select(selectPartyMembers).pipe(takeUntil(this.destroy$)).subscribe(weddingParty => {
       this.weddingPartyMembers = weddingParty;
 
