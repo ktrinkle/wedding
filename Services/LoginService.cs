@@ -62,6 +62,38 @@ public class LoginService : ILoginService
         return returnUser;
     }
 
+    public async Task<BearerDto?> LoginNoEmailAsync(string password)
+    {
+        /*
+        This is for use after the actual wedding to see the photos.
+        We also require a fixed password from AppSettings.
+        We also get the SAS token if the login is successful.
+        */
+        
+        var fixedPwd = GetMasterPassword(false).ToLower() == password.ToLower();
+        var fixedAdminPwd = GetMasterPassword(true).ToLower() == password.ToLower();
+        if (!fixedPwd && !fixedAdminPwd)
+        {
+            return null;
+        }
+
+        // get SAS token
+        var sasToken = await GetAzureSASTokenAsync();
+                
+        // partyGuid is made up
+        var partyGuid = Guid.NewGuid();
+
+        var returnUser = new BearerDto()
+        {
+            PartyGuid = partyGuid.ToString(),
+            PartyAddress = "viewonly@psa-history.org",
+            BearerToken = GenerateToken(partyGuid, "viewonly@psa-history.org", false),
+            SasToken = sasToken
+        };
+
+        return returnUser;
+    }
+
     public async Task<BearerDto?> LoginDeepLinkAsync(string loginToken)
     {
         if (loginToken is null)
@@ -141,7 +173,7 @@ public class LoginService : ILoginService
         var claims = new ClaimsIdentity(new Claim[]
         {
             new("sessionid", partyGuid.ToString()),
-            new Claim("username", emailAddress ?? ""),
+            new("username", emailAddress ?? ""),
         });
 
         if (adminFlag)
@@ -179,7 +211,7 @@ public class LoginService : ILoginService
         var containerClient = await _photoService.GetConnectionAsync(containerName);
         var expiryMinutes = 240;
 
-        if (!containerClient.CanGenerateSasUri) 
+        if (!containerClient!.CanGenerateSasUri) 
         {
             return string.Empty;
         }

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { partyByAuth } from '../store/wedding.actions';
 import { EventService } from '../services/event.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { EventService } from '../services/event.service';
 export class AuthService {
 
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private WEBSITE_READONLY: boolean = environment.websiteReadOnly;
 
   constructor(private dataService:DataService, private router: Router, private store: Store,
     public eventService: EventService) { }
@@ -76,6 +78,10 @@ export class AuthService {
       return false;
     }
 
+    public siteReadOnly():boolean {
+      return this.WEBSITE_READONLY;
+    }
+
   public processLoginEmail(loginDto: frontLogin): number
   {
     if (loginDto.emailAddress != '' && loginDto.password != '')
@@ -92,6 +98,44 @@ export class AuthService {
             localStorage.setItem('sasToken', al.sasToken ?? "");
             this.isLoggedIn();
             this.store.dispatch(partyByAuth());
+            this.eventService.loginEndEmit();
+            returnVal = -1;
+          }
+          else
+          {
+            returnVal = 0;
+          }
+        },
+        error: () => {
+          this.eventService.loginFailEmit();
+          returnVal = 1;
+        },
+        complete: () => {
+          this.eventService.loginEndEmit();
+          return returnVal;
+        }
+      });
+    }
+    return 1;
+  }
+
+  public processLoginNoEmail(loginDto: frontLogin): number
+  {
+    // We don't fire the store here because it won't exist. We don't need an email either.
+
+    if (loginDto.password != '')
+    {
+      var returnVal = 0;
+      this.eventService.loginStartEmit();
+      this.dataService.sendNoEmailLogin(loginDto).subscribe({
+        next: (al: any) => {
+          if (al.bearerToken)
+          {
+            localStorage.setItem('access_token', al.bearerToken ?? "");
+            localStorage.setItem('partyAddress', al.partyAddress ?? "");
+            localStorage.setItem('partyGuid', al.partyGuid ?? "");
+            localStorage.setItem('sasToken', al.sasToken ?? "");
+            this.isLoggedIn();
             this.eventService.loginEndEmit();
             returnVal = -1;
           }

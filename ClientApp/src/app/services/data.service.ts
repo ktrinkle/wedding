@@ -98,4 +98,9 @@ export class DataService {
     return this.httpClient.get<bearerDto>(uri);
   }
 
+  public sendNoEmailLogin(userLogin: frontLogin): Observable<bearerDto> {
+    var uri = this.REST_API_SERVER + '/Login/loginNoEmail';
+    return this.httpClient.post<bearerDto>(uri, userLogin);
+  }
+
 }
