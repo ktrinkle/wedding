@@ -4,5 +4,6 @@ export const environment = {
   app_url: "https://www.kevinandaustin.com",
   appInsights: {
     instrumentationKey: '${APP_INSIGHTS}'
-  }
+  },
+  websiteReadOnly: true
 };

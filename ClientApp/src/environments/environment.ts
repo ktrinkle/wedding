@@ -8,7 +8,8 @@ export const environment = {
   app_url: "https://localhost:44443",
   appInsights: {
     instrumentationKey: ''
-  }
+  },
+  websiteReadOnly: true
 };
 
 /*

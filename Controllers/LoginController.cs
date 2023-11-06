@@ -41,6 +41,27 @@ public class LoginController : ControllerBase
     }
 
     [AllowAnonymous]
+    [HttpPost("loginNoEmail")]
+    public async Task<ActionResult<WeddingPartyDto>> LoginNoEmailAsync(LoginDto loginDto)
+    {
+        _logger.LogInformation("User login flow beginning - no email address");
+
+        if (loginDto.Password is null or "")
+        {
+            return Unauthorized();
+        }
+
+        var loginResult = await _loginService.LoginNoEmailAsync(loginDto.Password);
+
+        if (loginResult is null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(loginResult);
+    }
+
+    [AllowAnonymous]
     [HttpGet("{loginGuid}")]
     public async Task<ActionResult<WeddingPartyDto>> Login(string loginGuid)
     {

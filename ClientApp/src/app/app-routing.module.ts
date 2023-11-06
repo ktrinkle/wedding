@@ -30,10 +30,10 @@ const routes: Routes = [
       component: GiftsComponent,
       canActivate: [AuthGuard]
     }, {
-      path: 'rsvp',
-      component: RsvpComponent,
-      canActivate: [AuthGuard]
-    }, {
+    //   path: 'rsvp',
+    //   component: RsvpComponent,
+    //   canActivate: [AuthGuard]
+    // }, {
       path: 'venue',
       component: VenueComponent,
       canActivate: [AuthGuard]
@@ -44,16 +44,16 @@ const routes: Routes = [
     }
   ]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard], children: [
-    {
-      path: 'rsvplist',
-      component: RsvplistComponent,
-      canActivate: [AuthGuard, AdminGuard]
-    },
-    {
-      path: 'giftlist',
-      component: GiftListComponent,
-      canActivate: [AuthGuard, AdminGuard]
-    }
+    // {
+    //   path: 'rsvplist',
+    //   component: RsvplistComponent,
+    //   canActivate: [AuthGuard, AdminGuard]
+    // },
+    // {
+    //   path: 'giftlist',
+    //   component: GiftListComponent,
+    //   canActivate: [AuthGuard, AdminGuard]
+    // }
   ]},
   { path: 'photos/:deeplink', component: PhotoUploadComponent }
 ];

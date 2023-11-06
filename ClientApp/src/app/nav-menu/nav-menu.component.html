@@ -71,7 +71,7 @@
                   Photos
                 </a>
               </li>
-              <li class="menu-controls" id="menu-controls">
+              <li class="menu-controls" id="menu-controls" *ngIf="!this.WEBSITE_READONLY">
                 <img src="../../assets/img/phone.png" width="16" alt="RSVP">
                 <a [routerLinkActive]="['link-active']" [routerLink]="['/wedding/rsvp']">
                   RSVP here
@@ -82,13 +82,13 @@
         <li appDropdown id="specialmenu" *ngIf="this.isLoggedIn()">
           Special
           <ul class="menu command_button hide">
-            <li class="menu-controls" id="menu-controls" *ngIf="this.isAdmin()">
+            <li class="menu-controls" id="menu-controls" *ngIf="this.isAdmin() && !this.WEBSITE_READONLY">
               <img src="../../assets/img/phone.png" width="16" alt="RSVP List">
               <a [routerLinkActive]="['link-active']" [routerLink]="['/admin/rsvplist']">
                 RSVP list
               </a>
             </li>
-            <li class="menu-controls" id="menu-controls" *ngIf="this.isAdmin()">
+            <li class="menu-controls" id="menu-controls" *ngIf="this.isAdmin() && !this.WEBSITE_READONLY">
               <img src="../../assets/img/phone.png" width="16" alt="RSVP List">
               <a [routerLinkActive]="['link-active']" [routerLink]="['/admin/giftlist']">
                 Gift list

@@ -20,6 +20,8 @@ export class NavMenuComponent {
   isExpanded = false;
   userLoggedIn = false;
 
+  WEBSITE_READONLY = this.authService.siteReadOnly();
+
   collapse() {
     this.isExpanded = false;
   }

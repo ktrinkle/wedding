@@ -22,20 +22,22 @@
             <div class="textcenter">
               <img src="../../assets/Danny.png" class="danny"/>
             </div>
-            <p>Kevin and Austin are getting married! We just need some information before we can give you our information.</p>
+            <p>Kevin and Austin got married! We just need some information before we can give you our information.</p>
             <hr>
             <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!this.isLoggedIn()">
               <div *ngIf="!this.loginProcessing">
                 <div *ngIf="this.loginError"><p>We could not find an email address for you, or the city was wrong. Please try again.</p></div>
                 <div class="flexbox">
-                <div class="stack textright">
-                  <label for="emailAddress" class="form-label">Your email address:</label>
+                <div *ngIf="!this.WEBSITE_READONLY">
+                  <div class="stack textright">
+                    <label for="emailAddress" class="form-label">Your email address:</label>
+                    </div>
+                  <div class="stack">
+                    <input type="email" id="emailAddress" name="emailAddress" formControlName="emailAddress" class="form-control" placeholder="name@example.com">
                   </div>
-                <div class="stack">
-                  <input type="email" id="emailAddress" name="emailAddress" formControlName="emailAddress" class="form-control" placeholder="name@example.com">
                 </div>
                 <div class="stack textright">
-                  <label for="password" class="form-label">What city are Austin and Kevin getting married in?</label>
+                  <label for="password" class="form-label">What city did Austin and Kevin get married in?</label>
                 </div>
                 <div class="stack">
                   <input id="password" name="password" formControlName="password" type="password" class="form-control" aria-labelledby="passwordHelpBlock">
@@ -56,6 +58,7 @@
 <div id="errorWindow" class="alert loginAlert content noscroll text-center" *ngIf="this.loginProcessing" >
   <div class="inner">
       <p style="font-weight: normal;">Please wait while we log you in.</p>
+      <p *ngIf="this.WEBSITE_READONLY">Login can take up to 3 minutes.</p>
       <br />
   </div>
 </div>

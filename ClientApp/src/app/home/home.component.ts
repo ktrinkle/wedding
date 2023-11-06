@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router,
     private eventService: EventService) { }
 
+  WEBSITE_READONLY = this.authService.siteReadOnly();
+
   ngOnInit(): void {
     this.eventService.loginEmitter.subscribe(ev => {
       this.updateLoginDisplay(ev);
@@ -33,14 +35,16 @@ export class HomeComponent implements OnInit {
   submitLogin(): void {
     this.loginError = false;
 
-    if (this.loginForm.value.emailAddress != '' && this.loginForm.value.password != '')
+    var emailOk = this.loginForm.value.emailAddress != '' || this.WEBSITE_READONLY;
+
+    if (emailOk && this.loginForm.value.password != '')
     {
 
       var loginSubmit: frontLogin = {
         emailAddress: this.loginForm.value.emailAddress,
         password: this.loginForm.value.password
       }
-      var loginStatus = this.authService.processLoginEmail(loginSubmit);
+      var loginStatus = this.WEBSITE_READONLY ? this.authService.processLoginNoEmail(loginSubmit) : this.authService.processLoginEmail(loginSubmit);
       if (loginStatus == -1)
       {
         this.router.navigate(["/wedding"]);
