@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { DataService } from './data.service';
 import { bearerDto } from '../data/data';
 import { Guid } from 'typescript-guid';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DataService', () => {
   let dataService: DataService;
@@ -10,13 +11,13 @@ describe('DataService', () => {
   let partyGuid: Guid | undefined;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
-      providers: [
-        DataService
-      ],
-    });
+    imports: [],
+    providers: [
+        DataService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     dataService = TestBed.inject(DataService);
     httpMock = TestBed.inject(HttpTestingController);
   });
