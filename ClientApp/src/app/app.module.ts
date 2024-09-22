@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Scroll } from '@angular/router';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -44,62 +44,56 @@ export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    OfficiantComponent,
-    RsvpComponent,
-    VenueComponent,
-    GiftsComponent,
-    WeddingComponent,
-    DropdownDirective,
-    AboutComponent,
-    RsvplistComponent,
-    AdminComponent,
-    GiftListComponent,
-    RsvpDrinkPipe,
-    PhotosComponent,
-    PhotoUploadComponent,
-    UploadPhotoCommonComponent,
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'about', component: AboutComponent },
-      { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] },
-      { path: 'wedding/officiant', component: OfficiantComponent, canActivate: [AuthGuard] },
-      // { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },
-      { path: 'wedding/venue', component: VenueComponent, canActivate: [AuthGuard] },
-      { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
-      { path: 'wedding/photos', component: PhotosComponent, canActivate: [AuthGuard, PhotoGuard]},
-      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard]},
-      // { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
-      // { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]},
-      { path: 'photos/:deeplink', component: PhotoUploadComponent }
-    ]),
-    NgbModule,
-    DragDropModule,
-    ScrollingModule,
-    CdkMenuModule,
-    StoreModule.forRoot(reducers, {metaReducers}),
-    EffectsModule.forRoot(WeddingEffects),
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ["localhost", "kevinandaustin.com", "localhost:7096"],
-        disallowedRoutes: [],
-      },
-    }),
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttperrorInterceptor, multi: true },
-],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NavMenuComponent,
+        HomeComponent,
+        OfficiantComponent,
+        RsvpComponent,
+        VenueComponent,
+        GiftsComponent,
+        WeddingComponent,
+        DropdownDirective,
+        AboutComponent,
+        RsvplistComponent,
+        AdminComponent,
+        GiftListComponent,
+        RsvpDrinkPipe,
+        PhotosComponent,
+        PhotoUploadComponent,
+        UploadPhotoCommonComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([
+            { path: '', component: HomeComponent, pathMatch: 'full' },
+            { path: 'about', component: AboutComponent },
+            { path: 'wedding', component: WeddingComponent, canActivate: [AuthGuard] },
+            { path: 'wedding/officiant', component: OfficiantComponent, canActivate: [AuthGuard] },
+            // { path: 'wedding/rsvp', component: RsvpComponent, canActivate: [AuthGuard] },
+            { path: 'wedding/venue', component: VenueComponent, canActivate: [AuthGuard] },
+            { path: 'wedding/gifts', component: GiftsComponent, canActivate: [AuthGuard] },
+            { path: 'wedding/photos', component: PhotosComponent, canActivate: [AuthGuard, PhotoGuard] },
+            { path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard] },
+            // { path: 'admin/rsvplist', component: RsvplistComponent, canActivate: [AuthGuard, AdminGuard]},
+            // { path: 'admin/giftlist', component: GiftListComponent, canActivate: [AuthGuard, AdminGuard]},
+            { path: 'photos/:deeplink', component: PhotoUploadComponent }
+        ]),
+        NgbModule,
+        DragDropModule,
+        ScrollingModule,
+        CdkMenuModule,
+        StoreModule.forRoot(reducers, { metaReducers }),
+        EffectsModule.forRoot(WeddingEffects),
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                allowedDomains: ["localhost", "kevinandaustin.com", "localhost:7096"],
+                disallowedRoutes: [],
+            },
+        })], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: HttperrorInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
