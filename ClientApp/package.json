@@ -33,7 +33,7 @@
     "@popperjs/core": "^2.11.7",
     "bootstrap": "^5.3.2",
     "install": "^0.13.0",
-    "ngx-device-detector": "^5.0.1",
+    "ngx-device-detector": "^6.0.2",
     "npm": "^9.6.2",
     "oidc-client": "^1.11.5",
     "popper.js": "^1.16.0",
