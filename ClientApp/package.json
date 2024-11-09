@@ -25,7 +25,7 @@
     "@angular/platform-server": "^18.2.11",
     "@angular/router": "^18.2.11",
     "@auth0/angular-jwt": "^5.2.0",
-    "@microsoft/applicationinsights-web": "^3.3.2",
+    "@microsoft/applicationinsights-web": "^3.3.4",
     "@ng-bootstrap/ng-bootstrap": "^17.0.1",
     "@ngrx/effects": "^18.1.1",
     "@ngrx/operators": "^18.1.1",
