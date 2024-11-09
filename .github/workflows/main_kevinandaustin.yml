@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Replace secrets
         uses: Lambdaspire/action-substitute-secrets-in-file@v1.0.0
@@ -24,9 +24,9 @@ jobs:
           secretsJson: ${{ toJSON(secrets) }}
     
       - name: Set up .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
           include-prerelease: true
 
       - name: Build with dotnet
@@ -35,7 +35,7 @@ jobs:
       - name: Install EF Tool
         run: |
           dotnet new tool-manifest
-          dotnet tool install dotnet-ef --version 6
+          dotnet tool install dotnet-ef --version 8
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -46,13 +46,13 @@ jobs:
           ConnectionStrings__Wedding: ${{ secrets.CONNECTION_STRING }}
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .sql-script
           path: ${{env.DOTNET_ROOT}}/sql
@@ -93,13 +93,13 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .net-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'kevinandaustin'
           slot-name: 'Production'
