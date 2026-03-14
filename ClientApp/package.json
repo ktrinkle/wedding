@@ -35,7 +35,7 @@
     "bootstrap": "^5.3.7",
     "install": "^0.13.0",
     "ngx-device-detector": "^8.0.0",
-    "npm": "^11.7.0",
+    "npm": "^11.11.1",
     "oidc-client": "^1.11.5",
     "popper.js": "^1.16.0",
     "run-script-os": "^1.1.6",
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.20",
-    "@angular/cli": "^18.2.11",
+    "@angular/cli": "^21.2.2",
     "@angular/compiler-cli": "^18.2.13",
     "@angular/localize": "^18.2.13",
     "@types/jasmine": "~4.0.3",
