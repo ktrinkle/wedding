@@ -97,7 +97,7 @@ var app = builder.Build();
 app.UseCors(builder =>
 {
   builder
-     .WithOrigins("http://localhost:44443", "https://localhost:44443")
+     .WithOrigins("http://localhost:44443", "https://localhost:44443", "http://localhost:4200", "https://localhost:4200")
      .SetIsOriginAllowedToAllowWildcardSubdomains()
      .AllowAnyHeader()
      .AllowCredentials()
