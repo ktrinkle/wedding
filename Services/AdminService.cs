@@ -1,15 +1,9 @@
 namespace wedding.Services;
 
-public class AdminService : IAdminService
+public class AdminService(ILogger<AdminService> logger, ContextWedding context) : IAdminService
 {
-    private readonly ContextWedding _ContextWedding;
-    private readonly ILogger<AdminService> _logger;
-
-    public AdminService(ILogger<AdminService> logger, ContextWedding context)
-    {
-        _logger = logger;
-        _ContextWedding = context;
-    }
+    private readonly ContextWedding _ContextWedding = context;
+    private readonly ILogger<AdminService> _logger = logger;
 
     public async Task<List<WeddingPartyMemberDto>> GetAllNames()
     {
@@ -30,7 +24,7 @@ public class AdminService : IAdminService
         if (weddingPartyList is null)
         {
             _logger.LogInformation("No RSVPs found");
-            return new List<WeddingPartyMemberDto>();
+            return [];
         }
         
         return weddingPartyList;
@@ -57,7 +51,7 @@ public class AdminService : IAdminService
         if (weddingGifts is null)
         {
             _logger.LogInformation("No gifts found");
-            return new List<WeddingPartyGiftDto>();
+            return [];
         }
         
         return weddingGifts;

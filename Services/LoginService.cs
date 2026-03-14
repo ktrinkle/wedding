@@ -1,23 +1,14 @@
 using System.Security.Claims;
-using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
 
 namespace wedding.Services;
 
-public class LoginService : ILoginService
+public class LoginService(ILogger<LoginService> logger, ContextWedding context, IOptions<AppSettings> appSettings, IPhotoService photoService) : ILoginService
 {
-    private readonly ContextWedding _ContextWedding;
-    private readonly ILogger<LoginService> _logger;
-    private readonly AppSettings _appSettings;
-    private readonly IPhotoService _photoService;
-
-    public LoginService(ILogger<LoginService> logger, ContextWedding context, IOptions<AppSettings> appSettings, IPhotoService photoService)
-    {
-        _logger = logger;
-        _ContextWedding = context;
-        _appSettings = appSettings.Value;
-        _photoService = photoService;
-    }
+    private readonly ContextWedding _ContextWedding = context;
+    private readonly ILogger<LoginService> _logger = logger;
+    private readonly AppSettings _appSettings = appSettings.Value;
+    private readonly IPhotoService _photoService = photoService;
 
     public async Task<BearerDto?> LoginAsync(string emailAddr, string password)
     {
@@ -27,7 +18,7 @@ public class LoginService : ILoginService
         We also get the SAS token if the login is successful.
         */
         
-        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.ToLower() == emailAddr.ToLower());
+        var loginInfo = await _ContextWedding.WeddingGroup.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailAddr, StringComparison.CurrentCultureIgnoreCase));
         if (loginInfo is null)
         {
             _logger.LogError("Email address {email} is not in the invite list.", emailAddr.Replace(Environment.NewLine, ""));
@@ -70,8 +61,8 @@ public class LoginService : ILoginService
         We also get the SAS token if the login is successful.
         */
         
-        var fixedPwd = GetMasterPassword(false).ToLower() == password.ToLower();
-        var fixedAdminPwd = GetMasterPassword(true).ToLower() == password.ToLower();
+        var fixedPwd = GetMasterPassword(false).Equals(password, StringComparison.CurrentCultureIgnoreCase);
+        var fixedAdminPwd = GetMasterPassword(true).Equals(password, StringComparison.CurrentCultureIgnoreCase);
         if (!fixedPwd && !fixedAdminPwd)
         {
             return null;
@@ -170,11 +161,11 @@ public class LoginService : ILoginService
         var appIssuer = _appSettings.Issuer;
         var appAudience = _appSettings.Audience;
 
-        var claims = new ClaimsIdentity(new Claim[]
-        {
+        var claims = new ClaimsIdentity(
+        [
             new("sessionid", partyGuid.ToString()),
             new("username", emailAddress ?? ""),
-        });
+        ]);
 
         if (adminFlag)
         {
@@ -225,10 +216,6 @@ public class LoginService : ILoginService
         };
 
         sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
-
-        // signedVersion
-        // signedProtocol https
-        // canonicalizedResource = "/blob/myaccount/music" 
 
         var sasUri = containerClient.GenerateSasUri(sasBuilder);
 

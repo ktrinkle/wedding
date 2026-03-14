@@ -2,27 +2,18 @@ using Azure;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-//using SkiaSharp;
 using ImageMagick;
 using Wedding.Models;
 
 namespace wedding.Services;
 
-public class PhotoService : IPhotoService
+public class PhotoService(ILogger<PhotoService> logger, IOptions<AppSettings> appSettings) : IPhotoService
 {
-    private readonly ContextWedding _ContextWedding;
-    private readonly ILogger<PhotoService> _logger;
-    private readonly AppSettings _appSettings;
+    private readonly ILogger<PhotoService> _logger = logger;
+    private readonly AppSettings _appSettings = appSettings.Value;
 
     const string PhotoBlob = "/photos";
     const string ThumbBlob = "/thumbs";
-
-    public PhotoService(ILogger<PhotoService> logger, IOptions<AppSettings> appSettings, ContextWedding context)
-    {
-        _logger = logger;
-        _appSettings = appSettings.Value;
-        _ContextWedding = context;
-    }
 
     public async Task<BlobContainerClient> GetConnectionAsync(string containerName)
     {
@@ -164,9 +155,9 @@ public class PhotoService : IPhotoService
         using var image = new MagickImage(fileStream, imageSettings);
 
         var divisor = image.Height / 100;
-        var width = Convert.ToInt32(Math.Round((decimal)(image.Width / divisor)));
+        var width = Convert.ToUInt32(Math.Round((decimal)(image.Width / divisor)));
 
-        _logger.LogInformation("divisor generated, new size {divisor} x {width}", divisor, width);
+        _logger.LogInformation("Divisor generated, new size {divisor} x {width}", divisor, width);
 
         var size = new MagickGeometry(width, 100)
         {
@@ -215,7 +206,7 @@ public class PhotoService : IPhotoService
                     using (var imageStream = await blobClient.OpenReadAsync())
                     {
                         tempImage = new byte[imageStream.Length];
-                        await imageStream.ReadAsync(tempImage.AsMemory(0, (int)tempImage.Length));
+                        _ = await imageStream.ReadAsync(tempImage.AsMemory(0, tempImage.Length));
                     }
 
                     returnList.Add(new PhotoListDto()
@@ -232,7 +223,7 @@ public class PhotoService : IPhotoService
         catch (Exception ex)
         {
             _logger.LogCritical(ex.ToString());
-            return new List<PhotoListDto>();
+            return [];
         }
     }
 
